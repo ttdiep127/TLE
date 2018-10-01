@@ -1,0 +1,93 @@
+<div class="m-1">
+  <img src="../../../../../assets/logo/logo.webp" width="50px">
+  <form (submit)="onSubmit($event)">
+    <dx-validation-group>
+      <small>Email</small>
+      <dx-text-box placeholder="Email" [value]="loginData.emailAddress" valueChangeEvent="keyup">
+        <dxi-validation-rule type="required" message="Email is required."></dxi-validation-rule>
+        <dxi-validation-rule type="email" message="Email is invalid!"></dxi-validation-rule>
+      </dx-text-box>
+      <small>Password</small>
+      <dx-text-box placeholder="Password" mode="password" [value]="loginData.password" valueChangeEvent="keyup">
+        <dxi-validation-rule type="required" message="Password is required."></dxi-validation-rule>
+      </dx-text-box>
+      <div class="row mb-2">
+        <div class="col">
+          <dx-check-box text="Remember me" [(value)]="loginData.isKeepSignedIn"></dx-check-box>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 mt-1">
+          <dx-button
+            ngClass="btn-default"
+            [disabled]="isLoading"
+            class="w-100"
+            text="{{isLoading?'Logging':'Login'}}"
+            icon="{{isLoading?'fas fa-spinner fa-spin':''}}"
+            [useSubmitBehavior]="true">
+          </dx-button>
+        </div>
+      </div>
+      <div class="clearfix mt-1">
+        <div class="mr-auto">
+          <a routerLinkActive="active" [routerLink]="['/forgot']">Forgot Password?</a>
+        </div>
+        <div class="ml-auto">
+          <a routerLinkActive="active" [routerLink]="['/register']">Sign up</a>
+        </div>
+      </div>
+    </dx-validation-group>
+  </form>
+  <div class="row mb-0 hor-line">
+    <div class="col">
+      <hr class="w-100 float-left">
+    </div>
+    <a>Or connect with</a>
+    <div class="col">
+      <hr class="w-100 float-right">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 mt-1">
+      <dx-button
+        ngClass="btn-facebook"
+        [disabled]="isLoading"
+        class="w-100"
+        text="Login with Facebook"
+        [useSubmitBehavior]="true">
+      </dx-button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 mt-1">
+      <dx-button
+        ngClass="btn-google"
+        [disabled]="isLoading"
+        class="w-100"
+        text="Sign in with Google+"
+        [useSubmitBehavior]="true">
+      </dx-button>
+    </div>
+  </div>
+  <div class="row mb-0 hor-line">
+    <div class="col">
+      <hr class="w-100 float-left">
+    </div>
+    <a>Join with Us</a>
+    <div class="col">
+      <hr class="w-100 float-right">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 mt-1">
+      <dx-button
+        [disabled]="isLoading"
+        class="w-100"
+        text="Sign Up"
+        type="success"
+        [useSubmitBehavior]="true">
+      </dx-button>
+    </div>
+  </div>
+
+</div>

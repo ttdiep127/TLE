@@ -1,0 +1,30 @@
+<nav class="navbar border-bottom">
+  <div class="container">
+    <div>
+      <a routerLinkActive="active" routerLink="/help" class="" href="">Help</a>
+    </div>
+    <div class="form-inline">
+      <div *ngIf="user">
+        <small class="mr-1">{{user.name}}</small>
+        <a class="mr-1">|</a>
+        <a routerLinkActive="active" class=" mr-1">Logout</a>
+      </div>
+      <div *ngIf="!user">
+        <a class=" mr-1" (click)="onLogin = true">Login</a>
+        <a class="mr-1">|</a>
+        <a routerLinkActive="active" routerLink="/signUp" class=" mr-1" href="">Register</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<dx-popup [(visible)]="onLogin"
+          title="Login Form"
+          [showTitle]="false"
+          [showCloseButton]="true"
+          [closeOnOutsideClick]="true">
+  <div *dxTemplate="let data of 'content'">
+    <div *ngIf="onLogin">
+      <app-login></app-login>
+    </div>
+  </div>
+</dx-popup>

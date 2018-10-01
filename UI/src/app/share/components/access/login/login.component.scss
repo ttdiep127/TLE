@@ -1,0 +1,49 @@
+@import "~src/assets/variables.scss";
+
+img {
+  display: block;
+  margin: auto;
+}
+
+.btn-facebook {
+  background-color: #3B5998;
+  color: white;
+
+  &:hover {
+    background-color: #2F4779;
+  }
+
+}
+
+.btn-google {
+  background-color: #DB4437;
+  color: white;
+
+  &:hover {
+    background-color: #c9302c;
+  }
+}
+
+.hor-line {
+  line-height: 33px;
+
+
+  hr {
+    color: $light-main-color;
+    background-color: $light-main-color;
+    border-color: $light-main-color;
+    opacity: 0.5;
+  }
+}
+
+.link {
+  line-height: 33px;
+}
+@media only screen and (min-width: 481px){
+  .dx-popup-normal {
+    width: 350px!important;
+    height: 350px!important;
+  }
+
+}
+

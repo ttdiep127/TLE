@@ -1,0 +1,41 @@
+@import "~src/assets/variables";
+
+body {
+  font-family: "Segoe UI",Arial,sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+}
+
+.link{
+  cursor: pointer;
+  color: #0056b3;
+  text-decoration: none;
+  background-color: transparent;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.container{
+  max-width: 970px;
+}
+
+.btn-default{
+  background-color: $dark-main-color;
+  color: $background-color;
+
+  &:hover {
+    color: $dark-main-color;
+    background-color: white;
+  }
+}
+
+@media only screen and (min-width: 481px) {
+
+}
+
+@media only screen and (min-width: 769px) {
+
+}
