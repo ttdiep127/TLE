@@ -1,11 +1,11 @@
 ﻿using Entities.AppModels;
 using Entities.Models;
+using Repositories.Repositories;
 using System.Threading.Tasks;
 using TLE.Entities.Repositories;
 using TLE.Entities.Resource;
 using TLE.Entities.Service;
 using TLE.Entities.UnitOfWork;
-using TLE.Repository.Repositories;
 
 namespace TLE.Service
 {
@@ -18,6 +18,19 @@ namespace TLE.Service
             _repository = Repository;
         }
 
+        public async Task<Users> Get(int userId)
+        {
+            try
+            {
+                return await _repository.Get(userId);
+
+            }
+            catch (System.Exception ex)
+            {
+
+                throw;
+            }
+        }
         public async Task<Users> Add(Users userInput)
         {
             var user = await _repository.Get(userInput.Id);

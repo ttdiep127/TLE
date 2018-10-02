@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLE.Entities", "Entities\TL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLE.Services", "Service\TLE.Services.csproj", "{139CC8FE-4C1F-4FED-9CF0-33C3CF9169F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLE.Repository", "..\TLEOld\TLE.Repository\TLE.Repository.csproj", "{91F9AC4A-589E-450F-9203-6DC5129C854D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLE.Repositories", "Repositories\TLE.Repositories.csproj", "{D37E1CB1-40FE-4F96-B8F6-A085AD9F043C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{139CC8FE-4C1F-4FED-9CF0-33C3CF9169F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{139CC8FE-4C1F-4FED-9CF0-33C3CF9169F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{139CC8FE-4C1F-4FED-9CF0-33C3CF9169F4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{91F9AC4A-589E-450F-9203-6DC5129C854D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{91F9AC4A-589E-450F-9203-6DC5129C854D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{91F9AC4A-589E-450F-9203-6DC5129C854D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{91F9AC4A-589E-450F-9203-6DC5129C854D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D37E1CB1-40FE-4F96-B8F6-A085AD9F043C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D37E1CB1-40FE-4F96-B8F6-A085AD9F043C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D37E1CB1-40FE-4F96-B8F6-A085AD9F043C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D37E1CB1-40FE-4F96-B8F6-A085AD9F043C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
