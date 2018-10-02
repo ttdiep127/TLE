@@ -8,7 +8,7 @@ import {AppRoutingModule} from './app-rounting.module';
 import {AuthenticationService} from './services/authentication.service';
 import {UserService} from './services/user.service';
 import {CookieService} from 'angular2-cookie/core';
-import {BaseService} from './services/api.service';
+import {BaseService} from './services/base.service';
 import {Utility} from './share/Utility';
 import {NgxPermissionsModule} from 'ngx-permissions';
 

@@ -22,14 +22,14 @@ namespace Entities.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ErrorMessages {
+    public class ConstantStrings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ErrorMessages() {
+        internal ConstantStrings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Entities.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Entities.Resources.ErrorMessages", typeof(ErrorMessages).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Entities.Resources.ConstantStrings", typeof(ConstantStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,11 @@ namespace Entities.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Task assignment not found.
+        ///   Looks up a localized string similar to http://localhost:4200.
         /// </summary>
-        public static string AssignmentNotFound {
+        public static string Enviroment {
             get {
-                return ResourceManager.GetString("AssignmentNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Password is incorrect..
-        /// </summary>
-        public static string IncorrectPassword {
-            get {
-                return ResourceManager.GetString("IncorrectPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User Name is not exsit..
-        /// </summary>
-        public static string InvalidUserName {
-            get {
-                return ResourceManager.GetString("InvalidUserName", resourceCulture);
+                return ResourceManager.GetString("Enviroment", resourceCulture);
             }
         }
     }

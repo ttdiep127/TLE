@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entities.AppModels;
 using Entities.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TLE.Entities.Service;
 using TLE.Service;
@@ -22,15 +23,16 @@ namespace Web.Api.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
-        public async Task<Users> Get()
+        [HttpGet("{userId}")]
+        public async Task<Users> Get(int userId)
         {
-            return await _userService.Get(2);
+            return await _userService.Get(userId);
             //return new string[] { "authentication" };
         }
-
-        [HttpPost("/login")]
-        public async Task<Response> Post([FromBody]LoginModel input)
+        
+        [HttpPost]
+        [Route("login")]
+        public async Task<Response> Post([FromBody] LoginModel input)
         {
             return await _userService.Login(input);
         }

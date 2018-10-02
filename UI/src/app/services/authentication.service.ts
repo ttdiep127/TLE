@@ -5,7 +5,7 @@ import {NgxPermissionsService} from 'ngx-permissions';
 import {BehaviorSubject} from 'rxjs';
 import {Observable, of} from 'rxjs';
 import {LoggedUser, RegisterUser, UserInfo, UserLogin} from '../models/account.models';
-import {BaseService} from './api.service';
+import {BaseService} from './base.service';
 
 import {RequestResponse} from '../models/RequestResponse';
 
@@ -86,17 +86,17 @@ export class AuthenticationService {
     return this.loggedUser.accessToken;
   }
 
-  setAccessToken(token: string, opts?: CookieOptionsArgs) {
-    if (!!this.cookieService.get('AccessToken')) {
-      this.cookieService.remove('AccessToken');
-    }
-    this.cookieService.put('AccessToken', token, opts);
-  }
-
-  isLoggedIn(): boolean {
-    return this.cookieService.get(ACCOUNT_STORE_NAME) != null;
-  }
-
+  // setAccessToken(token: string, opts?: CookieOptionsArgs) {
+  //   if (!!this.cookieService.get('AccessToken')) {
+  //     this.cookieService.remove('AccessToken');
+  //   }
+  //   this.cookieService.put('AccessToken', token, opts);
+  // }
+  //
+  // isLoggedIn(): boolean {
+  //   return this.cookieService.get(ACCOUNT_STORE_NAME) != null;
+  // }
+  //
   initAccountInfo() {
     const user = this.loggedUser;
     this.setCurrentUser(user);
@@ -110,44 +110,45 @@ export class AuthenticationService {
   }
 
   login(loginData: UserLogin): Observable<RequestResponse> {
+    debugger;
     return this.baseService.post(`${this.baseUrl}/login`, loginData);
     // return of(new RequestResponse());
   }
 
 
-  loginWithUserId(userId: number): Observable<LoggedUser> {
-    return this.baseService.get(`${this.baseUrl}/login/` + userId);
-  }
-
-  logout() {
-    this.baseService.get(`${this.baseUrl}/logout/`).subscribe(() => {
-    }, () => {
-    }, () => {
-      this.setLoggedUser(null);
-      this.router.navigate(['/login']);
-    });
-  }
-
-  // reset password
-  requestPasswordReset(email: string): Observable<boolean> {
-    return this.baseService.post(`${this.baseUrl}/forgot`, {email: email});
-  }
-
-  checkResetPasswordCode(code: string): Observable<string> {
-    return this.baseService.post(`${this.baseUrl}/check-password-token`, {passwordToken: code});
-  }
-
-
-  // register and reset password
-  register(account: RegisterUser): Observable<number> {
-    return this.baseService.post(`${this.baseUrl}/register`, account);
-  }
-
-  activeUser(activeCode: string): Observable<UserLogin> {
-    return this.baseService.get(`${this.baseUrl}/active/${activeCode}`);
-  }
-
-  resendEmailToActivate(email: string): Observable<boolean> {
-    return this.baseService.post(`${this.baseUrl}/resend`, {email: email});
-  }
+  // loginWithUserId(userId: number): Observable<LoggedUser> {
+  //   return this.baseService.get(`${this.baseUrl}/login/` + userId);
+  // }
+  //
+  // logout() {
+  //   this.baseService.get(`${this.baseUrl}/logout/`).subscribe(() => {
+  //   }, () => {
+  //   }, () => {
+  //     this.setLoggedUser(null);
+  //     this.router.navigate(['/login']);
+  //   });
+  // }
+  //
+  // // reset password
+  // requestPasswordReset(email: string): Observable<boolean> {
+  //   return this.baseService.post(`${this.baseUrl}/forgot`, {email: email});
+  // }
+  //
+  // checkResetPasswordCode(code: string): Observable<string> {
+  //   return this.baseService.post(`${this.baseUrl}/check-password-token`, {passwordToken: code});
+  // }
+  //
+  //
+  // // register and reset password
+  // register(account: RegisterUser): Observable<number> {
+  //   return this.baseService.post(`${this.baseUrl}/register`, account);
+  // }
+  //
+  // activeUser(activeCode: string): Observable<UserLogin> {
+  //   return this.baseService.get(`${this.baseUrl}/active/${activeCode}`);
+  // }
+  //
+  // resendEmailToActivate(email: string): Observable<boolean> {
+  //   return this.baseService.post(`${this.baseUrl}/resend`, {email: email});
+  // }
 }

@@ -3,7 +3,6 @@ import {Gender} from '../share/enums';
 export class UserLogin {
   emailAddress: string;
   password: string;
-  name: string;
   isKeepSignedIn: boolean;
 }
 

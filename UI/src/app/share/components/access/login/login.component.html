@@ -3,12 +3,12 @@
   <form (submit)="onSubmit($event)">
     <dx-validation-group>
       <small>Email</small>
-      <dx-text-box placeholder="Email" [value]="loginData.emailAddress" valueChangeEvent="keyup">
+      <dx-text-box placeholder="Email" [(value)]="loginData.emailAddress" valueChangeEvent="keyup">
         <dxi-validation-rule type="required" message="Email is required."></dxi-validation-rule>
         <dxi-validation-rule type="email" message="Email is invalid!"></dxi-validation-rule>
       </dx-text-box>
       <small>Password</small>
-      <dx-text-box placeholder="Password" mode="password" [value]="loginData.password" valueChangeEvent="keyup">
+      <dx-text-box placeholder="Password" mode="password" [(value)]="loginData.password" valueChangeEvent="keyup">
         <dxi-validation-rule type="required" message="Password is required."></dxi-validation-rule>
       </dx-text-box>
       <div class="row mb-2">

@@ -5,34 +5,37 @@ import {Observable, throwError} from 'rxjs';
 
 import {environment} from '../../environments/environment';
 import {catchError, map} from 'rxjs/operators';
+import {CookieService} from 'angular2-cookie/services';
 
 @Injectable()
 export class BaseService {
+
   private baseURL = environment.baseUrl;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private cookieService: CookieService) {
   }
 
   protected get url() {
     return this.baseURL;
   }
 
-  private static get headers(): HttpHeaders {
+    get headers(): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      // "Accept": "q=0.8;application/json;q=0.9",
-      // "APIKey": "~123456789~",
-      // "Authorization": "Bearer " + this.cookieService.get("AccessToken")
+      'Accept': 'q=0.8;application/json;q=0.9',
+      'APIKey': '~123456789~',
+      'Authorization': 'Bearer ' + this.cookieService.get('AccessToken')
     });
   }
 
-  private static get options(): any {
+   get options(): any {
     return {
-      headers: BaseService.headers
+      headers: this.headers
     };
   }
 
-  private static extractData(res: Response) {
+
+   static extractData(res: Response) {
     return res || {};
   }
 
@@ -45,7 +48,7 @@ export class BaseService {
 
   get(url: string): Observable<any> {
     return this.http
-      .get(`${this.baseURL}/${url}`, BaseService.options)
+      .get(`${this.baseURL}/${url}`, this.options)
       .pipe(
         catchError(BaseService.handleError)
       );
@@ -53,13 +56,13 @@ export class BaseService {
 
   getWithDynamicQueryTerm(url: string, key: string, val: string): Observable<any> {
     return this.http
-      .get(`${this.baseURL}/${url}/?${key}=${val}`, BaseService.options)
+      .get(`${this.baseURL}/${url}/?${key}=${val}`, this.options)
       .pipe(catchError(BaseService.handleError));
   }
 
   getWithFixedQueryString(url: string, param: any): Observable<any> {
     const params = new HttpParams().append('query', param);
-    const options = {headers: BaseService.headers, params: params};
+    const options = {headers: this.headers, params: params};
     return this.http
       .get(`${this.baseURL}/${url}`, options)
       .pipe(map(BaseService.extractData), catchError(BaseService.handleError));
@@ -73,7 +76,7 @@ export class BaseService {
         params.set(key, val);
       }
     }
-    const options = {headers: BaseService.headers, params: params};
+    const options = {headers: this.headers, params: params};
     return this.http
       .get(`${this.baseURL}/${url}`, options)
       .pipe(map(BaseService.extractData), catchError(BaseService.handleError));
@@ -82,21 +85,21 @@ export class BaseService {
   post(url: string, param: any): Observable<any> {
     const body = JSON.stringify(param);
     return this.http
-      .post(`${this.baseURL}/${url}`, body, BaseService.options)
+      .post(`${this.baseURL}/${url}`, body, this.options)
       .pipe(catchError(BaseService.handleError));
   }
 
   update(url: string, param: any): Observable<any> {
     const body = JSON.stringify(param);
     return this.http
-      .put(`${this.baseURL}/${url}`, body, BaseService.options)
+      .put(`${this.baseURL}/${url}`, body, this.options)
       .pipe(catchError(BaseService.handleError));
   }
 
   patch(url: string, param: any): Observable<any> {
     const body = JSON.stringify(param);
     return this.http
-      .patch(`${this.baseURL}/${url}`, body, BaseService.options)
+      .patch(`${this.baseURL}/${url}`, body, this.options)
       .pipe(catchError(BaseService.handleError));
   }
 
@@ -108,7 +111,7 @@ export class BaseService {
         params.set(key, val);
       }
     }
-    const options = {headers: BaseService.headers, params: params};
+    const options = {headers: this.headers, params: params};
     return this.http
       .delete(`${this.baseURL}/${url}`, options)
       .pipe(map(BaseService.extractData), catchError(BaseService.handleError));
@@ -116,7 +119,7 @@ export class BaseService {
 
   deleteWithKey(url: string, key: string, val: string): Observable<any> {
     return this.http
-      .delete(`${this.baseURL}/${url}/?${key}=${val}`, BaseService.options)
+      .delete(`${this.baseURL}/${url}/?${key}=${val}`, this.options)
       .pipe(catchError(BaseService.handleError));
   }
 }

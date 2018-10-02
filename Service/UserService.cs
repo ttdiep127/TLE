@@ -1,9 +1,9 @@
 ﻿using Entities.AppModels;
 using Entities.Models;
+using Entities.Resources;
 using Repositories.Repositories;
 using System.Threading.Tasks;
 using TLE.Entities.Repositories;
-using TLE.Entities.Resource;
 using TLE.Entities.Service;
 using TLE.Entities.UnitOfWork;
 

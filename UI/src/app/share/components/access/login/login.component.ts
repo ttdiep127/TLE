@@ -24,12 +24,12 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.authService.isLoggedIn()) {
-      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-      this.router.navigate([this.returnUrl]);
-    } else {
-      // this.authService.logout();
-    }
+    // if (this.authService.isLoggedIn()) {
+    //   this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    //   this.router.navigate([this.returnUrl]);
+    // } else {
+    //   // this.authService.logout();
+    // }
     this.loginBtnId = Utility.getGUID();
   }
 
@@ -40,8 +40,9 @@ export class LoginComponent implements OnInit {
       .subscribe((rr) => {
           if (rr.success) {
             const user = rr.obj;
-            this.authService.setLoggedUser(user);
-            this.router.navigate(['/dashboard']);
+            notify('success');
+            // this.authService.setLoggedUser(user);
+            // this.router.navigate(['/dashboard']);
             if (this.loginData.isKeepSignedIn) {
               localStorage.removeItem('Name');
               localStorage.removeItem('Remember me');
