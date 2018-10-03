@@ -8,6 +8,7 @@ import {CarouselComponent} from './components/carousel/carousel.component';
 import {MemberbarComponent} from './components/header/memberbar/memberbar.component';
 import {MenubarComponent} from './components/header/menubar/menubar.component';
 import {LoginComponent} from './components/access/login/login.component';
+import {FooderComponent} from './components/fooder/fooder.component';
 
 const BASE_MODULES = [
   CommonModule,
@@ -23,8 +24,9 @@ const COMPONENTS = [
   CarouselComponent,
   MemberbarComponent,
   MenubarComponent,
-  LoginComponent
-]
+  LoginComponent,
+  FooderComponent
+];
 
 const NB_THEME_PROVIDERS = [];
 
@@ -39,7 +41,7 @@ export class SharedModule {
   static forRoot(): ModuleWithProviders {
     return <ModuleWithProviders>{
       ngModule: SharedModule,
-      providers:  [...NB_THEME_PROVIDERS],
+      providers: [...NB_THEME_PROVIDERS],
     };
   }
 }
