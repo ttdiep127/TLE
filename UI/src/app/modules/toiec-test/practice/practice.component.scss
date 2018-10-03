@@ -1,0 +1,16 @@
+@import "~src/assets/variables.scss";
+
+.notification {
+  border-radius: 4px;
+  background-color: gray;
+}
+
+.correct-answer {
+  font-weight: 500;
+  background-color: $green-light;
+}
+
+.incorrect-answer {
+  font-weight: 500;
+  background-color: $red-light;
+}

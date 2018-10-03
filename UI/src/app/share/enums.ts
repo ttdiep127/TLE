@@ -3,3 +3,10 @@ export enum Gender {
   MALE,
   UNDEFINED
 }
+export enum Answer {
+  A = 1,
+  B,
+  C,
+  D
+}
+

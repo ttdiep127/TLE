@@ -9,6 +9,15 @@ body {
 .main-color {
   color: $main-color;
 }
+
+.correct-color {
+  color: $green;
+}
+
+.incorrect-color {
+  color: $red;
+}
+
 .link{
   cursor: pointer;
   color: #0056b3;
@@ -27,6 +36,8 @@ body {
 .btn-default{
   background-color: $dark-main-color;
   color: $background-color;
+  border-radius: 0;
+  font-size: 1em;
 
   &:hover {
     color: $dark-main-color;

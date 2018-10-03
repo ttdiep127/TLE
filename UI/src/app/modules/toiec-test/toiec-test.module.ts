@@ -3,7 +3,7 @@ import {RouterModule} from '@angular/router';
 
 import {DevExtremeModule} from 'devextreme-angular';
 import {ToiecTestComponent} from './toiec-test.component';
-import { PracticeComponent } from './practice/practice.component';
+import {PracticeComponent } from './practice/practice.component';
 import {SharedModule} from '../../share/share.module';
 
 @NgModule({
