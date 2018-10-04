@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Service;
 using TLE.Entities.UnitOfWork;
 using TLE.Repositories;
 using TLE.Service;
@@ -34,6 +35,7 @@ namespace Web.Api
             services.AddCors();
 
             services.AddScoped<UserService>();
+            services.AddScoped<QtionService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.Configure<CookiePolicyOptions>(options =>
             {

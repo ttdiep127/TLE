@@ -11,6 +11,8 @@ import {CookieService} from 'angular2-cookie/services';
 export class BaseService {
 
   private baseURL = environment.baseUrl;
+  public questionUrl = 'api/questions';
+  public  userUrl = 'api/users';
 
   constructor(private http: HttpClient, private cookieService: CookieService) {
   }

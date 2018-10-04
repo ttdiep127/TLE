@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
-import {of} from 'rxjs';
-import {QtionP5} from '../data/question.mock';
+import {Observable, of} from 'rxjs';
+import {BaseService} from './base.service';
+import {QuestionModel} from '../models/question.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionStorageService {
 
-  constructor() { }
+  constructor(private baseService: BaseService) { }
 
-  getQuestion(partNumber: number){
-    return of(QtionP5);
+  getQuestion(partNumber: number): Observable<QuestionModel[]> {
+    return this.baseService.get(`${this.baseService.questionUrl}/${partNumber}`);
   }
 }

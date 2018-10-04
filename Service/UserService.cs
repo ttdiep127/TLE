@@ -2,6 +2,7 @@
 using Entities.Models;
 using Entities.Resources;
 using Repositories.Repositories;
+using System;
 using System.Threading.Tasks;
 using TLE.Entities.Repositories;
 using TLE.Entities.Service;
@@ -12,10 +13,12 @@ namespace TLE.Service
     public class UserService: BaseService<Users>, IUserService
     {
         private readonly IRepository<Users> _repository;
+        private readonly IRepository<Answers> _answerRepo;
 
         public UserService(IUnitOfWork unitOfWork): base(unitOfWork)
         {
             _repository = Repository;
+            _answerRepo = UnitOfWork.Repository<Answers>();
         }
 
         public async Task<Users> Get(int userId)
@@ -92,6 +95,51 @@ namespace TLE.Service
                 Message = null,
                 obj = user
             };
+        }
+
+        public async Task<Response> Answer(AnswerModel answerQuestion)
+        {
+            try
+            {
+                var savedAnswer = await _answerRepo.Get(answerQuestion.UserId, answerQuestion.QtionId);
+                if (savedAnswer != null)
+                {
+                    savedAnswer.Answer = answerQuestion.Answer;
+                    savedAnswer.IsCorrect = answerQuestion.IsCorrect;
+                    savedAnswer.UpdateDay = DateTime.Now;
+                    _answerRepo.Update(savedAnswer);
+                    await UnitOfWork.SaveChangesAsync();
+                } else
+                {
+                    var answer = new Answers
+                    {
+                        UserId = answerQuestion.UserId,
+                        QtionId = answerQuestion.QtionId,
+                        Answer = answerQuestion.Answer,
+                        IsCorrect = answerQuestion.IsCorrect,
+                        UpdateDay = DateTime.Now
+                    };
+                    await _answerRepo.InsertAsync(answer);
+                    await UnitOfWork.SaveChangesAsync();
+                }
+                
+                return new Response
+                {
+                    Success = true,
+                    Message = null,
+                    obj = null
+                };
+            }
+            catch (System.Exception ex)
+            {
+                return new Response
+                {
+                    Success = false,
+                    Message = ErrorMessages.ErrorAddAnswer,
+                    obj = null
+                };
+            }
+            
         }
     }
 }

@@ -7,7 +7,8 @@ namespace Entities.Models
     {
         public int UserId { get; set; }
         public int QtionId { get; set; }
-        public bool? Answer { get; set; }
+        public int? Answer { get; set; }
+        public bool? IsCorrect { get; set; }
         public DateTime? UpdateDay { get; set; }
 
         public Qtions Qtion { get; set; }

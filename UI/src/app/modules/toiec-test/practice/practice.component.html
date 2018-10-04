@@ -1,28 +1,34 @@
-<div>
-  Câu hỏi part {{partNumber}}:
+<div class="form-inline">
+  <p class="float-left">Câu hỏi part {{partNumber}}:</p>
+  <p *ngIf="isLoading" class="float-left ml-sm-2" [ngStyle]="{'color': '#112d4e'}"><i class="fa fa-spinner fa-pulse"></i> Loading</p>
 </div>
 <div *ngIf="currentQuestion" class="border p-3">
-  <p><strong>{{currentQuestion.id}}. </strong>{{currentQuestion.question.qtion}}</p>
+  <p><strong>{{currentQuestion.id + 1}}. </strong>{{currentQuestion.question.qtion}}</p>
   <div class="dx-field">
     <dx-radio-group
       [items]="currentAnswers"
-      [disabled]="isSelected"
+      [disabled]="currentQuestion.answered"
+      [(value)]="currentAnswers[currentQuestion.userAnswer - 1]"
       (onValueChanged)="onValueChanged($event)">
     </dx-radio-group>
   </div>
-  <div ngClass="notification">
-    <div *ngIf="isSelected" class="p-3">
-      <div *ngIf="!isCorrectAnswer">
-        <p class="incorrect-color">Incorrect Answer!</p>
-        <p><strong>Đáp án: </strong>{{answer}}</p>
-      </div>
-      <div *ngIf="isCorrectAnswer">
-        <p class="correct-color">Correct Answer!</p>
+  <div class="temple-answer">
+    <div ngClass="notification">
+      <div *ngIf="isSelected" class="p-3">
+        <div *ngIf="!isCorrectAnswer">
+          <p class="incorrect-color">Incorrect Answer!</p>
+          <p><strong>Đáp án: </strong>{{answer}}</p>
+        </div>
+        <div *ngIf="isCorrectAnswer">
+          <p class="correct-color">Correct Answer!</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
 <div class="text-center mt-sm-2">
-  <div class="btn btn-default mr-sm-2"><i class="fas fa-chevron-left"></i>  Previous Question</div>
-  <div class="btn btn-default ml-sm-2">Next Question  <i class="fas fa-chevron-right"></i></div>
+  <button class="btn btn-default mr-sm-2" (click)="clickPrevious()" [disabled]="currentQuestion?.id === 0"><i class="fas fa-chevron-left"></i>  Previous Question</button>
+  <button class="btn btn-default ml-sm-2"(click)="clickNext()" [disabled]="isEnd">Next Question  <i class="fas fa-chevron-right"></i></button>
+  <button class="btn btn-success float-right" (click)="clickEnd()">End Practice</button>
 </div>
+

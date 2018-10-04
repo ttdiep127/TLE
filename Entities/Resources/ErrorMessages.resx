@@ -120,6 +120,9 @@
   <data name="AssignmentNotFound" xml:space="preserve">
     <value>Task assignment not found</value>
   </data>
+  <data name="ErrorAddAnswer" xml:space="preserve">
+    <value>The question is error.</value>
+  </data>
   <data name="IncorrectPassword" xml:space="preserve">
     <value>Password is incorrect.</value>
   </data>

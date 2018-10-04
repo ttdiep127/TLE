@@ -1,12 +1,12 @@
 @import "../../../../../assets/variables";
 
-::ng-deep .dx-resizable {
+.dx-resizable {
   width: inherit!important;
   height: inherit!important;
 }
 
 @media only screen and (min-width: 481px) {
-  ::ng-deep .dx-resizable {
+.dx-resizable {
     width: 350px !important;
     height: 500px !important;
   }

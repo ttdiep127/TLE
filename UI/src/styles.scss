@@ -43,6 +43,37 @@ body {
     color: $dark-main-color;
     background-color: white;
   }
+
+  &:disabled {
+    &:hover {
+      background-color: $dark-main-color;
+      color: $background-color;
+    }
+  }
+}
+
+.btn-success {
+  background-color: $green;
+  color: $background-color;
+  border-radius: 0;
+  font-size: 1em;
+  border: 0;
+
+  &:hover {
+    color: $green;
+    background-color: white;
+  }
+}
+
+.btn-primary {
+  border: 0;
+  border-radius: 0;
+  font-size: 1em;
+
+  &:hover {
+    color: $blue;
+    background-color: white;
+  }
 }
 
 @media only screen and (min-width: 481px) {

@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities.AppModels;
+using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -31,5 +32,7 @@ namespace Repositories.Repositories
         {
             return await repository.Entities.Where(_ => _.EmailAddress == email).FirstOrDefaultAsync();
         }
+
+        
     }
 }

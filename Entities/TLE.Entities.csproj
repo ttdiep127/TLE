@@ -134,7 +134,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppModels\AnswerModel.cs" />
     <Compile Include="AppModels\LoginModel.cs" />
+    <Compile Include="AppModels\QtionModel.cs" />
     <Compile Include="AppModels\Response.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Models\Answers.cs" />

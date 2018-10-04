@@ -38,7 +38,7 @@ namespace Entities.Models
             {
                 entity.HasKey(e => new { e.UserId, e.QtionId });
 
-                entity.Property(e => e.UpdateDay).HasColumnType("date");
+                entity.Property(e => e.UpdateDay).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Qtion)
                     .WithMany(p => p.Answers)

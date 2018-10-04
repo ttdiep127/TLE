@@ -70,6 +70,15 @@ namespace Entities.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The question is error..
+        /// </summary>
+        public static string ErrorAddAnswer {
+            get {
+                return ResourceManager.GetString("ErrorAddAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password is incorrect..
         /// </summary>
         public static string IncorrectPassword {

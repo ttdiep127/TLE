@@ -19,6 +19,7 @@ namespace Entities.Models
         public string Answer3 { get; set; }
         public string Answer4 { get; set; }
         public int? CorrectAnswer { get; set; }
+        public int? Part { get; set; }
 
         public ICollection<Answers> Answers { get; set; }
         public ICollection<TagQtions> TagQtions { get; set; }
