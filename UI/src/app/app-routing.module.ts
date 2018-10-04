@@ -12,7 +12,7 @@ const modulesPaths = {
 const routes: Routes = [
   {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
-  {path: 'test', component: ToiecTestComponent},
+  {path: 'test', component:  ToiecTestComponent},
   {path: 'practice/:id', component: PracticeComponent }
 ];
 
