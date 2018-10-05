@@ -1,6 +1,6 @@
 export class QuestionModel {
   id: number;
-  qtion: string;
+  contentQ: string;
   answer1: string;
   answer2: string;
   answer3: string;
@@ -18,7 +18,7 @@ export class QuestionAnswerModel {
   id: number;
   question: QuestionModel;
   userAnswer: number;
-  answered: boolean;
+  isCorrect: boolean;
 }
 
 export class QuestionAnswerOutput {

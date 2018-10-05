@@ -10,14 +10,7 @@ export class UserService {
   constructor(private baseService: BaseService) {
   }
 
-  answerQuestion(userId: number, qtionId: number, userAnswer: number, isCorrectAnswer: boolean): Observable<RequestResponse> {
-    const questionAnswer = new QuestionAnswerOutput({
-      userId : userId,
-      answer : userAnswer,
-      qtionId : qtionId,
-      isCorrect: isCorrectAnswer
-    });
-
-    return this.baseService.post(`${this.baseService.userUrl}/answer`, questionAnswer);
+  answerQuestion(input: QuestionAnswerOutput): Observable<RequestResponse> {
+    return this.baseService.post(`${this.baseService.userUrl}/answer`, input);
   }
 }

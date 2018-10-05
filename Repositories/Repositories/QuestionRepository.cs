@@ -20,7 +20,7 @@ namespace Repositories
                     _ => new QtionModel
                     {
                         Id = _.Id,
-                        Qtion = _.Qtion,
+                        ContentQ = _.ContentQ,
                         Answer1 = _.Answer1,
                         Answer2 = _.Answer2,
                         Answer3 = _.Answer3,

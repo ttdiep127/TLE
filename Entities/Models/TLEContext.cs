@@ -16,6 +16,8 @@ namespace Entities.Models
         }
 
         public virtual DbSet<Answers> Answers { get; set; }
+        public virtual DbSet<Paragraph> Paragraph { get; set; }
+        public virtual DbSet<ParagraphQuestion> ParagraphQuestion { get; set; }
         public virtual DbSet<Qtions> Qtions { get; set; }
         public virtual DbSet<Ratings> Ratings { get; set; }
         public virtual DbSet<TagQtions> TagQtions { get; set; }
@@ -55,11 +57,26 @@ namespace Entities.Models
                     .HasConstraintName("FK_Answers_Users");
             });
 
+            modelBuilder.Entity<ParagraphQuestion>(entity =>
+            {
+                entity.HasKey(e => new { e.ParagraphId, e.Position });
+
+                entity.HasOne(d => d.Paragraph)
+                    .WithMany(p => p.ParagraphQuestion)
+                    .HasForeignKey(d => d.ParagraphId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ParagraphQuestion_Paragraph");
+
+                entity.HasOne(d => d.Question)
+                    .WithMany(p => p.ParagraphQuestion)
+                    .HasForeignKey(d => d.QuestionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ParagraphQuestion_Qtions");
+            });
+
             modelBuilder.Entity<Qtions>(entity =>
             {
-                entity.Property(e => e.Answer1)
-                    .IsRequired()
-                    .HasMaxLength(1000);
+                entity.Property(e => e.Answer1).HasMaxLength(1000);
 
                 entity.Property(e => e.Answer2).HasMaxLength(1000);
 
@@ -67,9 +84,7 @@ namespace Entities.Models
 
                 entity.Property(e => e.Answer4).HasMaxLength(1000);
 
-                entity.Property(e => e.Qtion)
-                    .IsRequired()
-                    .HasMaxLength(1000);
+                entity.Property(e => e.ContentQ).HasMaxLength(1000);
             });
 
             modelBuilder.Entity<Ratings>(entity =>

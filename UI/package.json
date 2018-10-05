@@ -25,6 +25,7 @@
     "core-js": "^2.5.4",
     "devextreme": "^18.1.6",
     "devextreme-angular": "^18.1.6",
+    "lodash": "^4.17.11",
     "ngx-bootstrap": "^3.0.1",
     "ngx-permissions": "^6.0.1",
     "rxjs": "^6.0.0",

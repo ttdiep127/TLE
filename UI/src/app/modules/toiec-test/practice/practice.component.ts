@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {QuestionAnswerModel} from '../../../models/question.model';
+import {QuestionAnswerModel, QuestionAnswerOutput} from '../../../models/question.model';
 import {QuestionStorageService} from '../../../services/question-storage.service';
-import {Answer} from '../../../share/enums';
 import notify from 'devextreme/ui/notify';
-import {promise} from 'selenium-webdriver';
 import {UserService} from '../../../services/user.service';
+import {Answer} from '../../../share/enums';
+import {cloneDeep} from 'lodash';
 
 @Component({
   selector: 'app-practice',
@@ -17,15 +17,13 @@ export class PracticeComponent implements OnInit {
   count: number;
   paramsSub: any;
   currentQuestion: QuestionAnswerModel;
-  currentAnswers: any;
+  correctAnswer: string;
   isSelected: boolean;
-  answer: string;
-  answerABCD = Answer;
   questionStorage: QuestionAnswerModel[];
-  isCorrectAnswer: boolean;
   isLoading: boolean;
   isEnd: boolean;
   userId: number;
+  answerABCD = Answer;
 
   constructor(private route: ActivatedRoute, private router: Router,
               private questionStorageService: QuestionStorageService,
@@ -61,20 +59,9 @@ export class PracticeComponent implements OnInit {
 
   setCurrentQuestion(questionAnswer: QuestionAnswerModel) {
     if (questionAnswer) {
-      this.isSelected = false;
       this.currentQuestion = questionAnswer;
-      this.currentAnswers = [
-        {text: 'A. ' + (questionAnswer.question.answer1 || ''), value: 1},
-        {text: 'B. ' + (questionAnswer.question.answer2 || ''), value: 2},
-        {text: 'C. ' + (questionAnswer.question.answer3 || ''), value: 3}
-      ];
-
-      if (this.partNumber !== 2) {
-        this.currentAnswers.push({text: 'D. ' + (questionAnswer.question.answer4 || ''), value: 4});
-      }
-
-      if (this.currentQuestion.answered) {
-        this.isSelected = true;
+      debugger;
+      if (this.currentQuestion.userAnswer) {
         this.displayAnswer();
       }
     }
@@ -87,7 +74,6 @@ export class PracticeComponent implements OnInit {
           qtions.forEach(qtion => {
             const questionAnswer = new QuestionAnswerModel();
             questionAnswer.question = qtion;
-            questionAnswer.answered = false;
             questionAnswer.id = this.count - 1;
             this.questionStorage.push(questionAnswer);
             this.count += 1;
@@ -109,54 +95,52 @@ export class PracticeComponent implements OnInit {
     );
   }
 
-  onValueChanged(e) {
-    if (!this.currentQuestion.answered) {
-      if (e.value) {
-        this.currentQuestion.userAnswer = e.value.value;
-        this.currentQuestion.answered = true;
-        this.isSelected = true;
-        this.isCorrectAnswer = this.currentQuestion.userAnswer === this.currentQuestion.question.correctAnswer;
-        this.displayAnswer();
-
-
-        this.userService.answerQuestion(this.userId, this.currentQuestion.question.id,
-          this.currentQuestion.userAnswer, this.isCorrectAnswer).subscribe((rr) => {
-            if (!rr.success) {
-              notify(rr.message, 'warning');
-              this.clickNext();
-            }
-          }, () => notify('Error Server', 'error')
-        );
-      }
+  updateAnswer(qa: QuestionAnswerModel) {
+    this.currentQuestion.isCorrect = qa.isCorrect;
+    this.currentQuestion.userAnswer = qa.userAnswer;
+    debugger;
+    this.displayAnswer();
+    if (this.currentQuestion.userAnswer) {
+      const input = new QuestionAnswerOutput({
+        userId : this.userId,
+        answer : qa.userAnswer,
+        qtionId : qa.question.id,
+        isCorrect: qa.isCorrect
+      });
+      this.userService.answerQuestion(input).subscribe((rr) => {
+          if (!rr.success) {
+            notify(rr.message, 'warning');
+            this.clickNext();
+          }
+        }, () => notify('Error Server', 'error')
+      );
     }
-
   }
 
   displayAnswer() {
-    if (this.isSelected) {
+    if (this.currentQuestion.userAnswer) {
       switch (this.currentQuestion.question.correctAnswer) {
         case this.answerABCD.A: {
-          this.answer = 'A. ' + this.currentQuestion.question.answer1;
+          this.correctAnswer = 'A. ' + this.currentQuestion.question.answer1;
           break;
         }
         case this.answerABCD.B: {
-          this.answer = 'B. ' + this.currentQuestion.question.answer2;
+          this.correctAnswer = 'B. ' + this.currentQuestion.question.answer2;
           break;
         }
         case this.answerABCD.C: {
-          this.answer = 'C. ' + this.currentQuestion.question.answer3;
+          this.correctAnswer = 'C. ' + this.currentQuestion.question.answer3;
           break;
         }
         case this.answerABCD.D: {
-          this.answer = 'D. ' + this.currentQuestion.question.answer4;
+          this.correctAnswer = 'D. ' + this.currentQuestion.question.answer4;
           break;
         }
         default:
-          this.answer = 'No answer';
+          this.correctAnswer = 'No answer';
       }
     }
-
-    if (this.isCorrectAnswer) {
+    if (this.currentQuestion.isCorrect) {
       document.getElementsByClassName('notification').item(0).classList.add('correct-answer');
     } else {
       document.getElementsByClassName('notification').item(0).classList.add('incorrect-answer');

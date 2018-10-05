@@ -15,6 +15,7 @@ import {AppRoutingModule} from './app-routing.module';
 import { HomeComponent } from './modules/home/home.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {PracticeComponent} from './modules/toiec-test/practice/practice.component';
+import {QuestionComponent} from './modules/toiec-test/question/question.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {PracticeComponent} from './modules/toiec-test/practice/practice.componen
     HomeComponent,
     ToiecTestComponent,
     PracticeComponent,
+    QuestionComponent
   ],
   imports: [
     BrowserModule,

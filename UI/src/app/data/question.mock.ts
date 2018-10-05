@@ -2,7 +2,7 @@ import {QuestionModel} from '../models/question.model';
 
 export const QtionP5s: QuestionModel[] = [{
   id: 1,
-  qtion: 'Company officials must disclose their own ------ affairs.',
+  contentQ: 'Company officials must disclose their own ------ affairs.',
   answer1: 'finance',
   answer2: 'financing',
   answer3: 'financial',
@@ -10,7 +10,7 @@ export const QtionP5s: QuestionModel[] = [{
   correctAnswer: 3
 }, {
   id: 2,
-  qtion: 'I hope ------ can come here.',
+  contentQ: 'I hope ------ can come here.',
   answer1: 'your',
   answer2: 'you',
   answer3: 'yours',
@@ -19,7 +19,7 @@ export const QtionP5s: QuestionModel[] = [{
 },
   {
     id: 3,
-    qtion: 'Paul Brown resigned last Monday from his position as ------- executive of the company.',
+    contentQ: 'Paul Brown resigned last Monday from his position as ------- executive of the company.',
     answer1: 'fine',
     answer2: 'chief',
     answer3: 'front',

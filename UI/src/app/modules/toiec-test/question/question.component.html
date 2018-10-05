@@ -1,3 +1,11 @@
-<p>
-  question works!
-</p>
+<div *ngIf="qa">
+  <p><strong>{{qa.id + 1}}. </strong>{{qa.question.contentQ}}</p>
+  <div class="dx-field">
+    <dx-radio-group
+      [items]="currentAnswers"
+      [disabled]="qa.userAnswer"
+      [(value)]="userAnswer"
+      (onValueChanged)="onValueChanged($event)">
+    </dx-radio-group>
+  </div>
+</div>

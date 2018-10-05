@@ -3,23 +3,15 @@
   <p *ngIf="isLoading" class="float-left ml-sm-2" [ngStyle]="{'color': '#112d4e'}"><i class="fa fa-spinner fa-pulse"></i> Loading</p>
 </div>
 <div *ngIf="currentQuestion" class="border p-3">
-  <p><strong>{{currentQuestion.id + 1}}. </strong>{{currentQuestion.question.qtion}}</p>
-  <div class="dx-field">
-    <dx-radio-group
-      [items]="currentAnswers"
-      [disabled]="currentQuestion.answered"
-      [(value)]="currentAnswers[currentQuestion.userAnswer - 1]"
-      (onValueChanged)="onValueChanged($event)">
-    </dx-radio-group>
-  </div>
+ <app-question [question] = "currentQuestion" (questionChange)="updateAnswer($event)"></app-question>
   <div class="temple-answer">
     <div ngClass="notification">
-      <div *ngIf="isSelected" class="p-3">
-        <div *ngIf="!isCorrectAnswer">
+      <div *ngIf="currentQuestion.userAnswer" class="p-3">
+        <div *ngIf="!currentQuestion.isCorrect">
           <p class="incorrect-color">Incorrect Answer!</p>
-          <p><strong>Đáp án: </strong>{{answer}}</p>
+          <p><strong>Đáp án: </strong>{{correctAnswer}}</p>
         </div>
-        <div *ngIf="isCorrectAnswer">
+        <div *ngIf="currentQuestion.isCorrect">
           <p class="correct-color">Correct Answer!</p>
         </div>
       </div>
