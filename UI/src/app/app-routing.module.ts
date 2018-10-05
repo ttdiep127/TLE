@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './modules/home/home.component';
 import {ToiecTestComponent} from './modules/toiec-test/toiec-test.component';
-import {ToiecTestModule} from './modules/toiec-test/toiec-test.module';
 import {PracticeComponent} from './modules/toiec-test/practice/practice.component';
 const modulesPaths = {
   home: './modules/home/home.module#HomeModule',

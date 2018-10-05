@@ -30,7 +30,7 @@ export class PracticeComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router,
               private questionStorageService: QuestionStorageService,
               private userService: UserService) {
-    this.userId = 1;
+    this.userId = 2;
     this.paramsSub = this.route.params.subscribe(params => {
         const id = params['id'];
         if (!isNaN(id)) {

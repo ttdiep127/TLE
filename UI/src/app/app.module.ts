@@ -21,7 +21,7 @@ import {PracticeComponent} from './modules/toiec-test/practice/practice.componen
     AppComponent,
     HomeComponent,
     ToiecTestComponent,
-    PracticeComponent
+    PracticeComponent,
   ],
   imports: [
     BrowserModule,

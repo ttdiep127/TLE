@@ -5,6 +5,8 @@ import {DevExtremeModule} from 'devextreme-angular';
 import {ToiecTestComponent} from './toiec-test.component';
 import {PracticeComponent } from './practice/practice.component';
 import {SharedModule} from '../../share/share.module';
+import { QuestionComponent } from './question/question.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import {SharedModule} from '../../share/share.module';
     ])
   ],
   declarations: [
-  PracticeComponent]
+  PracticeComponent,
+  QuestionComponent,
+  TestComponent]
 })
 export class ToiecTestModule {
 }
