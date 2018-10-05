@@ -19,6 +19,10 @@ export class QuestionAnswerModel {
   question: QuestionModel;
   userAnswer: number;
   isCorrect: boolean;
+
+  public constructor(init?: Partial<QuestionAnswerModel>) {
+    Object.assign(this, init);
+  }
 }
 
 export class QuestionAnswerOutput {

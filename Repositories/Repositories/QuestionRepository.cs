@@ -31,5 +31,26 @@ namespace Repositories
 
         }
 
+        //public static async Task<IEnumerable<QtionModel>> GetByPara(this IRepository<Qtions> repository, int paraId)
+        //{
+        //    return await await repository.Entities
+        //            .Where(_ => _. == part)
+        //            .Select(
+        //                _ => new QtionModel
+        //                {
+        //                    Id = _.Id,
+        //                    ContentQ = _.ContentQ,
+        //                    Answer1 = _.Answer1,
+        //                    Answer2 = _.Answer2,
+        //                    Answer3 = _.Answer3,
+        //                    Answer4 = _.Answer4,
+        //                    CorrectAnswer = _.CorrectAnswer,
+        //                    Part = _.Part
+        //                }).ToListAsync();
+
+        //}
     }
+
+
+
 }

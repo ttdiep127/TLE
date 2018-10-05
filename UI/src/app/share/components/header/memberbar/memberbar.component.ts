@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserInfo} from '../../../../models/account.models';
+import {UserInfo} from '../../../../models/account.model';
 
 @Component({
   selector: 'app-memberbar',

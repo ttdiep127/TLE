@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {BaseService} from './base.service';
 import {QuestionModel} from '../models/question.model';
+import {ParagraphModel} from '../models/paragraph.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +13,9 @@ export class QuestionStorageService {
 
   getQuestion(partNumber: number): Observable<QuestionModel[]> {
     return this.baseService.get(`${this.baseService.questionUrl}/${partNumber}`);
+  }
+
+  getParagraph(partNumber: number): Observable<ParagraphModel> {
+    return this.baseService.get(`${this.baseService.questionUrl}/paragraph/${partNumber}`);
   }
 }

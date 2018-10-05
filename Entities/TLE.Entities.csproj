@@ -140,8 +140,8 @@
     <Compile Include="AppModels\Response.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Models\Answers.cs" />
-    <Compile Include="Models\Paragraph.cs" />
     <Compile Include="Models\ParagraphQuestion.cs" />
+    <Compile Include="Models\Paragraphs.cs" />
     <Compile Include="Models\Qtions.cs" />
     <Compile Include="Models\Ratings.cs" />
     <Compile Include="Models\TagQtions.cs" />

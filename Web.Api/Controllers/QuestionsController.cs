@@ -24,9 +24,10 @@ namespace Web.Api.Controllers
 
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("para/{part}")]
+        public async Task<Paragraphs> GetPara(int part)
         {
-            return new string[] { "value1", "value2" };
+            return await _service.GetPara(part);
         }
 
         // GET api/question/5

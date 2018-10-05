@@ -16,8 +16,8 @@ namespace Entities.Models
         }
 
         public virtual DbSet<Answers> Answers { get; set; }
-        public virtual DbSet<Paragraph> Paragraph { get; set; }
         public virtual DbSet<ParagraphQuestion> ParagraphQuestion { get; set; }
+        public virtual DbSet<Paragraphs> Paragraphs { get; set; }
         public virtual DbSet<Qtions> Qtions { get; set; }
         public virtual DbSet<Ratings> Ratings { get; set; }
         public virtual DbSet<TagQtions> TagQtions { get; set; }
@@ -59,17 +59,17 @@ namespace Entities.Models
 
             modelBuilder.Entity<ParagraphQuestion>(entity =>
             {
-                entity.HasKey(e => new { e.ParagraphId, e.Position });
+                entity.HasKey(e => new { e.IdParagraph, e.Position });
 
-                entity.HasOne(d => d.Paragraph)
+                entity.HasOne(d => d.IdParagraphNavigation)
                     .WithMany(p => p.ParagraphQuestion)
-                    .HasForeignKey(d => d.ParagraphId)
+                    .HasForeignKey(d => d.IdParagraph)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ParagraphQuestion_Paragraph");
+                    .HasConstraintName("FK_ParagraphQuestion_Paragraphs");
 
-                entity.HasOne(d => d.Question)
+                entity.HasOne(d => d.IdQuestionNavigation)
                     .WithMany(p => p.ParagraphQuestion)
-                    .HasForeignKey(d => d.QuestionId)
+                    .HasForeignKey(d => d.IdQuestion)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ParagraphQuestion_Qtions");
             });

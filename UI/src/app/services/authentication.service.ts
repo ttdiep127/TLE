@@ -4,7 +4,7 @@ import {CookieService, CookieOptionsArgs} from 'angular2-cookie/services';
 import {NgxPermissionsService} from 'ngx-permissions';
 import {BehaviorSubject} from 'rxjs';
 import {Observable, of} from 'rxjs';
-import {LoggedUser, RegisterUser, UserInfo, UserLogin} from '../models/account.models';
+import {LoggedUser, RegisterUser, UserInfo, UserLogin} from '../models/account.model';
 import {BaseService} from './base.service';
 
 import {RequestResponse} from '../models/RequestResponse';

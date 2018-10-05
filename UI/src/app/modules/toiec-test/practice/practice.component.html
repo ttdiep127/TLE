@@ -2,20 +2,27 @@
   <p class="float-left">Câu hỏi part {{partNumber}}:</p>
   <p *ngIf="isLoading" class="float-left ml-sm-2" [ngStyle]="{'color': '#112d4e'}"><i class="fa fa-spinner fa-pulse"></i> Loading</p>
 </div>
-<div *ngIf="currentQuestion" class="border p-3">
- <app-question [question] = "currentQuestion" (questionChange)="updateAnswer($event)"></app-question>
-  <div class="temple-answer">
-    <div ngClass="notification">
-      <div *ngIf="currentQuestion.userAnswer" class="p-3">
-        <div *ngIf="!currentQuestion.isCorrect">
-          <p class="incorrect-color">Incorrect Answer!</p>
-          <p><strong>Đáp án: </strong>{{correctAnswer}}</p>
-        </div>
-        <div *ngIf="currentQuestion.isCorrect">
-          <p class="correct-color">Correct Answer!</p>
+<div class="border p-3">
+  <div *ngIf="partNumber === 5">
+    <div *ngIf="currentQuestion">
+      <app-question  [question] = "currentQuestion" (questionChange)="updateAnswer($event)"></app-question>
+      <div class="temple-answer">
+        <div ngClass="notification">
+          <div *ngIf="currentQuestion.userAnswer" class="p-3">
+            <div *ngIf="!currentQuestion.isCorrect">
+              <p class="incorrect-color">Incorrect Answer!</p>
+              <p><strong>Đáp án: </strong>{{correctAnswer}}</p>
+            </div>
+            <div *ngIf="currentQuestion.isCorrect">
+              <p class="correct-color">Correct Answer!</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+  <div *ngIf="partNumber === 6">
+    <p>Part 6</p>
   </div>
 </div>
 <div class="text-center mt-sm-2">
