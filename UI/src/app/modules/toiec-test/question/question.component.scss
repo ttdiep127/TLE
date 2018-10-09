@@ -1,3 +1,29 @@
-@import "~src/assets/variables";
+@import "~src/assets/variables.scss";
+.temple-answer {
+  display: table;
+}
+.notification {
+  border-radius: 4px;
+  background-color: white;
+  -webkit-transition:background-color, 0.1s ease;
+  -moz-transition: background-color, 0.2s ease;
+  -ms-transition: background-color, 0.2s ease;
+  -o-transition: background-color, 0.2s ease;
+  transition: background-color, 0.1s ease;
+}
+
+.correct-answer {
+  font-weight: 500;
+  background-color: $green-light;
+
+}
+
+.incorrect-answer {
+  font-weight: 500;
+  background-color: $red-light;
+}
 
 
+.question-group {
+  width: 200px;
+}

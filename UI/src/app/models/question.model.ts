@@ -1,12 +1,13 @@
 export class QuestionModel {
   id: number;
   contentQ: string;
-  answer1: string;
-  answer2: string;
-  answer3: string;
-  answer4: string;
+  answer1?: string;
+  answer2?: string;
+  answer3?: string;
+  answer4?: string;
   correctAnswer?: number;
   part?: number;
+  position?: number;
 
   public constructor(init?: Partial<QuestionModel>) {
     Object.assign(this, init);

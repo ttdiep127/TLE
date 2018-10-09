@@ -16,6 +16,6 @@ export class QuestionStorageService {
   }
 
   getParagraph(partNumber: number): Observable<ParagraphModel> {
-    return this.baseService.get(`${this.baseService.questionUrl}/paragraph/${partNumber}`);
+    return this.baseService.get(`${this.baseService.questionUrl}/para/${partNumber}`);
   }
 }

@@ -56,13 +56,13 @@ namespace TLE.Service
             return user;
         }
 
-        public async Task<Response> Login(LoginModel authenticationInput)
+        public async Task<ResponseOutput> Login(LoginModel authenticationInput)
         {
             // Login with email and password
             var user = await _repository.Get(authenticationInput.EmailAddress);
             if (user == null)
             {
-                return new Response {
+                return new ResponseOutput {
                     Success = false,
                     Message = ErrorMessages.InvalidUserName,
                     obj = null,
@@ -81,7 +81,7 @@ namespace TLE.Service
 
             if (hashedPassword != user.Password)
             {
-                return new Response
+                return new ResponseOutput
                 {
                     Success = false,
                     Message = ErrorMessages.IncorrectPassword,
@@ -89,7 +89,7 @@ namespace TLE.Service
                 };
             }
 
-            return new Response
+            return new ResponseOutput
             {
                 Success = true,
                 Message = null,
@@ -97,7 +97,7 @@ namespace TLE.Service
             };
         }
 
-        public async Task<Response> Answer(AnswerModel answerQuestion)
+        public async Task<ResponseOutput> Answer(UserAnswer answerQuestion)
         {
             try
             {
@@ -123,7 +123,7 @@ namespace TLE.Service
                     await UnitOfWork.SaveChangesAsync();
                 }
                 
-                return new Response
+                return new ResponseOutput
                 {
                     Success = true,
                     Message = null,
@@ -132,7 +132,7 @@ namespace TLE.Service
             }
             catch (System.Exception ex)
             {
-                return new Response
+                return new ResponseOutput
                 {
                     Success = false,
                     Message = ErrorMessages.ErrorAddAnswer,

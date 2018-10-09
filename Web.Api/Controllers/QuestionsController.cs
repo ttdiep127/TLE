@@ -25,16 +25,17 @@ namespace Web.Api.Controllers
         // GET: api/<controller>
         [HttpGet]
         [HttpGet("para/{part}")]
-        public async Task<Paragraphs> GetPara(int part)
+        public async Task<ParagraphOutput> GetPara(int part)
         {
             return await _service.GetPara(part);
         }
 
         // GET api/question/5
         [HttpGet("{part}")]
-        public async Task<IEnumerable<QtionModel>> Get(int part)
+        public async Task<IEnumerable<QtionOutput>> Get(int part)
         {
-            return await _service.Get(part);
+            int userId = 2;
+            return await _service.Get(userId, part);
         }
 
         // POST api/<controller>

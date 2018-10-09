@@ -1,0 +1,32 @@
+<div>
+  <div>Content:</div>
+  <dx-text-area [(value)]="question.contentQ"></dx-text-area>
+</div>
+<div class="row">
+  <div class="col-sm">
+    <div>A:</div>
+    <dx-text-box [(value)]="answers[0]"></dx-text-box>
+  </div>
+  <div class="col-sm">
+    <div>B:</div>
+    <dx-text-box [(value)]="answers[1]"></dx-text-box>
+  </div>
+  <div class="col-sm">
+    <div>C:</div>
+    <dx-text-box [(value)]="answers[2]"></dx-text-box>
+  </div>
+  <div class="col-sm">
+    <div>D:</div>
+    <dx-text-box [(value)]="answers[3]"></dx-text-box>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm">
+    <div>Correct Answer</div>
+    <dx-select-box [dataSource]="answers" [(value)]="correctAnswer" ></dx-select-box>
+  </div>
+  <div class="col-sm">
+    <div>Part: </div>
+    <dx-select-box [dataSource]="toiecParts" [value]="toiecParts[currentPart-1]" valueExpr="value" displayExpr="text"></dx-select-box>
+  </div>
+</div>

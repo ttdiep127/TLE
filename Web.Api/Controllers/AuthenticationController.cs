@@ -32,7 +32,7 @@ namespace Web.Api.Controllers
         
         [HttpPost]
         [Route("login")]
-        public async Task<Response> Post([FromBody] LoginModel input)
+        public async Task<ResponseOutput> Post([FromBody] LoginModel input)
         {
             return await _userService.Login(input);
         }

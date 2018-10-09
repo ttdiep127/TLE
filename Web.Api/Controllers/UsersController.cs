@@ -37,7 +37,7 @@ namespace Web.Api.Controllers
         // POST api/<controller>
         [HttpPost]
         [Route("answer")]
-        public Task<Response> Post([FromBody]AnswerModel answerModel)
+        public Task<ResponseOutput> Post([FromBody]UserAnswer answerModel)
         {
             return _service.Answer(answerModel);
         }

@@ -134,10 +134,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppModels\AnswerModel.cs" />
+    <Compile Include="AppModels\UserAnswer.cs" />
     <Compile Include="AppModels\LoginModel.cs" />
-    <Compile Include="AppModels\QtionModel.cs" />
-    <Compile Include="AppModels\Response.cs" />
+    <Compile Include="AppModels\ParagraphOutput.cs" />
+    <Compile Include="AppModels\QtionOutput.cs" />
+    <Compile Include="AppModels\ResponseOutput.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Models\Answers.cs" />
     <Compile Include="Models\ParagraphQuestion.cs" />

@@ -12,12 +12,12 @@ namespace Repositories
 {
     public static class QuestionRepository
     {
-        public static async Task<IEnumerable<QtionModel>> Get(this IRepository<Qtions> repository, int part)
+        public static async Task<IEnumerable<QtionOutput>> Get(this IRepository<Qtions> repository, int part)
         {
             return await repository.Entities
                 .Where(_ => _.Part == part)
                 .Select(
-                    _ => new QtionModel
+                    _ => new QtionOutput
                     {
                         Id = _.Id,
                         ContentQ = _.ContentQ,
@@ -27,28 +27,15 @@ namespace Repositories
                         Answer4 = _.Answer4,
                         CorrectAnswer = _.CorrectAnswer,
                         Part = _.Part
-                    }).ToListAsync();
+                    }).OrderBy(_ => Guid.NewGuid()).Take(20).ToListAsync();
 
         }
 
-        //public static async Task<IEnumerable<QtionModel>> GetByPara(this IRepository<Qtions> repository, int paraId)
-        //{
-        //    return await await repository.Entities
-        //            .Where(_ => _. == part)
-        //            .Select(
-        //                _ => new QtionModel
-        //                {
-        //                    Id = _.Id,
-        //                    ContentQ = _.ContentQ,
-        //                    Answer1 = _.Answer1,
-        //                    Answer2 = _.Answer2,
-        //                    Answer3 = _.Answer3,
-        //                    Answer4 = _.Answer4,
-        //                    CorrectAnswer = _.CorrectAnswer,
-        //                    Part = _.Part
-        //                }).ToListAsync();
-
-        //}
+        public static async Task<Qtions> GetById(this IRepository<Qtions> repository, int questionId)
+        {
+            return await repository.Entities
+                    .FirstOrDefaultAsync(_ => _.Id == questionId);
+        }
     }
 
 

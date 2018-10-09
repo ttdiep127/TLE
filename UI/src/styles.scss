@@ -53,6 +53,17 @@ body {
   }
 }
 
+.btn-outlet-default {
+  background-color: white;
+  color: $dark-main-color;
+  border: 1px $dark-main-color transparent;
+  border-radius: 0;
+  &:hover {
+    background-color: $dark-main-color;
+    color: $background-color;
+  }
+}
+
 .btn-success {
   background-color: $green;
   color: $background-color;

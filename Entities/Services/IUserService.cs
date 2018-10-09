@@ -10,7 +10,7 @@ namespace TLE.Entities.Service
 {
     public interface IUserService: IBaseService<Users>
     {
-        Task<Response> Login(LoginModel authenticationInput);
+        Task<ResponseOutput> Login(LoginModel authenticationInput);
         Task<Users> Add(Users userInput);
     }
 }

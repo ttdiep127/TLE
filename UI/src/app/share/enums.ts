@@ -10,3 +10,11 @@ export enum Answer {
   D
 }
 
+export enum  TestTypes {
+  FullTest = 1,
+  ShortTest,
+  Part5,
+  Part6,
+  Part7
+}
+

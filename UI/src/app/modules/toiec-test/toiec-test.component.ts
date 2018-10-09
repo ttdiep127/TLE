@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-toiec-test',
@@ -7,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToiecTestComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
-
   }
+
 
 }

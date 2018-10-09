@@ -15,9 +15,9 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   qa: QuestionAnswerModel;
   currentAnswers: any;
-  correctAnswer: string;
-  answerABCD = Answer;
   userAnswer: any;
+  answerABCD = Answer;
+  correctAnswer: string;
 
   constructor() {
   }
@@ -45,8 +45,11 @@ export class QuestionComponent implements OnInit, OnChanges {
         {text: 'C. ' + (this.qa.question.answer3 || ''), value: 3},
         {text: 'D. ' + (this.qa.question.answer4 || ''), value: 4}
       ];
-      debugger;
-      this.userAnswer = this.currentAnswers[this.qa.userAnswer-1];
+      this.userAnswer = this.currentAnswers[this.qa.userAnswer - 1];
+      if (this.question.userAnswer) {
+        this.correctAnswer = this.displayAnswer(this.qa);
+      }
+
     }
   }
 
@@ -55,12 +58,48 @@ export class QuestionComponent implements OnInit, OnChanges {
       if (e.value) {
         this.qa.userAnswer = e.value.value;
         this.qa.isCorrect = this.qa.userAnswer === this.qa.question.correctAnswer;
+        this.correctAnswer = this.displayAnswer(this.qa);
         this.questionChange.emit(this.qa);
       }
     }
   }
 
+  displayAnswer(qa: QuestionAnswerModel): string {
+    let answer = '';
+    if (qa.userAnswer) {
+      switch (qa.question.correctAnswer) {
+        case this.answerABCD.A: {
+          answer = 'A. ' + qa.question.answer1;
+          break;
+        }
+        case this.answerABCD.B: {
+          answer = 'B. ' + qa.question.answer2;
+          break;
+        }
+        case this.answerABCD.C: {
+          answer = 'C. ' + qa.question.answer3;
+          break;
+        }
+        case this.answerABCD.D: {
+          answer = 'D. ' + qa.question.answer4;
+          break;
+        }
+        default:
+          answer = 'No answer';
+      }
 
-
-
+      const notification = document.getElementsByClassName('notification');
+      if (notification) {
+        const position = notification.length === 1 ? 0 : qa.id - 1;
+        notification.item(position).classList.remove('correct-answer');
+        notification.item(position).classList.remove('incorrect-answer');
+        if (qa.isCorrect) {
+          document.getElementsByClassName('notification').item(position).classList.add('correct-answer');
+        } else {
+          document.getElementsByClassName('notification').item(position).classList.add('incorrect-answer');
+        }
+      }
+    }
+    return answer;
+  }
 }
