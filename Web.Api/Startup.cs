@@ -36,6 +36,7 @@ namespace Web.Api
 
             services.AddScoped<UserService>();
             services.AddScoped<QtionService>();
+            services.AddScoped<TestService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.Configure<CookiePolicyOptions>(options =>
             {

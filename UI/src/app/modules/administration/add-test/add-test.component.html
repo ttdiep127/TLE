@@ -1,84 +1,49 @@
-<form action="your-action" (submit)="onFormSubmit($event)">
-  <dx-form>
-    <dxi-item>
-      <div class="row">
-        <div class="col-sm-9">
-          <div>Title:</div>
-          <dx-text-box [(value)]="testInput.title"></dx-text-box>
-        </div>
-        <div class="col-sm-3">
-          <div>Type:</div>
-          <dx-select-box
-            [dataSource]="typeTests"
-            valueExpr="value"
-            displayExpr="text"
-            [value]="typeTests[testInput.type - 1]"></dx-select-box>
-        </div>
-      </div>
-    </dxi-item>
-    <dxi-item itemType="group" caption="Add Questions">
-      <div class="question-form">
-        <dx-data-grid
-          [dataSource]="questionStorage"
-          [showBorders]="true"
-          minlength="400px">
-          <dxo-editing
-            mode="row"
-            [allowUpdating]="true"
-            [allowDeleting]="true"
-            [allowAdding]="true">
-          </dxo-editing>
-          <dxi-column caption="No" cellTemplate="numericalOrder" [width]="40">
-            <div *dxTemplate="let data of 'numericalOrder'">
-              {{data.row.rowIndex + 1}}
-            </div>
-          </dxi-column>
-          <dxi-column dataField="contentQ" caption="Content Question"></dxi-column>
-          <dxi-column dataField="answer4" caption="A" [width]="100"></dxi-column>
-          <dxi-column dataField="answer2" caption="B" [width]="100"></dxi-column>
-          <dxi-column dataField="answer3" caption="C" [width]="100"></dxi-column>
-          <dxi-column dataField="answer4" caption="D" [width]="100"></dxi-column>
-          <dxi-column dataField="correctAnswer" caption="Answer" dataType="number" [width]="100">
-          </dxi-column>
-          <dxi-column dataField="part" [width]="100" caption="Part"></dxi-column>
-        </dx-data-grid>
-      </div>
-    </dxi-item>
-    <dxi-item itemType="group" caption="Add Paragraphs">
-      <div class="para-form p-3 pb-5">
-        <dx-validation-group #validationPara>
-          <div class="mb-sm-2">
-            <div>Part:</div>
-            <dx-select-box [dataSource]="paraParts" [(value)]="currentPara.part" valueExpr="value"
-                           displayExpr="text">
-              <dxi-validation-rule type="required" message="This is required"></dxi-validation-rule>
+<form action="your-action">
+  <dx-validation-group>
+    <dx-form>
+      <dxi-item>
+        <div class="row">
+          <div class="col-sm-9">
+            <div>Title:</div>
+            <dx-text-box [(value)]="testInput.title">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Title is empty."></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+          <div class="col-sm-3">
+            <div>Type:</div>
+            <dx-select-box
+              [dataSource]="typeTests"
+              valueExpr="value"
+              displayExpr="text"
+              [(value)]="testInput.type">
+              <dxi-validation-rule type="required" message="Test type is required.">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="Type test is required."></dxi-validation-rule>
+                </dx-validator>
+              </dxi-validation-rule>
             </dx-select-box>
           </div>
-          <div class="mb-sm-2">
-            <div>Paragraph 1:</div>
-            <dx-text-area [(value)]="currentPara.contentP1">
-              <dxi-validation-rule type="required" message="This is required"></dxi-validation-rule>
-            </dx-text-area>
-          </div>
-          <div class="mb-sm-2" *ngIf="currentPara.part === 7">
-            <div>Paragraph 2:</div>
-            <dx-text-area [(value)]="currentPara.contentP2"></dx-text-area>
-          </div>
+        </div>
+      </dxi-item>
+      <dxi-item itemType="group" caption="Add Questions">
+        <div class="question-form">
           <dx-data-grid
-            [(dataSource)]="currentPara.questions"
-            [showBorders]="true">
+            [dataSource]="questionStorage"
+            [showBorders]="true"
+            minlength="400px">
             <dxo-editing
               mode="row"
               [allowUpdating]="true"
               [allowDeleting]="true"
               [allowAdding]="true">
             </dxo-editing>
-            <dxo-paging [enabled]="true"></dxo-paging>
-            <dxi-column caption="No" cellTemplate="numericalOrder" [width]="40">
-              <div *dxTemplate="let data of 'numericalOrder'">
-                {{data.row.rowIndex + 1}}
-              </div>
-            </dxi-column>
+            <!--<dxi-column caption="No" cellTemplate="numericalOrder" [width]="40">-->
+              <!--<div *dxTemplate="let data of 'numericalOrder'">-->
+                <!--{{data.row.rowIndex + 1}}-->
+              <!--</div>-->
+            <!--</dxi-column>-->
             <dxi-column dataField="contentQ" caption="Content Question">
             </dxi-column>
             <dxi-column dataField="answer1" caption="A" [width]="100">
@@ -90,51 +55,119 @@
             <dxi-column dataField="answer3" caption="C" [width]="100">
               <dxi-validation-rule type="required"></dxi-validation-rule>
             </dxi-column>
-            <dxi-column dataField="answer4" caption="D" [width]="100"></dxi-column>
-            <dxi-column dataField="correctAnswer" caption="Answer" dataType="number" [width]="70">
+            <dxi-column dataField="answer4" caption="D" [width]="100">
               <dxi-validation-rule type="required"></dxi-validation-rule>
             </dxi-column>
-            <dxi-column dataField="position" [width]="80" caption="Position" dataType="number">
+            <dxi-column dataField="correctAnswer" caption="Answer" dataType="number" [width]="100">
               <dxi-validation-rule type="required"></dxi-validation-rule>
             </dxi-column>
-            <dx-validation-summary></dx-validation-summary>
+            <dxi-column dataField="part" [width]="100" dataType="number">
+              <dxi-validation-rule type="required"></dxi-validation-rule>
+            </dxi-column>
           </dx-data-grid>
-        </dx-validation-group>
-        <dx-button class="btn-outlet-default float-right mt-sm-2" (click)="addParagraph($event)"
-                   text="Add Paragraph"></dx-button>
-      </div>
-      <div class="para-storage">
-        <div class="text-center">
-          <h3>List of Paragraph</h3>
         </div>
-        <dx-data-grid
-          [dataSource]="paraStorage"
-          [showBorders]="true">
-          <dxo-editing
-            mode="row"
-            [allowUpdating]="true"
-            [allowDeleting]="true">
-          </dxo-editing>
-          <dxi-column caption="No" cellTemplate="numericalOrder" [width]="40">
-            <div *dxTemplate="let data of 'numericalOrder'">
-              {{data.row.rowIndex + 1}}
+      </dxi-item>
+      <dxi-item itemType="group" caption="Add Paragraphs">
+        <div class="para-form p-3 pb-5">
+          <dx-validation-group>
+            <div class="mb-sm-2">
+              <div>Part:</div>
+              <dx-select-box [dataSource]="paraParts" [(value)]="currentPara.part" valueExpr="value"
+                             displayExpr="text">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="This is required"></dxi-validation-rule>
+                </dx-validator>
+              </dx-select-box>
             </div>
-          </dxi-column>
-          <dxi-column dataField="contentP1" caption="Paragraphs 1"></dxi-column>
-          <dxi-column dataField="contentP2" caption="Paragraphs 2"></dxi-column>
-          <dxi-column dataField="part" [width]="100" caption="Part"></dxi-column>
-        </dx-data-grid>
-      </div>
+            <div class="mb-sm-2">
+              <div>Paragraph 1:</div>
+              <dx-text-area [(value)]="currentPara.contentP1">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="This is required"></dxi-validation-rule>
+                </dx-validator>
+              </dx-text-area>
+            </div>
+            <div class="mb-sm-2" *ngIf="currentPara.part === 7">
+              <div>Paragraph 2:</div>
+              <dx-text-area [(value)]="currentPara.contentP2"></dx-text-area>
+            </div>
+            <dx-data-grid
+              #dataGirdQuestion
+              [(dataSource)]="currentPara.questions"
+              [showBorders]="true"
+              (onRowInserted)="onDataGirdChange()">
+              <dxo-editing
+                mode="row"
+                [allowUpdating]="true"
+                [allowDeleting]="true"
+                [allowAdding]="true">
+              </dxo-editing>
+              <dxo-paging [enabled]="true"></dxo-paging>
+              <dxi-column caption="No" cellTemplate="numericalOrder" [width]="40">
+                <div *dxTemplate="let data of 'numericalOrder'">
+                  {{data.row.rowIndex + 1}}
+                </div>
+              </dxi-column>
+              <dxi-column dataField="contentQ" caption="Content Question">
+              </dxi-column>
+              <dxi-column dataField="answer1" caption="A" [width]="100">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+              </dxi-column>
+              <dxi-column dataField="answer2" caption="B" [width]="100">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+              </dxi-column>
+              <dxi-column dataField="answer3" caption="C" [width]="100">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+              </dxi-column>
+              <dxi-column dataField="answer4" caption="D" [width]="100">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+              </dxi-column>
+              <dxi-column dataField="correctAnswer" caption="Answer" dataType="number" [width]="70">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+              </dxi-column>
+              <dxi-column dataField="position" [width]="80" caption="Position" dataType="number">
+                <dxi-validation-rule type="required"></dxi-validation-rule>
+              </dxi-column>
+            </dx-data-grid>
+            <dx-button class="btn-outlet-default float-right mt-sm-2" [disabled]="!(isValidDataGird)"
+                       (onClick)="addParagraph($event)"
+                       text="Add Paragraph"></dx-button>
+          </dx-validation-group>
+        </div>
+        <div class="para-storage">
+          <div class="text-center">
+            <h3>List of Paragraph</h3>
+          </div>
+          <dx-data-grid
+            [dataSource]="paraStorage"
+            [showBorders]="true">
+            <dxo-editing
+              mode="row"
+              [allowUpdating]="true"
+              [allowDeleting]="true">
+            </dxo-editing>
+            <dxi-column caption="No" cellTemplate="numericalOrder" [width]="40">
+              <div *dxTemplate="let data of 'numericalOrder'">
+                {{data.row.rowIndex + 1}}
+              </div>
+            </dxi-column>
+            <dxi-column dataField="contentP1" caption="Paragraphs 1"></dxi-column>
+            <dxi-column dataField="contentP2" caption="Paragraphs 2"></dxi-column>
+            <dxi-column dataField="part" [width]="100" caption="Part"></dxi-column>
+          </dx-data-grid>
+        </div>
+      </dxi-item>
+    </dx-form>
+    <dx-validation-summary class="mb-2 ml-5"></dx-validation-summary>
+    <dxi-item>
+      <dx-button
+        class="float-right btn-default"
+        text="Save"
+        [disabled]="isLoading"
+        (onClick)="onFormSubmit($event)">
+      </dx-button>
     </dxi-item>
-  </dx-form>
-  <dx-button
-    class="float-right"
-    text="Save"
-    type="default"
-    validationGroup="customerData"
-    [disabled]="isLoading"
-    [useSubmitBehavior]="true">
-  </dx-button>
+  </dx-validation-group>
 </form>
 <!--<dx-popup-->
 <!--height="auto"-->

@@ -77,6 +77,17 @@ namespace TLE.Repositories
             }
         }
 
+        public virtual IEnumerable<Task> InsertRangeAsync(IEnumerable<TEntity> entities)
+        {
+            var list = new List<Task>();
+            //foreach (var entity in entities)
+            //{
+            //    list.Add(await InsertAsync(entity));
+            //}
+            return list;
+        }
+
+
         public void Update(TEntity entity)
         {
             Entities.Update(entity);

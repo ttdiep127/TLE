@@ -3,6 +3,7 @@ import {Observable, of} from 'rxjs';
 import {BaseService} from './base.service';
 import {QuestionModel} from '../models/question.model';
 import {ParagraphModel} from '../models/paragraph.model';
+import {TestInputModel} from '../models/testInput.model';
 
 @Injectable({
   providedIn: 'root'

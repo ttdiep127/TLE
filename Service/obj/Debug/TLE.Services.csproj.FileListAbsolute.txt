@@ -156,3 +156,5 @@ D:\TLE\Service\obj\Debug\TLE.Services.csproj.CoreCompileInputs.cache
 D:\TLE\Service\obj\Debug\TLE.Services.csproj.CopyComplete
 D:\TLE\Service\obj\Debug\Service.dll
 D:\TLE\Service\obj\Debug\Service.pdb
+D:\TLE\Service\bin\Debug\x86\e_sqlite3.dll
+D:\TLE\Service\bin\Debug\x64\e_sqlite3.dll

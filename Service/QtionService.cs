@@ -27,7 +27,6 @@ namespace Service
             _paraRepo = UnitOfWork.Repository<Paragraphs>();
             _paraQuestionRepo = UnitOfWork.Repository<ParagraphQuestion>();
             _answerRepo = UnitOfWork.Repository<Answers>();
-
         }
 
         public async Task<IEnumerable<QtionOutput>> Get(int userId, int part)

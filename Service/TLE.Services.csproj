@@ -112,6 +112,7 @@
     <Compile Include="BaseService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QtionService.cs" />
+    <Compile Include="TestService.cs" />
     <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>

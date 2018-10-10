@@ -20,6 +20,8 @@ namespace TLE.Entities.Repositories
         Task InsertAsync(TEntity entity);
         void InsertRange(IEnumerable<TEntity> entities);
 
+        IEnumerable<Task> InsertRangeAsync(IEnumerable<TEntity> entities);
+
         void Update(TEntity entity);
         void UpdateRange(IEnumerable<TEntity> entities);
 

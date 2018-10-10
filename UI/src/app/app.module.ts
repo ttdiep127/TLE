@@ -19,6 +19,7 @@ import {QuestionComponent} from './modules/toiec-test/question/question.componen
 import {AdministrationComponent} from './modules/administration/administration.component';
 import {AddTestComponent} from './modules/administration/add-test/add-test.component';
 import {AddQuestionComponent} from './modules/administration/add-question/add-question.component';
+import {TestService} from './services/test.service';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import {AddQuestionComponent} from './modules/administration/add-question/add-qu
     BaseService,
     AuthenticationService,
     UserService,
+    TestService
   ],
   bootstrap: [AppComponent]
 })

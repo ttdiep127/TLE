@@ -13,6 +13,7 @@ export class BaseService {
   private baseURL = environment.baseUrl;
   public questionUrl = 'api/questions';
   public  userUrl = 'api/users';
+  public testUrl = 'api/tests';
   constructor(private http: HttpClient, private cookieService: CookieService) {
   }
 

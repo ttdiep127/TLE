@@ -134,6 +134,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppModels\TestInputModel.cs" />
     <Compile Include="AppModels\UserAnswer.cs" />
     <Compile Include="AppModels\LoginModel.cs" />
     <Compile Include="AppModels\ParagraphOutput.cs" />
