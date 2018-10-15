@@ -14,31 +14,28 @@ import {ToiecTestComponent} from './modules/toiec-test/toiec-test.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './modules/home/home.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {PracticeComponent} from './modules/toiec-test/practice/practice.component';
-import {QuestionComponent} from './modules/toiec-test/question/question.component';
 import {AdministrationComponent} from './modules/administration/administration.component';
 import {AddTestComponent} from './modules/administration/add-test/add-test.component';
 import {AddQuestionComponent} from './modules/administration/add-question/add-question.component';
 import {TestService} from './services/test.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ToiecTestComponent,
-    PracticeComponent,
-    QuestionComponent,
     AdministrationComponent,
     AddTestComponent,
-    AddQuestionComponent
+    AddQuestionComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    AppRoutingModule,
     SharedModule.forRoot(),
-    NgxPermissionsModule.forRoot()
+    NgxPermissionsModule.forRoot(),
+    AppRoutingModule
   ],
   providers: [
     CookieService,

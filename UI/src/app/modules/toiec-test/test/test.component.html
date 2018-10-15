@@ -1,3 +1,7 @@
-<p>
-  test works!
-</p>
+<div *ngIf="testType === TESTTYPES.Part5">
+  <div *ngIf="questionsPart5">
+      <div *ngFor="let question of questionsPart5">
+        <app-question [question]="question"></app-question>
+      </div>
+  </div>
+</div>

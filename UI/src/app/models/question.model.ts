@@ -8,6 +8,7 @@ export class QuestionModel {
   correctAnswer?: number;
   part?: number;
   position?: number;
+  topicId?: number;
 
   public constructor(init?: Partial<QuestionModel>) {
     Object.assign(this, init);
@@ -36,4 +37,12 @@ export class QuestionAnswerOutput {
     Object.assign(this, init);
   }
 
+}
+
+export  class QuestionRequest {
+  questions: QuestionModel[];
+
+  public constructor(init?: Partial<QuestionRequest>) {
+    Object.assign(this, init);
+  }
 }

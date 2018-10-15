@@ -7,8 +7,8 @@ namespace Entities.Models
     {
         public Topics()
         {
+            Qtions = new HashSet<Qtions>();
             Ratings = new HashSet<Ratings>();
-            TagQtions = new HashSet<TagQtions>();
         }
 
         public int Id { get; set; }
@@ -16,7 +16,7 @@ namespace Entities.Models
         public int? TopicLevel { get; set; }
         public int? Languages { get; set; }
 
+        public ICollection<Qtions> Qtions { get; set; }
         public ICollection<Ratings> Ratings { get; set; }
-        public ICollection<TagQtions> TagQtions { get; set; }
     }
 }

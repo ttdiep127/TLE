@@ -15,6 +15,18 @@
       <div *ngIf="partNumber === 5">
         <div *ngIf="currentQuestion">
           <app-question [question]="currentQuestion" (questionChange)="updateAnswer($event)"></app-question>
+          <div class="temple-answer">
+            <div ngClass="notification">
+              <div *ngIf="currentQuestion.userAnswer" class="p-1">
+                <div *ngIf="!currentQuestion.isCorrect">
+                  <a><strong>Answer: </strong>{{correctAnswer}}</a>
+                </div>
+                <div *ngIf="currentQuestion.isCorrect">
+                  <a class="correct-color">Correct Answer!</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div *ngIf="partNumber === 6 || partNumber ===7">

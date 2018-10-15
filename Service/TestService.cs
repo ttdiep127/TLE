@@ -38,6 +38,7 @@ namespace Service
                     Message = "Object null"
                 };
             }
+
             var response = new ResponseOutput();
 
             try
@@ -61,6 +62,7 @@ namespace Service
                         Answer3 = qtion.Answer3,
                         Answer4 = qtion.Answer4,
                         Part = qtion.Part,
+                        TopicId = qtion.TopicId
                     };
                     questions.Add(temp);
                 }
@@ -114,10 +116,12 @@ namespace Service
                             Answer3 = qtion.Answer3,
                             Answer4 = qtion.Answer4,
                             Part = qtion.Part,
+                            TopicId = qtion.TopicId
                         };
                         qtionsTemp.Add(qtionTemp);
                     }
                     _questionRepo.InsertRange(qtionsTemp);
+                    await UnitOfWork.SaveChangesAsync();
 
                     var paraQtions = new List<ParagraphQuestion>();
 
@@ -133,21 +137,22 @@ namespace Service
 
                         paraQtions.Add(paraQtion);
                     }
-                    var exist = _paraQuestionRepo.GetByParaId(paraTemp.Id);
+                    var exist = await _paraQuestionRepo.GetByParaId(paraTemp.Id);
 
-                    if (exist != null)
+                    if (exist == null)
                     {
                         _paraQuestionRepo.InsertRange(paraQtions);
+                        await UnitOfWork.SaveChangesAsync();
+                        return true;
                     }
                 }
-                await UnitOfWork.SaveChangesAsync();
-                return true;
             }
             catch (Exception)
             {
-                UnitOfWork.RollbackTransaction();
-                return false; ;
+
             }
+            UnitOfWork.RollbackTransaction();
+            return false;
         }
     }
 }

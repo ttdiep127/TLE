@@ -20,7 +20,6 @@ namespace Entities.Models
         public virtual DbSet<Paragraphs> Paragraphs { get; set; }
         public virtual DbSet<Qtions> Qtions { get; set; }
         public virtual DbSet<Ratings> Ratings { get; set; }
-        public virtual DbSet<TagQtions> TagQtions { get; set; }
         public virtual DbSet<TestQtions> TestQtions { get; set; }
         public virtual DbSet<Tests> Tests { get; set; }
         public virtual DbSet<TestTypes> TestTypes { get; set; }
@@ -85,6 +84,11 @@ namespace Entities.Models
                 entity.Property(e => e.Answer4).HasMaxLength(1000);
 
                 entity.Property(e => e.ContentQ).HasMaxLength(1000);
+
+                entity.HasOne(d => d.Topic)
+                    .WithMany(p => p.Qtions)
+                    .HasForeignKey(d => d.TopicId)
+                    .HasConstraintName("FK_Qtions_Topics");
             });
 
             modelBuilder.Entity<Ratings>(entity =>
@@ -104,23 +108,6 @@ namespace Entities.Models
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Ratings_Users");
-            });
-
-            modelBuilder.Entity<TagQtions>(entity =>
-            {
-                entity.HasKey(e => new { e.QtionId, e.TopicId });
-
-                entity.HasOne(d => d.Qtion)
-                    .WithMany(p => p.TagQtions)
-                    .HasForeignKey(d => d.QtionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TagQtions_Qtions");
-
-                entity.HasOne(d => d.Topic)
-                    .WithMany(p => p.TagQtions)
-                    .HasForeignKey(d => d.TopicId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TagQtions_Topics");
             });
 
             modelBuilder.Entity<TestQtions>(entity =>

@@ -8,8 +8,15 @@ import {Component, OnInit} from '@angular/core';
 export class AdministrationComponent implements OnInit {
 
   addTestPopupVisible: boolean;
+  onTest = 1;
+  onQtion = 2;
+  onPara = 3;
+  onOpen: number;
+  isLoading: boolean;
+
 
   constructor() {
+    this.isLoading = false;
   }
 
   ngOnInit() {

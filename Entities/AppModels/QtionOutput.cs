@@ -17,5 +17,6 @@ namespace Entities.AppModels
         public int? CorrectAnswer { get; set; }
         public int? Part { get; set; }
         public int? Position { get; set; }
+        public int? TopicId { get; set; }
     }
 }

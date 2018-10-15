@@ -44,6 +44,50 @@ namespace Service
             }
         }
 
+        public ResponseOutput AddQuestion(ICollection<QtionOutput> qtions)
+        {
+            if (qtions == null || qtions.Count == 0)
+            {
+                return new ResponseOutput
+                {
+                    Success = false,
+                    Message = "Object null"
+                };
+            }
+
+            var response = new ResponseOutput();
+
+            try
+            {
+                var questions = new List<Qtions>();
+                foreach (var qtion in qtions)
+                {
+                    var temp = new Qtions
+                    {
+                        Id = 0,
+                        ContentQ = qtion.ContentQ,
+                        Answer1 = qtion.Answer1,
+                        Answer2 = qtion.Answer2,
+                        Answer3 = qtion.Answer3,
+                        Answer4 = qtion.Answer4,
+                        Part = qtion.Part,
+                        TopicId = qtion.TopicId
+                    };
+                    questions.Add(temp);
+                }
+                _repository.InsertRange(questions);
+                UnitOfWork.SaveChanges();
+                response.Success = true;
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
         public async Task<ParagraphOutput> GetPara(int part)
         {
             try
@@ -66,6 +110,7 @@ namespace Service
                         CorrectAnswer = question.CorrectAnswer,
                         Part = question.Part,
                         Position = item.Position,
+                        TopicId = question.TopicId
                     });
                 }
 

@@ -1,30 +1,31 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-
-import {DevExtremeModule} from 'devextreme-angular';
 import {ToiecTestComponent} from './toiec-test.component';
-import {PracticeComponent } from './practice/practice.component';
+import {PracticeComponent} from './practice/practice.component';
 import {SharedModule} from '../../share/share.module';
-import { QuestionComponent } from './question/question.component';
-import { TestComponent } from './test/test.component';
+import {QuestionComponent} from './question/question.component';
+import {TestComponent} from './test/test.component';
 
 @NgModule({
   imports: [
     SharedModule,
     RouterModule.forChild([
-      {path: '', redirectTo: 'general'},
       {
-        path: 'general',
+        path: '',
         component: ToiecTestComponent,
       },
-      {path: 'practice', component: PracticeComponent
+      {
+        path: 'practice/:id', component: PracticeComponent
+      }, {
+        path: ':id', component: TestComponent
       }
     ])
   ],
   declarations: [
-  PracticeComponent,
-  QuestionComponent,
-  TestComponent]
+    ToiecTestComponent,
+    PracticeComponent,
+    QuestionComponent,
+    TestComponent]
 })
 export class ToiecTestModule {
 }

@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {QuestionAnswerModel, QuestionAnswerOutput, QuestionModel} from '../../../models/question.model';
-import {QuestionStorageService} from '../../../services/question-storage.service';
 import {UserService} from '../../../services/user.service';
 import {cloneDeep} from 'lodash';
 import {ParagraphModel} from '../../../models/paragraph.model';
 import notify from 'devextreme/ui/notify';
 import {GuideToiecPartV} from '../../../data/guideToiecPart';
+import {QuestionService} from '../../../services/question.service';
+import {Answers} from '../../../share/enums';
 
 @Component({
   selector: 'app-practice',
@@ -17,7 +18,7 @@ export class PracticeComponent implements OnInit {
   partNumber: number;
   count: number;
   paramsSub: any;
-  currentQuestion: any;
+  currentQuestion: QuestionAnswerModel;
   isSelected: boolean;
   questionsStorage: QuestionAnswerModel[];
   isLoading: boolean;
@@ -28,9 +29,10 @@ export class PracticeComponent implements OnInit {
   isFirstQuestion: boolean;
   guideToiecPart = GuideToiecPartV;
   inIntroduce: boolean;
+  correctAnswer: string;
 
   constructor(private route: ActivatedRoute, private router: Router,
-              private questionStorageService: QuestionStorageService,
+              private questionService: QuestionService,
               private userService: UserService) {
     this.userId = 2;
     this.paramsSub = this.route.params.subscribe(params => {
@@ -77,6 +79,10 @@ export class PracticeComponent implements OnInit {
   setCurrentQuestion(questionAnswer: QuestionAnswerModel) {
     if (questionAnswer) {
       this.currentQuestion = questionAnswer;
+      if (this.currentQuestion.userAnswer) {
+        this.correctAnswer = this.displayAnswer(this.currentQuestion);
+      }
+
       if (this.currentQuestion === this.questionsStorage[0]) {
         this.isFirstQuestion = true;
       } else {
@@ -98,7 +104,7 @@ export class PracticeComponent implements OnInit {
   }
 
   getParagraph() {
-    this.questionStorageService.getParagraph(this.partNumber).subscribe((para) => {
+    this.questionService.getParagraph(this.partNumber).subscribe((para) => {
       if (para) {
         para.id = this.count;
         this.paragraphsStorage.push(para);
@@ -124,7 +130,7 @@ export class PracticeComponent implements OnInit {
 
   getQuestions() {
     this.isLoading = true;
-    this.questionStorageService.getQuestion(this.partNumber).subscribe(qtions => {
+    this.questionService.getQuestions(this.partNumber).subscribe(qtions => {
         if (qtions) {
           qtions.forEach(qtion => {
             const questionAnswer = new QuestionAnswerModel();
@@ -153,6 +159,7 @@ export class PracticeComponent implements OnInit {
     this.currentQuestion.isCorrect = qa.isCorrect;
     this.currentQuestion.userAnswer = qa.userAnswer;
     if (this.currentQuestion.userAnswer) {
+      this.correctAnswer = this.displayAnswer(this.currentQuestion);
       const input = new QuestionAnswerOutput({
         userId: this.userId,
         answer: qa.userAnswer,
@@ -167,6 +174,46 @@ export class PracticeComponent implements OnInit {
         }, () => notify('Error Server', 'error')
       );
     }
+  }
+
+  displayAnswer(qa: QuestionAnswerModel): string {
+    let answer = '';
+    if (qa.userAnswer) {
+      switch (qa.question.correctAnswer) {
+        case Answers.A: {
+          answer = 'A. ' + qa.question.answer1;
+          break;
+        }
+        case Answers.B: {
+          answer = 'B. ' + qa.question.answer2;
+          break;
+        }
+        case Answers.C: {
+          answer = 'C. ' + qa.question.answer3;
+          break;
+        }
+        case Answers.D: {
+          answer = 'D. ' + qa.question.answer4;
+          break;
+        }
+        default:
+          answer = 'No answer';
+      }
+
+      debugger;
+      const notification = document.getElementsByClassName('notification');
+      if (notification) {
+        const position = notification.length === 1 ? 0 : qa.id - 1;
+        notification.item(position).classList.remove('correct-answer');
+        notification.item(position).classList.remove('incorrect-answer');
+        if (qa.isCorrect) {
+          document.getElementsByClassName('notification').item(position).classList.add('correct-answer');
+        } else {
+          document.getElementsByClassName('notification').item(position).classList.add('incorrect-answer');
+        }
+      }
+    }
+    return answer;
   }
 
   clickPrevious() {

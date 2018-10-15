@@ -8,17 +8,5 @@
       (onValueChanged)="onValueChanged($event)">
     </dx-radio-group>
   </div>
-  <div class="temple-answer">
-    <div ngClass="notification">
-      <div *ngIf="qa.userAnswer" class="p-1">
-        <div *ngIf="!qa.isCorrect">
-          <a><strong>Answer: </strong>{{correctAnswer}}</a>
-        </div>
-        <div *ngIf="qa.isCorrect">
-          <a class="correct-color">Correct Answer!</a>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 

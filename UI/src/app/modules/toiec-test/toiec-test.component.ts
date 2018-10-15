@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {QuestionService} from '../../services/question.service';
+import {UserService} from '../../services/user.service';
 
 @Component({
   selector: 'app-toiec-test',
@@ -7,7 +10,14 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ToiecTestComponent implements OnInit {
 
-  constructor() {
+  paramsSub: any;
+  constructor(private route: ActivatedRoute, private router: Router,
+              private questionService: QuestionService,
+              private userService: UserService) {
+    this.paramsSub = this.route.params.subscribe(params => {
+        const id = params['id'];
+  }
+    );
   }
 
   ngOnInit() {

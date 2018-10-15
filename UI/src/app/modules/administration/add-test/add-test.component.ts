@@ -4,11 +4,9 @@ import {TESTTYPES, TOIECPARTS} from '../../../share/constant.data';
 import {QuestionModel} from '../../../models/question.model';
 import {ParagraphModel} from '../../../models/paragraph.model';
 import {ListItem} from '../../../models/list-item.model';
-import {DxDataGridComponent, DxValidationGroupComponent} from 'devextreme-angular';
+import {DxDataGridComponent} from 'devextreme-angular';
 import {cloneDeep} from 'lodash';
 import {DxoSummaryComponent} from 'devextreme-angular/ui/nested/summary';
-import {forEach} from '@angular/router/src/utils/collection';
-import {QuestionStorageService} from '../../../services/question-storage.service';
 import {TestService} from '../../../services/test.service';
 import notify from 'devextreme/ui/notify';
 
@@ -18,7 +16,7 @@ import notify from 'devextreme/ui/notify';
   styleUrls: ['./add-test.component.scss']
 })
 export class AddTestComponent implements OnInit {
-  @ViewChild('dataGirdQuestion') dataGirdPara = DxDataGridComponent;
+  @ViewChild('dataGirdQuestion') dataGirdPara: DxDataGridComponent;
   @ViewChild('summary') summary = DxoSummaryComponent;
   testInput: TestInputModel;
   typeTests = TESTTYPES;
@@ -61,7 +59,9 @@ export class AddTestComponent implements OnInit {
       } else {
         notify(rr.message, 'warning');
       }
-    }, (er) => {  notify(er, 'error');  this.isLoading = false;
+    }, (er) => {
+      notify(er, 'error');
+      this.isLoading = false;
     }, () => {
       this.isLoading = false;
     });

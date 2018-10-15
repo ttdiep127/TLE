@@ -1,7 +1,12 @@
-<div class="mt-3 p-3">
+<dx-button (onClick)="onOpen = onTest" text="Add Test"></dx-button>
+<dx-button (onClick)="onOpen = onQtion" text="Add Qtion"></dx-button>
+<dx-button (onClick)="onOpen = onPara" text="Add Para"></dx-button>
+<div *ngIf="onOpen === onTest" class="mt-3 p-3">
   <app-add-test></app-add-test>
 </div>
-
+<div *ngIf="onOpen === onQtion" class="mt-3 p-3">
+  <app-add-question></app-add-question>
+</div>
 
 
 <!--<dx-button class="btn btn-default" text="Add Test" (click)="addTestPopupVisible = true"></dx-button>-->

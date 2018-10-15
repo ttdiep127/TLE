@@ -1,32 +1,47 @@
-<div>
-  <div>Content:</div>
-  <dx-text-area [(value)]="question.contentQ"></dx-text-area>
-</div>
-<div class="row">
-  <div class="col-sm">
-    <div>A:</div>
-    <dx-text-box [(value)]="answers[0]"></dx-text-box>
-  </div>
-  <div class="col-sm">
-    <div>B:</div>
-    <dx-text-box [(value)]="answers[1]"></dx-text-box>
-  </div>
-  <div class="col-sm">
-    <div>C:</div>
-    <dx-text-box [(value)]="answers[2]"></dx-text-box>
-  </div>
-  <div class="col-sm">
-    <div>D:</div>
-    <dx-text-box [(value)]="answers[3]"></dx-text-box>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm">
-    <div>Correct Answer</div>
-    <dx-select-box [dataSource]="answers" [(value)]="correctAnswer" ></dx-select-box>
-  </div>
-  <div class="col-sm">
-    <div>Part: </div>
-    <dx-select-box [dataSource]="toiecParts" [value]="toiecParts[currentPart-1]" valueExpr="value" displayExpr="text"></dx-select-box>
-  </div>
+<div class="question-form">
+  <dx-data-grid
+    [dataSource]="questionStorage"
+    [showBorders]="true"
+    minlength="400px">
+    <dxo-editing
+      mode="row"
+      [allowUpdating]="true"
+      [allowDeleting]="true"
+      [allowAdding]="true">
+    </dxo-editing>
+    <dxi-column caption="No" cellTemplate="numericalOrder" [width]="40">
+      <div *dxTemplate="let data of 'numericalOrder'">
+        {{data.row.rowIndex + 1}}
+      </div>
+    </dxi-column>
+    <dxi-column dataField="contentQ" caption="Content Question">
+    </dxi-column>
+    <dxi-column dataField="answer1" caption="A" [width]="100">
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="answer2" caption="B" [width]="100">
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="answer3" caption="C" [width]="100">
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="answer4" caption="D" [width]="100">
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="correctAnswer" caption="Answer" dataType="number" [width]="100">
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="part" [width]="100" dataType="number">
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="topicId" [width]="100" dataType="number">
+      <dxi-validation-rule type="required"></dxi-validation-rule>
+    </dxi-column>
+  </dx-data-grid>
+  <dx-button
+    class="float-right btn-default mt-sm-4"
+    text="Save"
+    [disabled]="isLoading"
+    (onClick)="onFormSubmit($event)">
+  </dx-button>
 </div>

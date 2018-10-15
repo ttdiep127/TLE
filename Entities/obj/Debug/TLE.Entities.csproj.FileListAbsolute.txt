@@ -151,7 +151,6 @@ D:\TLE\Entities\bin\Debug\System.Interactive.Async.xml
 D:\TLE\Entities\bin\Debug\System.Memory.xml
 D:\TLE\Entities\bin\Debug\System.Numerics.Vectors.xml
 D:\TLE\Entities\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
-D:\TLE\Entities\obj\Debug\TLE.Entities.csprojAssemblyReference.cache
 D:\TLE\Entities\obj\Debug\Entities.Resources.ErrorMessages.resources
 D:\TLE\Entities\obj\Debug\TLE.Entities.csproj.GenerateResource.cache
 D:\TLE\Entities\obj\Debug\TLE.Entities.csproj.CoreCompileInputs.cache

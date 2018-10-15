@@ -40,8 +40,9 @@ namespace Web.Api.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public ResponseOutput Post([FromBody]QuestionsRequest questions)
         {
+            return _service.AddQuestion(questions.Questions);
         }
 
         // PUT api/<controller>/5

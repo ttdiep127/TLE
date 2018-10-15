@@ -13,6 +13,8 @@ namespace Repositories.Repositories
     {
         public static async Task<IEnumerable<ParagraphQuestion>> GetByParaId(this IRepository<ParagraphQuestion> repository, int paraId)
         {
+
+            var  a = await repository.Entities.Where(_ => _.IdParagraph == paraId).ToListAsync();
             return await repository.Entities.Where(_ => _.IdParagraph == paraId).ToListAsync();
         }
     }
