@@ -200,7 +200,6 @@ export class PracticeComponent implements OnInit {
           answer = 'No answer';
       }
 
-      debugger;
       const notification = document.getElementsByClassName('notification');
       if (notification) {
         const position = notification.length === 1 ? 0 : qa.id - 1;

@@ -36,7 +36,7 @@ export class QuestionComponent implements OnInit, OnChanges {
 
   resetQuestion() {
     if (this.question) {
-      this.qa = cloneDeep(this.question);
+      this.qa = this.question;
       this.currentAnswers = [
         {text: 'A. ' + (this.qa.question.answer1 || ''), value: 1},
         {text: 'B. ' + (this.qa.question.answer2 || ''), value: 2},

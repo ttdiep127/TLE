@@ -1,9 +1,8 @@
-<div *ngIf="qa">
+<div class="mb-sm-2" *ngIf="qa">
   <p><strong>{{qa.id}}. </strong>{{qa.question.contentQ}}</p>
   <div class="dx-field">
     <dx-radio-group
       [items]="currentAnswers"
-      [disabled]="qa.userAnswer"
       [(value)]="userAnswer"
       (onValueChanged)="onValueChanged($event)">
     </dx-radio-group>

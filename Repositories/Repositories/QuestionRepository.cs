@@ -28,7 +28,7 @@ namespace Repositories
                         CorrectAnswer = _.CorrectAnswer,
                         Part = _.Part,
                         TopicId = _.TopicId,
-                    }).OrderBy(_ => Guid.NewGuid()).Take(20).ToListAsync();
+                    }).OrderBy(_ => Guid.NewGuid()).Take(40).ToListAsync();
 
         }
 
