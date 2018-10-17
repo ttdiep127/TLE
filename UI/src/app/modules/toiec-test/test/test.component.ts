@@ -28,6 +28,8 @@ export class TestComponent implements OnInit {
   inIntroduce: boolean;
   guideToiecPart = GuideToiecPartV;
   partNumber: number;
+  displayTestResult: boolean;
+  interval: any;
 
 
   constructor(private route: ActivatedRoute, private router: Router,
@@ -70,6 +72,7 @@ export class TestComponent implements OnInit {
     this.isSubmitting = false;
     this.inIntroduce = true;
     this.duration = 60 * this.duration;
+    this.displayTestResult = false;
   }
 
   ngOnInit() {
@@ -99,11 +102,10 @@ export class TestComponent implements OnInit {
 
   startTest(e) {
     this.inIntroduce = false;
-    const interval = setInterval(() => {
+     this.interval = setInterval(() => {
       this.duration = this.duration - 1;
       this.minutes = Math.floor(this.duration / 60);
       if (this.duration <= 0) {
-        clearInterval(interval);
         this.onSubmit();
       }
     }, 1000);
@@ -111,9 +113,10 @@ export class TestComponent implements OnInit {
 
   onSubmit() {
     if (this.checkAnswerAllQuestion()) {
+      clearInterval(this.interval);
       this.isSubmitting = true;
       if (this.questionsPart5) {
-        // display result
+        this.displayTestResult = true;
         if (this.userId) {
           const output = Utility.toQuestionAnswerOutput(this.questionsPart5, this.userId);
           if (output) {
@@ -127,16 +130,8 @@ export class TestComponent implements OnInit {
         }
       }
     }
+    window.scrollTo(0, 0);
     return;
-  }
-
-  displayResult() {
-    this.correctQuestions = 0;
-    this.questionsPart5.forEach(aq => {
-      if (aq.isCorrect) {
-        this.correctQuestions += 1;
-      }
-    });
   }
 
   checkAnswerAllQuestion(): boolean {

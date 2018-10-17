@@ -5,6 +5,7 @@ import {PracticeComponent} from './practice/practice.component';
 import {SharedModule} from '../../share/share.module';
 import {QuestionComponent} from './question/question.component';
 import {TestComponent} from './test/test.component';
+import { ResultComponent } from './result/result.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import {TestComponent} from './test/test.component';
     ToiecTestComponent,
     PracticeComponent,
     QuestionComponent,
-    TestComponent]
+    TestComponent,
+    ResultComponent]
 })
 export class ToiecTestModule {
 }

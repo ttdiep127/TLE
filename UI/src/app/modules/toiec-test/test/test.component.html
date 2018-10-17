@@ -40,11 +40,16 @@
     <div class="row">
       <div class="col-sm-3">
       </div>
-      <div class="col-sm-9 border p-sm-4">
-        <div *ngIf="testType === TESTTYPES.Part5">
-          <div *ngIf="questionsPart5">
-            <div *ngFor="let question of questionsPart5">
-              <app-question [question]="question"></app-question>
+      <div class="col-sm-9 ">
+        <div *ngIf="displayTestResult">
+          <app-result [answers]="questionsPart5"></app-result>
+        </div>
+        <div class="border p-sm-4">
+          <div *ngIf="testType === TESTTYPES.Part5">
+            <div *ngIf="questionsPart5">
+              <div *ngFor="let question of questionsPart5">
+                <app-question [question]="question"></app-question>
+              </div>
             </div>
           </div>
         </div>
@@ -53,7 +58,7 @@
   </div>
   <div class="float-right">
     <a class="">
-      <dx-button class="m-sm-2 btn-success" text="Submit" (onClick)="onSubmit()"></dx-button>
+      <dx-button class="m-sm-2 btn-success" text="Submit" (onClick)="onSubmit()" [disabled]="displayTestResult"></dx-button>
     </a>
   </div>
 
