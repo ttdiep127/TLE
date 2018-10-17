@@ -29,7 +29,7 @@ namespace Service
             _answerRepo = UnitOfWork.Repository<Answers>();
         }
 
-        public async Task<IEnumerable<QtionOutput>> Get(int userId, int part)
+        public async Task<IEnumerable<QtionOutput>> Get(int part)
         {
             try
             {

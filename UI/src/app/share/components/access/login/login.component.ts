@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {UserLogin} from '../../../../models/account.model';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {UserInfo, UserLogin} from '../../../../models/account.model';
 import {AuthenticationService} from '../../../../services/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Utility} from '../../../Utility';
@@ -11,6 +11,8 @@ import notify from 'devextreme/ui/notify';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  @Output() loggedUser = new EventEmitter<UserInfo>();
+
   loginData: UserLogin;
   isLoading: boolean;
   returnUrl: string;
@@ -40,6 +42,8 @@ export class LoginComponent implements OnInit {
       .subscribe((rr) => {
           if (rr.success) {
             const user = rr.obj;
+            this.authService.setLoggedUser(user);
+            this.loggedUser.emit(user);
             notify('success');
             // this.authService.setLoggedUser(user);
             // this.router.navigate(['/dashboard']);

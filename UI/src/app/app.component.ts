@@ -1,10 +1,20 @@
-import { Component } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AuthenticationService} from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'UI';
+export class AppComponent  implements OnInit, OnDestroy {
+  constructor(private authService: AuthenticationService ) {
+  }
+
+  ngOnInit() {
+    this.authService.initAccountInfo();
+  }
+
+  ngOnDestroy(): void {
+  }
+
 }

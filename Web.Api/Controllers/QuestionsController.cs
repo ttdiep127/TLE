@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Entities.AppModels;
 using Entities.Models;
@@ -34,8 +35,7 @@ namespace Web.Api.Controllers
         [HttpGet("{part}")]
         public async Task<IEnumerable<QtionOutput>> Get(int part)
         {
-            int userId = 2;
-            return await _service.Get(userId, part);
+            return await _service.Get(part);
         }
 
         // POST api/<controller>

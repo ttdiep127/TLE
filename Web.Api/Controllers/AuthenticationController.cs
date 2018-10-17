@@ -23,6 +23,13 @@ namespace Web.Api.Controllers
             _userService = userService;
         }
 
+        [HttpGet]
+        [Route("logout")]
+        public ResponseOutput Post()
+        {
+            return new ResponseOutput();
+        }
+
         [HttpGet("{userId}")]
         public async Task<Users> Get(int userId)
         {
@@ -36,6 +43,8 @@ namespace Web.Api.Controllers
         {
             return await _userService.Login(input);
         }
+
+        
 
     }
 }

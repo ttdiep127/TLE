@@ -5,9 +5,9 @@
     </div>
     <div class="form-inline">
       <div *ngIf="user">
-        <small class="mr-1">{{user.name}}</small>
+        <a class="mr-1">{{user.fullName}}</a>
         <a class="mr-1">|</a>
-        <a routerLinkActive="active" class=" mr-1">Logout</a>
+        <a class=" mr-1" (click)="logout($event)">Logout</a>
       </div>
       <div *ngIf="!user">
         <a class=" mr-1" (click)="onLogin = true">Login</a>
@@ -24,7 +24,7 @@
           [closeOnOutsideClick]="true">
   <div *dxTemplate="let data of 'content'">
     <div *ngIf="onLogin">
-      <app-login></app-login>
+      <app-login (loggedUser)="loggedIn($event)"></app-login>
     </div>
   </div>
 </dx-popup>

@@ -7,6 +7,7 @@ import {QuestionAnswerModel, QuestionAnswerOutput, QuestionModel} from '../../..
 import notify from 'devextreme/ui/notify';
 import {Utility} from '../../../share/Utility';
 import {GuideToiecPartV} from '../../../data/guideToiecPart';
+import {AuthenticationService} from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-test',
@@ -20,7 +21,7 @@ export class TestComponent implements OnInit {
   isLoading: boolean;
   index: number;
   isSubmitting: boolean;
-  userId = 1;
+  userId: number;
   correctQuestions: number;
   duration: number;
   minutes: number;
@@ -31,7 +32,8 @@ export class TestComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router,
               private questionService: QuestionService,
-              private userService: UserService) {
+              private userService: UserService, private autheService: AuthenticationService) {
+    this.userId = this.autheService.currentUserId;
     this.route.params.subscribe(params => {
       const id = params['id'];
 
@@ -46,7 +48,7 @@ export class TestComponent implements OnInit {
         }
         case 'part5': {
           this.testType = TestTypes.Part5;
-          this.duration = 0.5;
+          this.duration = 30;
           this.partNumber = 5;
           break;
         }
@@ -112,14 +114,16 @@ export class TestComponent implements OnInit {
       this.isSubmitting = true;
       if (this.questionsPart5) {
         // display result
-        const output = Utility.toQuestionAnswerOutput(this.questionsPart5);
-        if (output) {
-          this.userService.submitAQs(output).subscribe(rr => {
-            if (rr.success) {
-            } else {
-              notify('Error when save data', 'warning');
-            }
-          }, () => notify('Error Server', 'error'), () => this.isSubmitting = false);
+        if (this.userId) {
+          const output = Utility.toQuestionAnswerOutput(this.questionsPart5, this.userId);
+          if (output) {
+            this.userService.submitAQs(output).subscribe(rr => {
+              if (rr.success) {
+              } else {
+                notify(rr.message, 'warning');
+              }
+            }, (er) => notify(er, 'error'), () => this.isSubmitting = false);
+          }
         }
       }
     }

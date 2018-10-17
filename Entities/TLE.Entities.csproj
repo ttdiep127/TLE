@@ -134,6 +134,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppModels\AnswersRequest.cs" />
     <Compile Include="AppModels\QuestionsRequest.cs" />
     <Compile Include="AppModels\TestInputModel.cs" />
     <Compile Include="AppModels\UserAnswer.cs" />
@@ -141,7 +142,9 @@
     <Compile Include="AppModels\ParagraphOutput.cs" />
     <Compile Include="AppModels\QtionOutput.cs" />
     <Compile Include="AppModels\ResponseOutput.cs" />
+    <Compile Include="AppModels\UserOuput.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Models\Answers.cs" />
     <Compile Include="Models\ParagraphQuestion.cs" />
     <Compile Include="Models\Paragraphs.cs" />

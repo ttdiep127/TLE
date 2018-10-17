@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Entities.Models;
 using Entities.Resources;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,7 +15,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Service;
+using TLE.Entities.Helpers;
 using TLE.Entities.UnitOfWork;
 using TLE.Repositories;
 using TLE.Service;
@@ -33,11 +37,39 @@ namespace Web.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+            // configure strongly typed settings objects
+            var appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
 
+            // configure jwt authentication
+            var appSettings = appSettingsSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
+
+
+            // configure DI for application services
             services.AddScoped<UserService>();
             services.AddScoped<QtionService>();
             services.AddScoped<TestService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
@@ -60,13 +92,14 @@ namespace Web.Api
                 app.UseHsts();
             }
 
-            // Configure corss-domain
-            app.UseCors(builder => builder
-                .WithOrigins(ConstantStrings.Enviroment)
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
-                .AllowCredentials()
-            );
+                .AllowCredentials());
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseMvc();

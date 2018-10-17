@@ -165,8 +165,6 @@ namespace Entities.Models
                     .IsRequired()
                     .HasMaxLength(225);
 
-                entity.Property(e => e.Token).HasMaxLength(50);
-
                 entity.Property(e => e.TokenCreatedDate).HasColumnType("datetime");
             });
         }

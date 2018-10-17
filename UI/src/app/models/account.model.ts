@@ -6,16 +6,20 @@ export class UserLogin {
   isKeepSignedIn: boolean;
 }
 
-export class LoggedUser {
-  userId: number;
-  employeeId: number;
+export class UserInfo {
+  id: number;
+  emailAddress: number;
   accessToken: string;
   fullName: string;
-  email: string;
-  roles: string[] = [];
+  lastName: string;
+  firstName: string;
+  gender: number;
+  token: string;
+  joinedDate: Date;
+  avtSrc: string;
   exp: number;
 
-  public constructor(init?: Partial<LoggedUser>) {
+  public constructor(init?: Partial<UserInfo>) {
     Object.assign(this, init);
   }
 }
@@ -27,10 +31,4 @@ export class RegisterUser {
   firstName: string;
   lastName: string;
   gender: Gender;
-}
-
-export class UserInfo {
-  userId: string;
-  email: string;
-  name: string;
 }

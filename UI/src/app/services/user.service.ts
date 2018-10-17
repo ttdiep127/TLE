@@ -14,9 +14,9 @@ export class UserService {
     return this.baseService.post(`${this.baseService.userUrl}/answer`, input);
   }
 
-  submitAQs(answerQtion: QuestionAnswerOutput[]): Observable<RequestResponse> {
+  submitAQs(answers: QuestionAnswerOutput[]): Observable<RequestResponse> {
     const input = {
-      'answerQuestions': answerQtion
+      'answers': answers
     };
     return this.baseService.post(`${this.baseService.userUrl}/answers`, input);
   }

@@ -158,3 +158,4 @@ D:\TLE\Entities\obj\Debug\TLE.Entities.csproj.CopyComplete
 D:\TLE\Entities\obj\Debug\Entities.dll
 D:\TLE\Entities\obj\Debug\Entities.pdb
 D:\TLE\Entities\obj\Debug\Entities.Resources.ConstantStrings.resources
+D:\TLE\Entities\obj\Debug\TLE.Entities.csprojAssemblyReference.cache

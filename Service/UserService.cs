@@ -1,9 +1,16 @@
 ﻿using Entities.AppModels;
 using Entities.Models;
 using Entities.Resources;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Repositories.Repositories;
 using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using TLE.Entities.Helpers;
 using TLE.Entities.Repositories;
 using TLE.Entities.Service;
 using TLE.Entities.UnitOfWork;
@@ -14,11 +21,14 @@ namespace TLE.Service
     {
         private readonly IRepository<Users> _repository;
         private readonly IRepository<Answers> _answerRepo;
+        private readonly AppSettings _appSettings;
 
-        public UserService(IUnitOfWork unitOfWork): base(unitOfWork)
+
+        public UserService(IUnitOfWork unitOfWork, IOptions<AppSettings> appSettings): base(unitOfWork)
         {
             _repository = Repository;
             _answerRepo = UnitOfWork.Repository<Answers>();
+            _appSettings = appSettings.Value;
         }
 
         public async Task<Users> Get(int userId)
@@ -56,10 +66,35 @@ namespace TLE.Service
             return user;
         }
 
-        public async Task<ResponseOutput> Login(LoginModel authenticationInput)
+        public ResponseOutput Answers(ICollection<UserAnswer> answers)
+        {
+            var count = 0; 
+            if (answers != null)
+            {
+                foreach (var answer in answers)
+                {
+                    var response = Answer(answer);
+                    if (response.Result.Success) count++;
+                }
+
+                if (count == answers.Count)
+                {
+                    return new ResponseOutput(true);
+                }
+                else if (count > 0)
+                {
+                    return new ResponseOutput
+                    (false, "Didn't save all answers.");
+                }
+            }
+            
+            return new ResponseOutput(false, "array is emtpy.");
+        }
+
+        public async Task<ResponseOutput> Login(LoginModel input)
         {
             // Login with email and password
-            var user = await _repository.Get(authenticationInput.EmailAddress);
+            var user = await _repository.Get(input.EmailAddress);
             if (user == null)
             {
                 return new ResponseOutput {
@@ -77,23 +112,50 @@ namespace TLE.Service
 
             //
             // Check password
-            var hashedPassword = authenticationInput.Password;
 
-            if (hashedPassword != user.Password)
+            // authentication successful so generate jwt token
+            var hashedPassword = input.Password;
+
+            if (hashedPassword == user.Password)
             {
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(7),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                user.Token = tokenHandler.WriteToken(token);
+                UnitOfWork.SaveChanges();
                 return new ResponseOutput
                 {
-                    Success = false,
-                    Message = ErrorMessages.IncorrectPassword,
-                    obj = null
+                    Success = true,
+                    Message = null,
+                    obj = new UserOuput
+                    {
+                        Id = user.Id,
+                        EmailAddress = user.EmailAddress,
+                        FullName = user.FullName,
+                        LastName = user.LastName,
+                        FirstName = user.FirstName,
+                        Gender = user.Gender,
+                        JoinedDate = user.JoinedDate,
+                        Token = user.Token,
+                        AvtSrc = user.AvtSrc
+                    }
                 };
             }
 
             return new ResponseOutput
             {
-                Success = true,
-                Message = null,
-                obj = user
+                Success = false,
+                Message = ErrorMessages.IncorrectPassword,
+                obj = null
             };
         }
 

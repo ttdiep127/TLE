@@ -44,10 +44,9 @@ namespace Web.Api.Controllers
 
         [HttpPost]
         [Route("answers")]
-        public Task<ResponseOutput> AnswerQuestions([FromForm]object input)
+        public ResponseOutput UserAnswers([FromBody]AnswersRequest input)
         {
-
-            return null;
+            return _service.Answers(input.Answers);
         }
 
         // PUT api/<controller>/5

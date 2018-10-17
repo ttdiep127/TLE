@@ -8,6 +8,7 @@ import notify from 'devextreme/ui/notify';
 import {GuideToiecPartV} from '../../../data/guideToiecPart';
 import {QuestionService} from '../../../services/question.service';
 import {Answers} from '../../../share/enums';
+import {AuthenticationService} from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-practice',
@@ -23,7 +24,6 @@ export class PracticeComponent implements OnInit {
   questionsStorage: QuestionAnswerModel[];
   isLoading: boolean;
   isEnd: boolean;
-  userId: number;
   paragraphsStorage: ParagraphModel[];
   currentPara: ParagraphModel;
   isFirstQuestion: boolean;
@@ -31,10 +31,9 @@ export class PracticeComponent implements OnInit {
   inIntroduce: boolean;
   correctAnswer: string;
 
-  constructor(private route: ActivatedRoute, private router: Router,
+  constructor(private authService: AuthenticationService, private route: ActivatedRoute, private router: Router,
               private questionService: QuestionService,
               private userService: UserService) {
-    this.userId = 2;
     this.paramsSub = this.route.params.subscribe(params => {
         const id = params['id'];
         if (!isNaN(id)) {
@@ -71,7 +70,6 @@ export class PracticeComponent implements OnInit {
       default: {
         this.router.navigate(['/test']);
       }
-
     }
     this.isSelected = false;
   }
@@ -153,6 +151,7 @@ export class PracticeComponent implements OnInit {
   }
 
   updateAnswer(qa: QuestionAnswerModel) {
+    debugger;
     if (this.partNumber === 6) {
       this.currentQuestion = this.questionsStorage[qa.id - 1];
     }
@@ -160,19 +159,23 @@ export class PracticeComponent implements OnInit {
     this.currentQuestion.userAnswer = qa.userAnswer;
     if (this.currentQuestion.userAnswer) {
       this.correctAnswer = this.displayAnswer(this.currentQuestion);
-      const input = new QuestionAnswerOutput({
-        userId: this.userId,
-        answer: qa.userAnswer,
-        qtionId: qa.question.id,
-        isCorrect: qa.isCorrect
-      });
-      this.userService.answerQuestion(input).subscribe((rr) => {
-          if (!rr.success) {
-            notify(rr.message, 'warning');
-            this.clickNext();
-          }
-        }, () => notify('Error Server', 'error')
-      );
+      const userId = this.authService.currentUserId;
+      if (userId) {
+        const input = new QuestionAnswerOutput({
+          userId: userId,
+          answer: qa.userAnswer,
+          qtionId: qa.question.id,
+          isCorrect: qa.isCorrect
+        });
+        this.userService.answerQuestion(input).subscribe((rr) => {
+            if (!rr.success) {
+              notify(rr.message, 'warning');
+              this.clickNext();
+            }
+          }, () => notify('Error Server', 'error')
+        );
+      }
+
     }
   }
 
