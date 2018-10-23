@@ -14,6 +14,7 @@ export class BaseService {
   public questionUrl = 'api/questions';
   public  userUrl = 'api/users';
   public testUrl = 'api/tests';
+  public achievementUrl = 'api/achievement'
   constructor(private http: HttpClient, private cookieService: CookieService) {
   }
 

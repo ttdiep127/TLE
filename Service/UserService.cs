@@ -7,6 +7,7 @@ using Repositories.Repositories;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,18 +18,24 @@ using TLE.Entities.UnitOfWork;
 
 namespace TLE.Service
 {
-    public class UserService: BaseService<Users>, IUserService
+    public class UserService : BaseService<Users>, IUserService
     {
         private readonly IRepository<Users> _repository;
         private readonly IRepository<Answers> _answerRepo;
+        private readonly IRepository<Ratings> _ratingRepo;
         private readonly AppSettings _appSettings;
+        private readonly IRepository<TestResults> _testResultRepo;
+        private readonly IRepository<Tests> _testRepo;
 
 
-        public UserService(IUnitOfWork unitOfWork, IOptions<AppSettings> appSettings): base(unitOfWork)
+        public UserService(IUnitOfWork unitOfWork, IOptions<AppSettings> appSettings) : base(unitOfWork)
         {
             _repository = Repository;
             _answerRepo = UnitOfWork.Repository<Answers>();
             _appSettings = appSettings.Value;
+            _ratingRepo = UnitOfWork.Repository<Ratings>();
+            _testResultRepo = UnitOfWork.Repository<TestResults>();
+            _testRepo = UnitOfWork.Repository<Tests>();
         }
 
         public async Task<Users> Get(int userId)
@@ -36,11 +43,9 @@ namespace TLE.Service
             try
             {
                 return await _repository.Get(userId);
-
             }
             catch (System.Exception ex)
             {
-
                 throw;
             }
         }
@@ -48,7 +53,7 @@ namespace TLE.Service
         {
             var user = await _repository.Get(userInput.Id);
 
-            if(user != null)
+            if (user != null)
             {
                 if (user.Disable)
                 {
@@ -56,7 +61,8 @@ namespace TLE.Service
                     _repository.Update(user);
                     await UnitOfWork.SaveChangesAsync();
                 }
-            } else
+            }
+            else
             {
                 user = userInput;
                 user.Id = 0;
@@ -66,20 +72,41 @@ namespace TLE.Service
             return user;
         }
 
-        public ResponseOutput Answers(ICollection<UserAnswer> answers)
+        public ResponseOutput Answers(TestRequest testRequest)
         {
-            var count = 0; 
-            if (answers != null)
+            var test = _testRepo.Entities.FirstOrDefault(_ => _.Id == testRequest.Id);
+            if (test != null && testRequest.Answers != null)
             {
+                var answers = testRequest.Answers;
+                var numberCorrect = 0;
+                var count = 0;
                 foreach (var answer in answers)
                 {
+                    if (answer.IsCorrect == true) numberCorrect++;
                     var response = Answer(answer);
                     if (response.Result.Success) count++;
                 }
 
                 if (count == answers.Count)
                 {
-                    return new ResponseOutput(true);
+                    _testResultRepo.Insert(new TestResults
+                    {
+                        TestId = testRequest.Id,
+                        UserId = answers[0].UserId,
+                        Scored = numberCorrect,
+                        DateTime = DateTime.Now
+                    }
+                    );
+                    UnitOfWork.SaveChanges();
+                    if (CalculatePercentageProficient(answers))
+                    {
+                        return new ResponseOutput(true);
+                    }
+                    else
+                    {
+                        return new ResponseOutput(false, "Cannot update Percentage Proficient");
+                    }
+
                 }
                 else if (count > 0)
                 {
@@ -87,8 +114,49 @@ namespace TLE.Service
                     (false, "Didn't save all answers.");
                 }
             }
-            
+
             return new ResponseOutput(false, "array is emtpy.");
+        }
+
+        private bool CalculatePercentageProficient(List<UserAnswer> answers)
+        {
+            try
+            {
+                var topics = GetTopics(answers);
+                var userId = answers[0].UserId;
+                foreach (var topicId in topics)
+                {
+                    var numberCorrectAnswer = 0;
+                    var allanswers = _answerRepo.Entities.Where(_ => _.UserId == userId && _.Qtion.TopicId == topicId).ToList();
+                    foreach (var answer in allanswers)
+                    {
+                        if (answer.IsCorrect == true) numberCorrectAnswer++;
+                    }
+
+                    var percentageProgicient = (float)numberCorrectAnswer / allanswers.Count();
+
+                    _ratingRepo.Insert(new Ratings
+                    {
+                        UserId = userId,
+                        TopicId = topicId,
+                        Precentage = percentageProgicient,
+                        UpdateDay = DateTime.Now
+                    });
+                    UnitOfWork.SaveChanges();
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                UnitOfWork.RollbackTransaction();
+                return false;
+            }
+        }
+
+        private List<int> GetTopics(List<UserAnswer> answers)
+        {
+            return answers.Select(_ => _.TopicId).Distinct().ToList();
         }
 
         public async Task<ResponseOutput> Login(LoginModel input)
@@ -97,7 +165,8 @@ namespace TLE.Service
             var user = await _repository.Get(input.EmailAddress);
             if (user == null)
             {
-                return new ResponseOutput {
+                return new ResponseOutput
+                {
                     Success = false,
                     Message = ErrorMessages.InvalidUserName,
                     obj = null,
@@ -171,7 +240,8 @@ namespace TLE.Service
                     savedAnswer.UpdateDay = DateTime.Now;
                     _answerRepo.Update(savedAnswer);
                     await UnitOfWork.SaveChangesAsync();
-                } else
+                }
+                else
                 {
                     var answer = new Answers
                     {
@@ -184,7 +254,7 @@ namespace TLE.Service
                     await _answerRepo.InsertAsync(answer);
                     await UnitOfWork.SaveChangesAsync();
                 }
-                
+
                 return new ResponseOutput
                 {
                     Success = true,
@@ -201,7 +271,7 @@ namespace TLE.Service
                     obj = null
                 };
             }
-            
+
         }
     }
 }

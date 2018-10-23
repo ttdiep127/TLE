@@ -8,6 +8,8 @@ import notify from 'devextreme/ui/notify';
 import {Utility} from '../../../share/Utility';
 import {GuideToiecPartV} from '../../../data/guideToiecPart';
 import {AuthenticationService} from '../../../services/authentication.service';
+import {TestService} from '../../../services/test.service';
+import {TestInputModel, TestOutputModel} from '../../../models/testInput.model';
 
 @Component({
   selector: 'app-test',
@@ -17,7 +19,8 @@ import {AuthenticationService} from '../../../services/authentication.service';
 export class TestComponent implements OnInit {
   testType: number;
   TESTTYPES = TestTypes;
-  questionsPart5: QuestionAnswerModel[];
+  questions: QuestionAnswerModel[];
+  test: TestInputModel;
   isLoading: boolean;
   index: number;
   isSubmitting: boolean;
@@ -33,7 +36,7 @@ export class TestComponent implements OnInit {
 
 
   constructor(private route: ActivatedRoute, private router: Router,
-              private questionService: QuestionService,
+              private testService: TestService,
               private userService: UserService, private autheService: AuthenticationService) {
     this.userId = this.autheService.currentUserId;
     this.route.params.subscribe(params => {
@@ -77,32 +80,31 @@ export class TestComponent implements OnInit {
 
   ngOnInit() {
     this.index = 1;
-    if (this.testType === TestTypes.Part5) {
-      this.isLoading = true;
-      this.questionService.getQuestions(5).subscribe(qtions => {
-          if (qtions) {
-            this.questionsPart5 = [];
-            qtions.forEach(qtion => {
-              const temp = new QuestionAnswerModel({
-                id: this.index,
-                isCorrect: false,
-                question: qtion
-              });
-              this.index += 1;
-              this.questionsPart5.push(temp);
+    this.isLoading = true;
+    this.testService.getTest(this.TESTTYPES.Part5).subscribe(rr => {
+        if (rr.success) {
+          this.test = rr.obj;
+          this.questions = [];
+          this.test.questions.forEach(qtion => {
+            const temp = new QuestionAnswerModel({
+              id: this.index,
+              isCorrect: false,
+              question: qtion
             });
-          } else {
-            notify('Question Empty!', 'warning');
-          }
-        },
-        () => notify('Error Server', 'error'), () => this.isLoading = false
-      );
-    }
+            this.index += 1;
+            this.questions.push(temp);
+          });
+        } else {
+          notify('Question Empty!', 'warning');
+        }
+      },
+      () => notify('Error Server', 'error'), () => this.isLoading = false
+    );
   }
 
   startTest(e) {
     this.inIntroduce = false;
-     this.interval = setInterval(() => {
+    this.interval = setInterval(() => {
       this.duration = this.duration - 1;
       this.minutes = Math.floor(this.duration / 60);
       if (this.duration <= 0) {
@@ -115,13 +117,21 @@ export class TestComponent implements OnInit {
     if (this.checkAnswerAllQuestion()) {
       clearInterval(this.interval);
       this.isSubmitting = true;
-      if (this.questionsPart5) {
-        this.displayTestResult = true;
+      if (this.questions) {
         if (this.userId) {
-          const output = Utility.toQuestionAnswerOutput(this.questionsPart5, this.userId);
+          const output = Utility.toQuestionAnswerOutput(this.questions, this.userId);
           if (output) {
-            this.userService.submitAQs(output).subscribe(rr => {
+            const testOutput = new TestOutputModel({
+              id: this.test.id,
+              typeId: this.test.typeId,
+              answers: output
+            });
+
+            this.testService.submitAQs(testOutput).subscribe(rr => {
               if (rr.success) {
+                this.displayTestResult = true;
+                // Load result
+
               } else {
                 notify(rr.message, 'warning');
               }
@@ -129,9 +139,10 @@ export class TestComponent implements OnInit {
           }
         }
       }
+    } else {
+      return;
     }
     window.scrollTo(0, 0);
-    return;
   }
 
   checkAnswerAllQuestion(): boolean {
@@ -141,16 +152,12 @@ export class TestComponent implements OnInit {
       return true;
     }
 
-    let checkedAll = true;
-    this.questionsPart5.forEach(qtion => {
-      if (qtion.userAnswer) {
-        checkedAll = false;
-      }
-    });
-
-    if (!checkedAll) {
-      return confirm('You did not finish all questions. Do you want to submit this test? ');
+    if (this.questions.find(_ => _.userAnswer === undefined)) {
+      alert('Please answers all the questions before submit!');
+      return false;
     }
+    debugger;
+
     return true;
   }
 }

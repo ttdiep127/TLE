@@ -7,7 +7,7 @@ namespace Entities.Models
     {
         public Paragraphs()
         {
-            ParagraphQuestion = new HashSet<ParagraphQuestion>();
+            ParagraphQuestions = new HashSet<ParagraphQuestions>();
         }
 
         public int Id { get; set; }
@@ -15,6 +15,6 @@ namespace Entities.Models
         public string ContentP2 { get; set; }
         public int? Part { get; set; }
 
-        public ICollection<ParagraphQuestion> ParagraphQuestion { get; set; }
+        public ICollection<ParagraphQuestions> ParagraphQuestions { get; set; }
     }
 }

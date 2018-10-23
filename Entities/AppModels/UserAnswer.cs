@@ -13,5 +13,6 @@ namespace Entities.AppModels
         public int? Answer { get; set; }
         public bool? IsCorrect { get; set; }
         public DateTime? UpdateDay { get; set; }
+        public int TopicId { get; set; }
     }
 }

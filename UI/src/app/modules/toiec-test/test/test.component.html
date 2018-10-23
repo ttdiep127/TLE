@@ -14,24 +14,16 @@
       {{minutes}} : {{duration%60}}
     </nav>
     <div class="mt-sm-4">
-      <div  *ngFor="let qtion of questionsPart5; let i = index">
+      <div  *ngFor="let qtion of questions; let i = index">
         <div class="row mt-sm-1" *ngIf="i%2 === 0">
           <div class="col pr-0">
             <a>{{qtion.id}}. </a>
-            <dx-check-box class="float-right" [value]="questionsPart5[i].userAnswer? true: false"></dx-check-box>
+            <dx-check-box class="float-right" [value]="questions[i].userAnswer? true: false"></dx-check-box>
           </div>
           <div class="col pr-0">
             <a>{{qtion.id + 1}}. </a>
-            <dx-check-box class="float-right" [value]="questionsPart5[i+1].userAnswer? true: false"></dx-check-box>
+            <dx-check-box class="float-right" [value]="questions[i+1].userAnswer? true: false"></dx-check-box>
           </div>
-          <!--<div class="col pr-0">-->
-            <!--<a>{{qtion.id + 2}}. </a>-->
-            <!--<dx-check-box class="float-right" [value]="questionsPart5[i+2].userAnswer? true: false"></dx-check-box>-->
-          <!--</div>-->
-          <!--<div class="col pr-0">-->
-            <!--<a>{{qtion.id + 3}}. </a>-->
-            <!--<dx-check-box class="float-right" [value]="questionsPart5[i+3].userAnswer? true: false"></dx-check-box>-->
-          <!--</div>-->
         </div>
       </div>
     </div>
@@ -42,12 +34,12 @@
       </div>
       <div class="col-sm-9 ">
         <div *ngIf="displayTestResult">
-          <app-result [answers]="questionsPart5"></app-result>
+          <app-result [test]="test"></app-result>
         </div>
         <div class="border p-sm-4">
           <div *ngIf="testType === TESTTYPES.Part5">
-            <div *ngIf="questionsPart5">
-              <div *ngFor="let question of questionsPart5">
+            <div *ngIf="questions">
+              <div *ngFor="let question of questions">
                 <app-question [question]="question"></app-question>
               </div>
             </div>
@@ -58,10 +50,9 @@
   </div>
   <div class="float-right">
     <a class="">
-      <dx-button class="m-sm-2 btn-success" text="Submit" (onClick)="onSubmit()" [disabled]="displayTestResult"></dx-button>
+      <dx-button class="m-sm-2 btn-default" text="Submit" (onClick)="onSubmit()" [(disabled)]="displayTestResult"></dx-button>
     </a>
   </div>
-
 </div>
 
 

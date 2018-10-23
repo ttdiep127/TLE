@@ -18,14 +18,14 @@ namespace Service
     {
         private readonly IRepository<Qtions> _repository;
         private readonly IRepository<Paragraphs> _paraRepo;
-        private readonly IRepository<ParagraphQuestion> _paraQuestionRepo;
+        private readonly IRepository<ParagraphQuestions> _paraQuestionRepo;
         private readonly IRepository<Answers> _answerRepo;
 
         public QtionService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _repository = Repository;
             _paraRepo = UnitOfWork.Repository<Paragraphs>();
-            _paraQuestionRepo = UnitOfWork.Repository<ParagraphQuestion>();
+            _paraQuestionRepo = UnitOfWork.Repository<ParagraphQuestions>();
             _answerRepo = UnitOfWork.Repository<Answers>();
         }
 
@@ -90,44 +90,38 @@ namespace Service
 
         public async Task<ParagraphOutput> GetPara(int part)
         {
-            try
+            var para = await _paraRepo.Get(part);
+            para.ParagraphQuestions = await _paraQuestionRepo.GetByParaId(para.Id);
+
+            var paraQuestions = new List<QtionOutput>();
+            foreach (var qtion in para.ParagraphQuestions)
             {
-                var para = await _paraRepo.Get(part);
-                if (para == null) return null;
-                var questionsPara = await _paraQuestionRepo.GetByParaId(para.Id);
-                var questions = new List<QtionOutput>();
-                foreach (var item in questionsPara)
+                var temp = await _repository.GetById(qtion.IdQuestion);
+                paraQuestions.Add(new QtionOutput
                 {
-                    var question = await _repository.GetById(item.IdQuestion);
-                    questions.Add(new QtionOutput
-                    {
-                        Id = question.Id,
-                        Answer1 = question.Answer1,
-                        Answer2 = question.Answer2,
-                        Answer3 = question.Answer3,
-                        Answer4 = question.Answer4,
-                        ContentQ = question.ContentQ,
-                        CorrectAnswer = question.CorrectAnswer,
-                        Part = question.Part,
-                        Position = item.Position,
-                        TopicId = question.TopicId
-                    });
-                }
-
-                return new ParagraphOutput{
-                    Id = para.Id,
-                    Part = para .Part,
-                    ContentP1 = para.ContentP1,
-                    ContentP2 = para.ContentP2,
-                    Questions = questions
-                };
+                    Id = temp.Id,
+                    Answer1 = temp.Answer1,
+                    Answer2 = temp.Answer2,
+                    Answer3 = temp.Answer3,
+                    Answer4 = temp.Answer4,
+                    ContentQ = temp.ContentQ,
+                    CorrectAnswer = temp.CorrectAnswer,
+                    Part = temp.Part,
+                    Position = qtion.Position,
+                    TopicId = temp.TopicId
+                });
             }
-            catch (Exception e)
+
+            return new ParagraphOutput
             {
-
-                throw;
-            }
+                Id = para.Id,
+                ContentP1 = para.ContentP1,
+                ContentP2 = para.ContentP2,
+                Part = para.Part,
+                Questions = paraQuestions
+            };
         }
 
+       
     }
 }

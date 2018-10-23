@@ -12,6 +12,10 @@ namespace Repositories
 {
     public static class QuestionRepository
     {
+        public static async Task<Qtions> GetById(this IRepository<Qtions> repository, int questionId)
+        {
+            return await repository.Entities.FirstOrDefaultAsync(_ => _.Id == questionId);
+        }
         public static async Task<IEnumerable<QtionOutput>> Get(this IRepository<Qtions> repository, int part)
         {
             return await repository.Entities
@@ -32,11 +36,8 @@ namespace Repositories
 
         }
 
-        public static async Task<Qtions> GetById(this IRepository<Qtions> repository, int questionId)
-        {
-            return await repository.Entities
-                    .FirstOrDefaultAsync(_ => _.Id == questionId);
-        }
+        
+
     }
 
 

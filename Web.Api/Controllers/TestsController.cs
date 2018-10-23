@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Entities.AppModels;
+using Entities.Models;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 
@@ -28,10 +29,10 @@ namespace Web.Api.Controllers
         }
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{testType}")]
+        public async Task<ResponseOutput> GetTest(int testType)
         {
-            return "value";
+            return await _service.GetTest(testType);
         }
 
         // POST api/<controller>

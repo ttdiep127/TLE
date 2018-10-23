@@ -44,9 +44,9 @@ namespace Web.Api.Controllers
 
         [HttpPost]
         [Route("answers")]
-        public ResponseOutput UserAnswers([FromBody]AnswersRequest input)
+        public ResponseOutput SumbitTest([FromBody]TestRequest input)
         {
-            return _service.Answers(input.Answers);
+            return _service.Answers(input);
         }
 
         // PUT api/<controller>/5

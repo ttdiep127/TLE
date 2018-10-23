@@ -7,7 +7,7 @@ namespace Entities.Models
     {
         public int UserId { get; set; }
         public int TopicId { get; set; }
-        public int? Precentage { get; set; }
+        public double? Precentage { get; set; }
         public DateTime? UpdateDay { get; set; }
         public int Id { get; set; }
 

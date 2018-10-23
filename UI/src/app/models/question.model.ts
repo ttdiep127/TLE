@@ -32,6 +32,7 @@ export class QuestionAnswerOutput {
   qtionId: number;
   answer: number;
   isCorrect: boolean;
+  topicId: number;
 
   public constructor(init?: Partial<QuestionAnswerOutput>) {
     Object.assign(this, init);

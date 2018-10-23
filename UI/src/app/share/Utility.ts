@@ -15,12 +15,13 @@ export class Utility {
   public static toQuestionAnswerOutput(qa: QuestionAnswerModel[], userId: number): QuestionAnswerOutput[] {
     const output = [];
     qa.forEach(aq => {
-      if (aq.userAnswer) {
+      if (aq.userAnswer !== null) {
         const input = new QuestionAnswerOutput({
           userId: userId,
           answer: aq.userAnswer,
           qtionId: aq.question.id,
-          isCorrect: aq.isCorrect
+          isCorrect: aq.isCorrect,
+          topicId: aq.question.topicId
         });
         output.push(input);
       }

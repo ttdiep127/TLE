@@ -16,11 +16,12 @@ namespace Entities.Models
         }
 
         public virtual DbSet<Answers> Answers { get; set; }
-        public virtual DbSet<ParagraphQuestion> ParagraphQuestion { get; set; }
+        public virtual DbSet<ParagraphQuestions> ParagraphQuestions { get; set; }
         public virtual DbSet<Paragraphs> Paragraphs { get; set; }
         public virtual DbSet<Qtions> Qtions { get; set; }
         public virtual DbSet<Ratings> Ratings { get; set; }
         public virtual DbSet<TestQtions> TestQtions { get; set; }
+        public virtual DbSet<TestResults> TestResults { get; set; }
         public virtual DbSet<Tests> Tests { get; set; }
         public virtual DbSet<TestTypes> TestTypes { get; set; }
         public virtual DbSet<Topics> Topics { get; set; }
@@ -56,18 +57,18 @@ namespace Entities.Models
                     .HasConstraintName("FK_Answers_Users");
             });
 
-            modelBuilder.Entity<ParagraphQuestion>(entity =>
+            modelBuilder.Entity<ParagraphQuestions>(entity =>
             {
                 entity.HasKey(e => new { e.IdParagraph, e.Position });
 
                 entity.HasOne(d => d.IdParagraphNavigation)
-                    .WithMany(p => p.ParagraphQuestion)
+                    .WithMany(p => p.ParagraphQuestions)
                     .HasForeignKey(d => d.IdParagraph)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ParagraphQuestion_Paragraphs");
 
                 entity.HasOne(d => d.IdQuestionNavigation)
-                    .WithMany(p => p.ParagraphQuestion)
+                    .WithMany(p => p.ParagraphQuestions)
                     .HasForeignKey(d => d.IdQuestion)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ParagraphQuestion_Qtions");
@@ -93,8 +94,6 @@ namespace Entities.Models
 
             modelBuilder.Entity<Ratings>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.UpdateDay).HasColumnType("date");
 
                 entity.HasOne(d => d.Topic)
@@ -112,19 +111,32 @@ namespace Entities.Models
 
             modelBuilder.Entity<TestQtions>(entity =>
             {
-                entity.HasKey(e => new { e.TestId, e.QtionId });
+                entity.HasKey(e => new { e.TestId, e.ItemId, e.IsPara });
 
-                entity.HasOne(d => d.Qtion)
-                    .WithMany(p => p.TestQtions)
-                    .HasForeignKey(d => d.QtionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TestQtions_Qtions");
+                entity.Property(e => e.IsPara).HasColumnName("isPara");
 
                 entity.HasOne(d => d.Test)
                     .WithMany(p => p.TestQtions)
                     .HasForeignKey(d => d.TestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TestQtions_Tests");
+            });
+
+            modelBuilder.Entity<TestResults>(entity =>
+            {
+                entity.Property(e => e.DateTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Test)
+                    .WithMany(p => p.TestResults)
+                    .HasForeignKey(d => d.TestId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TestResults_Tests");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TestResults)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TestResults_Users1");
             });
 
             modelBuilder.Entity<Tests>(entity =>
@@ -134,6 +146,7 @@ namespace Entities.Models
                 entity.HasOne(d => d.Type)
                     .WithMany(p => p.Tests)
                     .HasForeignKey(d => d.TypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Tests_Types");
             });
 

@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {QuestionAnswerModel} from '../../../models/question.model';
+import {TestService} from '../../../services/test.service';
+import {AchievementService} from '../../../services/achievement.service';
 
 @Component({
   selector: 'app-result',
@@ -8,17 +10,13 @@ import {QuestionAnswerModel} from '../../../models/question.model';
 })
 export class ResultComponent implements OnInit {
 
-  @Input() answers: QuestionAnswerModel[];
+  @Input() test: QuestionAnswerModel[];
   correctAnswerNumber: number;
 
+  constructor(private achivementService: AchievementService) {
 
+  }
   ngOnInit() {
-    this.correctAnswerNumber = 0;
-    this.answers.forEach(answer => {
-      if (answer.isCorrect) {
-        this.correctAnswerNumber  += 1;
-      }
-    });
   }
 
 }

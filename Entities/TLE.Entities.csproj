@@ -137,6 +137,7 @@
     <Compile Include="AppModels\AnswersRequest.cs" />
     <Compile Include="AppModels\QuestionsRequest.cs" />
     <Compile Include="AppModels\TestInputModel.cs" />
+    <Compile Include="AppModels\TestOutput.cs" />
     <Compile Include="AppModels\UserAnswer.cs" />
     <Compile Include="AppModels\LoginModel.cs" />
     <Compile Include="AppModels\ParagraphOutput.cs" />
@@ -146,11 +147,12 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Models\Answers.cs" />
-    <Compile Include="Models\ParagraphQuestion.cs" />
+    <Compile Include="Models\ParagraphQuestions.cs" />
     <Compile Include="Models\Paragraphs.cs" />
     <Compile Include="Models\Qtions.cs" />
     <Compile Include="Models\Ratings.cs" />
     <Compile Include="Models\TestQtions.cs" />
+    <Compile Include="Models\TestResults.cs" />
     <Compile Include="Models\Tests.cs" />
     <Compile Include="Models\TestTypes.cs" />
     <Compile Include="Models\TLEContext.cs" />
@@ -171,6 +173,7 @@
     <Compile Include="Services\IBaseService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="Utilities\Enum.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -178,9 +181,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utilities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\ConstantStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Entities.AppModels
 {
-    public class AnswersRequest
+    public class TestRequest
     {
-        public ICollection<UserAnswer> Answers { get; set; }
+        public int Id { get; set; }
+        public int TypeId { get; set; }
+        public List<UserAnswer> Answers { get; set; }
     }
 }

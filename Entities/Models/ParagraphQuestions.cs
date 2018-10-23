@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Entities.Models
 {
-    public partial class ParagraphQuestion
+    public partial class ParagraphQuestions
     {
         public int IdParagraph { get; set; }
         public int IdQuestion { get; set; }
