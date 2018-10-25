@@ -13,6 +13,9 @@ export class Utility {
   }
 
   public static toQuestionAnswerOutput(qa: QuestionAnswerModel[], userId: number): QuestionAnswerOutput[] {
+    if (!userId) {
+      userId = 0;
+    }
     const output = [];
     qa.forEach(aq => {
       if (aq.userAnswer !== null) {

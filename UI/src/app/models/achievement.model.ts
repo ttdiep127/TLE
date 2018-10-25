@@ -1,11 +1,11 @@
-export class Rating {
+export class RatingModel {
   userId: number;
   topicId: number;
-  precentage: number;
-  updateDaty: Date;
+  percentage: number;
+  updateDay: Date;
   id: number;
 
-  public constructor(init?: Partial<Rating>) {
+  public constructor(init?: Partial<RatingModel>) {
     Object.assign(this, init);
   }
 }

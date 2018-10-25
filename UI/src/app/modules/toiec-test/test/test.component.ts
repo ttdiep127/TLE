@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {QuestionService} from '../../../services/question.service';
-import {UserService} from '../../../services/user.service';
 import {TestTypes} from '../../../share/enums';
 import {QuestionAnswerModel, QuestionAnswerOutput, QuestionModel} from '../../../models/question.model';
 import notify from 'devextreme/ui/notify';
@@ -10,6 +9,8 @@ import {GuideToiecPartV} from '../../../data/guideToiecPart';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {TestService} from '../../../services/test.service';
 import {TestInputModel, TestOutputModel} from '../../../models/testInput.model';
+import {UserService} from '../../../services/user.service';
+import {promise} from 'selenium-webdriver';
 
 @Component({
   selector: 'app-test',
@@ -33,12 +34,13 @@ export class TestComponent implements OnInit {
   partNumber: number;
   displayTestResult: boolean;
   interval: any;
+  testOutput: TestOutputModel;
 
 
   constructor(private route: ActivatedRoute, private router: Router,
               private testService: TestService,
-              private userService: UserService, private autheService: AuthenticationService) {
-    this.userId = this.autheService.currentUserId;
+              private userService: UserService, private authService: AuthenticationService) {
+    this.userId = this.authService.currentUserId;
     this.route.params.subscribe(params => {
       const id = params['id'];
 
@@ -114,28 +116,39 @@ export class TestComponent implements OnInit {
   }
 
   onSubmit() {
+    debugger;
     if (this.checkAnswerAllQuestion()) {
       clearInterval(this.interval);
       this.isSubmitting = true;
       if (this.questions) {
-        if (this.userId) {
-          const output = Utility.toQuestionAnswerOutput(this.questions, this.userId);
-          if (output) {
-            const testOutput = new TestOutputModel({
-              id: this.test.id,
-              typeId: this.test.typeId,
-              answers: output
-            });
+        const output = Utility.toQuestionAnswerOutput(this.questions, this.userId);
+        if (output) {
+          this.testOutput = new TestOutputModel({
+            id: this.test.id,
+            typeId: this.test.typeId,
+            answers: output
+          });
 
-            this.testService.submitAQs(testOutput).subscribe(rr => {
+          // Promise.resolve(this.testOutput = new TestOutputModel({
+          //   id: this.test.id,
+          //   typeId: this.test.typeId,
+          //   answers: output
+          // })).then(() => this.displayTestResult = true);
+
+          if (this.userId) {
+            this.testService.submitAQs(this.testOutput).subscribe(rr => {
               if (rr.success) {
-                this.displayTestResult = true;
                 // Load result
 
               } else {
                 notify(rr.message, 'warning');
               }
-            }, (er) => notify(er, 'error'), () => this.isSubmitting = false);
+            }, (er) => notify(er, 'error'), () => {
+              this.isSubmitting = false;
+              this.displayTestResult = true;
+            });
+          } else {
+            this.displayTestResult = true;
           }
         }
       }
@@ -156,7 +169,6 @@ export class TestComponent implements OnInit {
       alert('Please answers all the questions before submit!');
       return false;
     }
-    debugger;
 
     return true;
   }

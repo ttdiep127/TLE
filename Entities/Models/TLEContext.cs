@@ -16,6 +16,8 @@ namespace Entities.Models
         }
 
         public virtual DbSet<Answers> Answers { get; set; }
+        public virtual DbSet<Articles> Articles { get; set; }
+        public virtual DbSet<ArticleViews> ArticleViews { get; set; }
         public virtual DbSet<ParagraphQuestions> ParagraphQuestions { get; set; }
         public virtual DbSet<Paragraphs> Paragraphs { get; set; }
         public virtual DbSet<Qtions> Qtions { get; set; }
@@ -57,6 +59,36 @@ namespace Entities.Models
                     .HasConstraintName("FK_Answers_Users");
             });
 
+            modelBuilder.Entity<Articles>(entity =>
+            {
+                entity.Property(e => e.CreatedDay).HasColumnType("datetime");
+
+                entity.Property(e => e.Description).HasMaxLength(2000);
+
+                entity.Property(e => e.Title)
+                    .IsRequired()
+                    .HasMaxLength(1000);
+
+                entity.HasOne(d => d.Topic)
+                    .WithMany(p => p.Articles)
+                    .HasForeignKey(d => d.TopicId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Articles_Topics");
+            });
+
+            modelBuilder.Entity<ArticleViews>(entity =>
+            {
+                entity.HasKey(e => e.ArticleId);
+
+                entity.Property(e => e.ArticleId).ValueGeneratedNever();
+
+                entity.HasOne(d => d.Article)
+                    .WithOne(p => p.ArticleViews)
+                    .HasForeignKey<ArticleViews>(d => d.ArticleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ArticleViews_Articles");
+            });
+
             modelBuilder.Entity<ParagraphQuestions>(entity =>
             {
                 entity.HasKey(e => new { e.IdParagraph, e.Position });
@@ -94,19 +126,7 @@ namespace Entities.Models
 
             modelBuilder.Entity<Ratings>(entity =>
             {
-                entity.Property(e => e.UpdateDay).HasColumnType("date");
-
-                entity.HasOne(d => d.Topic)
-                    .WithMany(p => p.Ratings)
-                    .HasForeignKey(d => d.TopicId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Ratings_Topics");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.Ratings)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Ratings_Users");
+                entity.Property(e => e.UpdateDay).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<TestQtions>(entity =>

@@ -139,7 +139,7 @@ namespace TLE.Service
                     {
                         UserId = userId,
                         TopicId = topicId,
-                        Precentage = percentageProgicient,
+                        Percentage = percentageProgicient,
                         UpdateDay = DateTime.Now
                     });
                     UnitOfWork.SaveChanges();

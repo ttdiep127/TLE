@@ -33,8 +33,9 @@
       <div class="col-sm-3">
       </div>
       <div class="col-sm-9 ">
-        <div *ngIf="displayTestResult">
-          <app-result [test]="test"></app-result>
+        <div *ngIf="displayTestResult && testOutput">
+          <a>Result</a>
+          <app-result [test]="testOutput"></app-result>
         </div>
         <div class="border p-sm-4">
           <div *ngIf="testType === TESTTYPES.Part5">

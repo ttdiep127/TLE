@@ -19,6 +19,7 @@ import {AddTestComponent} from './modules/administration/add-test/add-test.compo
 import {AddQuestionComponent} from './modules/administration/add-question/add-question.component';
 import {TestService} from './services/test.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {AchievementService} from './services/achievement.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     BaseService,
     AuthenticationService,
     UserService,
-    TestService
+    TestService,
+    AchievementService
   ],
   bootstrap: [AppComponent]
 })

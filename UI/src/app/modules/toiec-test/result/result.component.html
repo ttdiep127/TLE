@@ -1,3 +1,15 @@
 <div class="border">
-  <strong>Correct Question:{{correctAnswerNumber}}/{{answers.length}}</strong>
+  <strong>Correct Question:{{correctAnswerNumber}}/{{test.answers.length}}</strong>
 </div>
+<div *ngIf="articleRecommend">
+  <div *ngFor="let article of articleRecommend">
+    <a>{{article.title}}</a>-<strong>{{article.topicId}}</strong> - <a>{{article.description}}</a>
+  </div>
+</div>
+
+<div *ngIf="ratings">
+  <div *ngFor="let rating of ratings">
+    <a>{{rating.topicId}}</a>-<strong>{{rating.percentage}}</strong> - <a>{{rating.updateDay}}</a>
+  </div>
+</div>
+

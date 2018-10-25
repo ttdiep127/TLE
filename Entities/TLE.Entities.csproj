@@ -138,6 +138,7 @@
     <Compile Include="AppModels\QuestionsRequest.cs" />
     <Compile Include="AppModels\TestInputModel.cs" />
     <Compile Include="AppModels\TestOutput.cs" />
+    <Compile Include="AppModels\ArticleOuput.cs" />
     <Compile Include="AppModels\UserAnswer.cs" />
     <Compile Include="AppModels\LoginModel.cs" />
     <Compile Include="AppModels\ParagraphOutput.cs" />
@@ -147,6 +148,8 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Models\Answers.cs" />
+    <Compile Include="Models\Articles.cs" />
+    <Compile Include="Models\ArticleViews.cs" />
     <Compile Include="Models\ParagraphQuestions.cs" />
     <Compile Include="Models\Paragraphs.cs" />
     <Compile Include="Models\Qtions.cs" />

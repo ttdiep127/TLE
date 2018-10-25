@@ -8,7 +8,6 @@ namespace Entities.Models
         public Users()
         {
             Answers = new HashSet<Answers>();
-            Ratings = new HashSet<Ratings>();
             TestResults = new HashSet<TestResults>();
         }
 
@@ -26,7 +25,6 @@ namespace Entities.Models
         public string AvtSrc { get; set; }
 
         public ICollection<Answers> Answers { get; set; }
-        public ICollection<Ratings> Ratings { get; set; }
         public ICollection<TestResults> TestResults { get; set; }
     }
 }
