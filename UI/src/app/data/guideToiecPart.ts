@@ -1,4 +1,4 @@
-export const GuideToiecPartE = [{
+export const GuideToeicPartE = [{
   part: 1, directions:
     'For each question in this part, you will hear four statements about a picture in your test book.' +
     ' When you hear the statements, you must select the one statement that best describes what you see in the picture.' +
@@ -37,7 +37,7 @@ export const GuideToiecPartE = [{
     ' Select the best answer for each question and mark the letter (A), (B), (C), or (D) on your answer sheet.'
 }];
 
-export const GuideToiecPartV = [
+export const GuideToeicPartV = [
   {}, {}, {}, {
     part: 4, directions: 'Bạn sẽ nghe một số cuộc nói chuyện ngắn được đưa ra bởi một người nói duy nhất. ' +
       'Bạn sẽ được yêu cầu trả lời ba câu hỏi về những gì người nói nói trong mỗi cuộc nói chuyện ngắn.' +

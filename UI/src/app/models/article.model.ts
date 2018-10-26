@@ -5,7 +5,7 @@ export class ArticleModel {
   createdDate?: Date;
   createdBy?: number;
   topicId: number;
-  view?: number;
+  views?: number;
 
   public constructor(init?: Partial<ArticleModel>) {
     Object.assign(this, init);

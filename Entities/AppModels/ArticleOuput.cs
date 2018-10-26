@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities.AppModels
 {
-    public class ArticleInfo
+    public class ArticleInfo 
     {
         public int Id { get; set; }
         public string Title { get; set; }

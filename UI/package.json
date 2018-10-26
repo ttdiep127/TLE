@@ -26,10 +26,14 @@
     "core-js": "^2.5.4",
     "devextreme": "^18.1.6",
     "devextreme-angular": "^18.1.6",
+    "jquery": "^3.3.1",
     "lodash": "^4.17.11",
+    "ng2-owl-carousel2": "^2.0.3",
     "ngx-bootstrap": "^3.0.1",
+    "ngx-owl-carousel": "^2.0.7",
     "ngx-permissions": "^6.0.1",
     "rxjs": "^6.0.0",
+    "script-loader": "^0.7.2",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

@@ -1,0 +1,96 @@
+<div class="text-center bg-main-color">
+  <h4>Bạn vừa hoàn thành bài kiểm tra:</h4>
+  <h2>{{test.title}}</h2>
+  <h3>Điểm của bạn: {{correctAnswerNumber}}/{{test.answers.length}}</h3>
+  <a>Thời gian làm bài: {{minutes}} phút {{spendTime%60}} giây </a>
+</div>
+<div *ngIf="isDisplayRecommend">
+
+  <owl-carousel
+    [options]="{items: 3, dots: false, navigation: false}"
+  [items]="articleRecommend"
+  [carouselClasses]="['owl-theme', 'row', 'sliding']">
+  <div class="item" *ngFor="let item of articleRecommend;let i = index">
+    <div class="article-info">{{item.title}}</div>
+  </div>s
+  </owl-carousel>
+</div>
+
+
+<!--<div class="owl-carousel owl-theme">-->
+<!--<div> Your Content</div>-->
+<!--<div> Your Content</div>-->
+<!--<div> Your Content</div>-->
+<!--<div> Your Content</div>-->
+<!--<div> Your Content</div>-->
+<!--<div> Your Content</div>-->
+<!--<div> Your Content</div>-->
+<!--</div>-->
+<!--<div class="owl-carousel owl-theme">-->
+<!--<div *ngFor="let item of articleRecommend">-->
+<!--<div class="article-info">a</div>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<ng2-owl-carousel2 (onItemSelect)="onItemSelect($event)"-->
+<!--useAttributeSelector="boolean value"-->
+<!--[options]="carouselOptions">-->
+<!--&lt;!&ndash;If attribute selector is  true&ndash;&gt;-->
+<!--//add carousel-item attribute to the html element. onselect will do nothing in this case-->
+<!--<div carousel-item></div>-->
+<!--&lt;!&ndash;If attribute selector is  false&ndash;&gt;-->
+<!--<carousel-item *ngFor="let item of articleRecommend">-->
+<!--//your item template here-->
+<!--</carousel-item>-->
+<!--</ng2-owl-carousel2>-->
+
+
+<!--<div id="asdsadsad1" class="carousel slide" data-ride="carousel">-->
+<!--<div class="carousel-inner">-->
+<!--<div class="carousel-item active">-->
+<!--<div class="row ml-sm-4 mr-sm-4">-->
+<!--<div class="col article-trailer"></i></div>-->
+<!--<div class="col article-trailer">“b2” –<i> Napoleon Hill</i></div>-->
+<!--<div class="col article-trailer">“b2” –<i> Napoleon Hill</i></div>-->
+
+<!--</div>-->
+<!--</div>-->
+<!--<div class="carousel-item">-->
+<!--<div class="row ml-sm-4 mr-sm-4">-->
+<!--<div class="col">“b1” –<i> Napo1ddeson Hill</i></div>-->
+<!--<div class="col">“b1” –<i> Napol1asdeon Hill</i></div>-->
+<!--<div class="col">“b1” –<i> Napsadasdoleon Hill</i></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="carousel-item">-->
+<!--<div class="row ml-sm-4 mr-sm-4">-->
+<!--<div class="col">“b2” –<i> Napoleon Hill</i></div>-->
+<!--<div class="col">“b2” –<i> Napoldeon Hill</i></div>-->
+<!--<div class="col">“b2” –<i> Napoleon Hill</i></div>-->
+<!--<div class="col">“b2” –<i> Napoleon Hill</i></div>-->
+<!--</div>-->
+<!--</div>-->
+<!--<a class="carousel-control-prev" href="#asdsadsad1" role="button" data-slide="prev">-->
+<!--<i class="fas fa-chevron-left"></i>-->
+<!--</a>-->
+<!--<a class="carousel-control-next" href="#asdsadsad1" role="button" data-slide="next">-->
+<!--<i class="fas fa-chevron-right"></i>-->
+<!--</a>-->
+<!--</div>-->
+
+
+<!--<div class="border">-->
+<!--<strong>Correct Question:{{correctAnswerNumber}}/{{test.answers.length}}</strong>-->
+<!--</div>-->
+<!--<div *ngIf="articleRecommend">-->
+<!--<div *ngFor="let article of articleRecommend">-->
+<!--<a>{{article.title}}</a>-<strong>{{article.topicId}}</strong> - <a>{{article.description}}</a>-->
+<!--</div>-->
+<!--</div>-->
+
+<!--<div *ngIf="ratings">-->
+<!--<div *ngFor="let rating of ratings">-->
+<!--<a>{{rating.topicId}}</a>-<strong>{{rating.percentage}}</strong> - <a>{{rating.updateDay}}</a>-->
+<!--</div>-->
+<!--</div>-->
+

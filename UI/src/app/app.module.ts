@@ -10,7 +10,6 @@ import {CookieService} from 'angular2-cookie/core';
 import {BaseService} from './services/base.service';
 import {Utility} from './share/Utility';
 import {NgxPermissionsModule} from 'ngx-permissions';
-import {ToiecTestComponent} from './modules/toiec-test/toiec-test.component';
 import {AppRoutingModule} from './app-routing.module';
 import {HomeComponent} from './modules/home/home.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -18,7 +17,7 @@ import {AdministrationComponent} from './modules/administration/administration.c
 import {AddTestComponent} from './modules/administration/add-test/add-test.component';
 import {AddQuestionComponent} from './modules/administration/add-question/add-question.component';
 import {TestService} from './services/test.service';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {AchievementService} from './services/achievement.service';
 
 @NgModule({

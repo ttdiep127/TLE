@@ -16,6 +16,7 @@ export class TestInputModel {
 
 export class TestOutputModel {
   id: number;
+  title: string;
   typeId: TestTypes;
   answers: QuestionAnswerOutput[];
 

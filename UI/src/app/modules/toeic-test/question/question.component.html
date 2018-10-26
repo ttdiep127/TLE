@@ -1,0 +1,24 @@
+<div class="mb-sm-2" *ngIf="qa">
+  <p><strong>{{qa.id}}. </strong>{{qa.question.contentQ}}</p>
+  <div class="dx-field">
+    <dx-radio-group
+      [items]="currentAnswers"
+      [(value)]="userAnswer"
+      [disabled]="(!isTesting) && (qa.userAnswer)"
+      (onValueChanged)="onValueChanged($event)">
+    </dx-radio-group>
+  </div>
+  <div *ngIf="!isTesting" class="temple-answer">
+    <div ngClass="notification">
+      <div *ngIf="qa.userAnswer && correctAnswer" class="p-1">
+        <div *ngIf="!qa.isCorrect">
+          <a><strong>Answer: </strong>{{correctAnswer}}</a>
+        </div>
+        <div *ngIf="qa.isCorrect">
+          <a class="correct-color">Correct Answer!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
