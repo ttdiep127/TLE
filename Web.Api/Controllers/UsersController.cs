@@ -27,11 +27,11 @@ namespace Web.Api.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET api/user/{userId}/rating
+        [HttpGet("{userId}/rating")]
+        public async Task<IList<RatingModel>> Get(int userId)
         {
-            return "value";
+            return await _service.GetRating(userId);
         }
 
         // POST api/<controller>

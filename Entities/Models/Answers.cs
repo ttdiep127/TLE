@@ -12,6 +12,7 @@ namespace Entities.Models
         public DateTime? UpdateDay { get; set; }
 
         public Qtions Qtion { get; set; }
-        public Users User { get; set; }
+        public Ratings User { get; set; }
+        public Users UserNavigation { get; set; }
     }
 }

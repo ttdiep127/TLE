@@ -1,5 +1,6 @@
 ﻿using Entities.AppModels;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Repositories;
 using System;
@@ -14,7 +15,7 @@ using TLE.Service;
 
 namespace Service
 {
-    public class QtionService: BaseService<Qtions>
+    public class QtionService : BaseService<Qtions>
     {
         private readonly IRepository<Qtions> _repository;
         private readonly IRepository<Paragraphs> _paraRepo;
@@ -31,19 +32,27 @@ namespace Service
 
         public async Task<IEnumerable<QtionOutput>> Get(int part)
         {
-            try
-            {
-                var question = await _repository.Get(part);
-                return question;
-
-            }
-            catch (System.Exception ex)
-            {
-
-                throw;
-            }
+            var question = await _repository.Get(part);
+            return question;
         }
 
+        public async Task<IEnumerable<QtionOutput>> GetByTopicId(int topicId)
+        {
+            var questions = await _repository.Entities.Where(_ => _.TopicId == topicId).Select(_ => new QtionOutput
+            {
+                Id = _.Id,
+                TopicId = _.TopicId,
+                Answer1 = _.Answer1,
+                Answer2 = _.Answer2,
+                Answer3 = _.Answer3,
+                Answer4 = _.Answer4,
+                ContentQ = _.ContentQ,
+                CorrectAnswer = _.CorrectAnswer,
+                Part = _.Part,
+            }).Take(20).ToListAsync();
+
+            return questions;
+        }
         public ResponseOutput AddQuestion(ICollection<QtionOutput> qtions)
         {
             if (qtions == null || qtions.Count == 0)
@@ -122,6 +131,6 @@ namespace Service
             };
         }
 
-       
+
     }
 }

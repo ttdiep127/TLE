@@ -4,6 +4,7 @@ export class RatingModel {
   percentage: number;
   updateDay: Date;
   id: number;
+  name: string;
 
   public constructor(init?: Partial<RatingModel>) {
     Object.assign(this, init);

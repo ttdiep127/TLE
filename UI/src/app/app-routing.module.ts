@@ -5,7 +5,7 @@ import {AdministrationComponent} from './modules/administration/administration.c
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 const modulesPaths = {
   home: './modules/home/home.module#HomeModule',
-  toeicTest: './modules/toeic-test/toeic-test.module#ToeicTestModule'
+  toiecTest: './modules/toeic-test/toeic-test.module#ToeicTestModule'
 };
 
 const routes: Routes = [
@@ -13,6 +13,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'test', loadChildren:  './modules/toeic-test/toeic-test.module#ToeicTestModule'},
   {path: 'admin', component: AdministrationComponent},
+  {path: 'grammar', loadChildren: './modules/grammar/grammar.module#GrammarModule'}
 ];
 
 const config: ExtraOptions = {

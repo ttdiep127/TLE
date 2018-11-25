@@ -27,7 +27,7 @@ namespace TLE.Service
         private readonly IRepository<TestResults> _testResultRepo;
         private readonly IRepository<Tests> _testRepo;
 
-
+      
         public UserService(IUnitOfWork unitOfWork, IOptions<AppSettings> appSettings) : base(unitOfWork)
         {
             _repository = Repository;
@@ -38,11 +38,16 @@ namespace TLE.Service
             _testRepo = UnitOfWork.Repository<Tests>();
         }
 
+        public async Task<IList<RatingModel>> GetRating(int userId)
+        {
+            return await _ratingRepo.GetTopRating(userId, 5);
+        }
+
         public async Task<Users> Get(int userId)
         {
             try
             {
-                return await _repository.Get(userId);
+                return await _repository.GetById(userId);
             }
             catch (System.Exception ex)
             {
@@ -51,7 +56,7 @@ namespace TLE.Service
         }
         public async Task<Users> Add(Users userInput)
         {
-            var user = await _repository.Get(userInput.Id);
+            var user = await _repository.GetById(userInput.Id);
 
             if (user != null)
             {
@@ -162,7 +167,7 @@ namespace TLE.Service
         public async Task<ResponseOutput> Login(LoginModel input)
         {
             // Login with email and password
-            var user = await _repository.Get(input.EmailAddress);
+            var user = await _repository.GetByEmail(input.EmailAddress);
             if (user == null)
             {
                 return new ResponseOutput

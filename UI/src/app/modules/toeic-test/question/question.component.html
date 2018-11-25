@@ -9,9 +9,9 @@
     </dx-radio-group>
   </div>
   <div *ngIf="!isTesting" class="temple-answer">
-    <div ngClass="notification">
+    <div [ngClass]="qa?.isCorrect?'notification correct-answer':'notification incorrect-answer'">
       <div *ngIf="qa.userAnswer && correctAnswer" class="p-1">
-        <div *ngIf="!qa.isCorrect">
+        <div *ngIf="!qa.isCorrect" >
           <a><strong>Answer: </strong>{{correctAnswer}}</a>
         </div>
         <div *ngIf="qa.isCorrect">

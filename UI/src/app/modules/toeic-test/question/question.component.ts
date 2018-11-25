@@ -102,15 +102,15 @@ export class QuestionComponent implements OnInit, OnChanges {
 
       const notification = document.getElementsByClassName('notification');
       const position = notification.length === 1 ? 0 : qa.id - 1;
-      if (notification.item(position)) {
-        notification.item(position).classList.remove('correct-answer');
-        notification.item(position).classList.remove('incorrect-answer');
-        if (qa.isCorrect) {
-          document.getElementsByClassName('notification').item(position).classList.add('correct-answer');
-        } else {
-          document.getElementsByClassName('notification').item(position).classList.add('incorrect-answer');
-        }
-      }
+      // if (notification.item(position)) {
+      //   notification.item(position).classList.remove('correct-answer');
+      //   notification.item(position).classList.remove('incorrect-answer');
+      //   if (qa.isCorrect) {
+      //     document.getElementsByClassName('notification').item(position).classList.add('correct-answer');
+      //   } else {
+      //     document.getElementsByClassName('notification').item(position).classList.add('incorrect-answer');
+      //   }
+      // }
     }
     this.correctAnswer = answer;
   }

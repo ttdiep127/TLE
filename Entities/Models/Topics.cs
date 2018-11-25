@@ -9,6 +9,7 @@ namespace Entities.Models
         {
             Articles = new HashSet<Articles>();
             Qtions = new HashSet<Qtions>();
+            Ratings = new HashSet<Ratings>();
         }
 
         public int Id { get; set; }
@@ -18,5 +19,6 @@ namespace Entities.Models
 
         public ICollection<Articles> Articles { get; set; }
         public ICollection<Qtions> Qtions { get; set; }
+        public ICollection<Ratings> Ratings { get; set; }
     }
 }

@@ -66,6 +66,7 @@ namespace Web.Api
 
             // configure DI for application services
             services.AddScoped<AchievementService>();
+            services.AddScoped<ArticleService>();
             services.AddScoped<UserService>();
             services.AddScoped<QtionService>();
             services.AddScoped<TestService>();

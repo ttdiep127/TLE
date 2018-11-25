@@ -31,13 +31,13 @@ namespace Web.Api.Controllers
 
         // GET api/<controller>/5
         [HttpGet("rating/{userId}")]
-        public List<Ratings> GetRatings(int userId)
+        public async Task<IList<RatingModel>> GetRatings(int userId)
         {
-            return _service.GetRating(userId);
+            return await _service.GetRating(userId);
         }
 
         [HttpGet("recommend/{userId}")]
-        public List<ArticleInfo> RecommendTopicToLearn(int userId)
+        public List<ArticleOutput> RecommendTopicToLearn(int userId)
         {
             return _service.GetRecommend(userId);
         }

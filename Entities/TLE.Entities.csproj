@@ -136,9 +136,10 @@
   <ItemGroup>
     <Compile Include="AppModels\AnswersRequest.cs" />
     <Compile Include="AppModels\QuestionsRequest.cs" />
+    <Compile Include="AppModels\RatingModel.cs" />
     <Compile Include="AppModels\TestInputModel.cs" />
     <Compile Include="AppModels\TestOutput.cs" />
-    <Compile Include="AppModels\ArticleOuput.cs" />
+    <Compile Include="AppModels\ArticleOutput.cs" />
     <Compile Include="AppModels\UserAnswer.cs" />
     <Compile Include="AppModels\LoginModel.cs" />
     <Compile Include="AppModels\ParagraphOutput.cs" />

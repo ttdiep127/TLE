@@ -19,6 +19,8 @@ import {AddQuestionComponent} from './modules/administration/add-question/add-qu
 import {TestService} from './services/test.service';
 import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {AchievementService} from './services/achievement.service';
+import {GrammarService} from './services/grammar.service';
+import { ArchivementComponent } from './modules/archivement/archivement.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import {AchievementService} from './services/achievement.service';
     AdministrationComponent,
     AddTestComponent,
     AddQuestionComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ArchivementComponent,
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import {AchievementService} from './services/achievement.service';
     AuthenticationService,
     UserService,
     TestService,
-    AchievementService
+    AchievementService,
+    GrammarService,
   ],
   bootstrap: [AppComponent]
 })

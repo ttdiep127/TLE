@@ -1,6 +1,7 @@
 @import "~src/assets/variables.scss";
-.detail-test {
+.clock-postiion {
   position: fixed;
+  right: 115px;
 }
 .clock {
   background-color: $dark-main-color;

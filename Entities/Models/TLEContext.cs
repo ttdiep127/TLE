@@ -34,7 +34,7 @@ namespace Entities.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=DIEPTRAN;Database=TLE;Trusted_Connection=True;");
+                optionsBuilder.UseSqlServer("Server=TRANTIEUTHU;Database=TLE;Trusted_Connection=True;");
             }
         }
 
@@ -53,6 +53,12 @@ namespace Entities.Models
                     .HasConstraintName("FK_Answers_Qtions");
 
                 entity.HasOne(d => d.User)
+                    .WithMany(p => p.Answers)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Answers_Ratings");
+
+                entity.HasOne(d => d.UserNavigation)
                     .WithMany(p => p.Answers)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -127,6 +133,12 @@ namespace Entities.Models
             modelBuilder.Entity<Ratings>(entity =>
             {
                 entity.Property(e => e.UpdateDay).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Topic)
+                    .WithMany(p => p.Ratings)
+                    .HasForeignKey(d => d.TopicId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Ratings_Topics");
             });
 
             modelBuilder.Entity<TestQtions>(entity =>

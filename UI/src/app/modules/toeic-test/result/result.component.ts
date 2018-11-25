@@ -19,47 +19,30 @@ export class ResultComponent implements OnInit {
   @Input() test: TestOutputModel;
   @Input() spendTime: number;
   correctAnswerNumber: number;
-  ratings: RatingModel[];
   articleRecommend: ArticleModel[];
   minutes: number;
   isDisplayRecommend: boolean;
+  weaknessGrammars: RatingModel[];
+  isDisplayWeaknessGrammar: boolean;
+  mySlideOptions: any;
 
   constructor(private authService: AuthenticationService, private achievementService: AchievementService) {
     this.isDisplayRecommend = false;
   }
 
   ngOnInit() {
-    // jQuery('.owl-carousel').owlCarousel();
-    //
-    // jQuery('.owl-carousel').owlCarousel({
-    //   loop: true,
-    //   margin: 10,
-    //   responsiveClass: true,
-    //   rewind: true,
-    //   responsive: {
-    //     0: {
-    //       items: 1,
-    //       nav: true,
-    //       loop: false,
-    //     },
-    //     600: {
-    //       items: 3,
-    //       nav: false,
-    //       loop: false,
-    //     },
-    //     1000: {
-    //       items: 5,
-    //       loop: false,
-    //       nav: true
-    //     }
-    //   }
-    // });
+    this.mySlideOptions = {items: 5, dots: false, nav: true, loop: true};
     if (this.authService.currentUserId) {
-      this.achievementService.getRecommend(this.authService.currentUserId).subscribe(result => {
+      const userId = this.authService.currentUserId;
+      this.achievementService.getRecommend(userId).subscribe(result => {
         if (result) {
           this.articleRecommend = result;
           this.isDisplayRecommend = true;
         }
+      });
+      this.achievementService.getRating(userId).subscribe( ratings => {
+        this.weaknessGrammars = ratings;
+        this.isDisplayWeaknessGrammar = true;
       });
     }
     this.correctAnswerNumber = 0;

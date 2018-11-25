@@ -12,7 +12,7 @@ namespace Repositories.Repositories
 {
     public static class UserRepository
     {
-        public static async Task<Users> Get(this IRepository<Users> repository, int userId)
+        public static async Task<Users> GetById(this IRepository<Users> repository, int userId)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace Repositories.Repositories
             }
         }
 
-        public static async Task<Users> Get(this IRepository<Users> repository, string email)
+        public static async Task<Users> GetByEmail(this IRepository<Users> repository, string email)
         {
             return await repository.Entities.Where(_ => _.EmailAddress == email).FirstOrDefaultAsync();
         }

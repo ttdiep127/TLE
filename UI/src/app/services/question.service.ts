@@ -17,6 +17,10 @@ export class QuestionService {
     return this.baseService.get(`${this.baseService.questionUrl}/${partNumber}`);
   }
 
+  getQuestionsTopic(topicId: number): Observable<QuestionModel[]> {
+    return this.baseService.get(`${this.baseService.questionUrl}/topic/${topicId}`);
+  }
+
   getParagraph(partNumber: number): Observable<ParagraphModel> {
     return this.baseService.get(`${this.baseService.questionUrl}/para/${partNumber}`);
   }

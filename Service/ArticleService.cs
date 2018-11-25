@@ -22,14 +22,13 @@ namespace Service
             _articleViewsRepo = UnitOfWork.Repository<ArticleViews>();
         }
 
-        internal List<ArticleInfo> getArtiles(List<Ratings> topRatings)
+        internal List<ArticleOutput> GetArtiles(List<Ratings> topRatings)
         {
 
-            var articles = new List<ArticleInfo>();
+            var articles = new List<ArticleOutput>();
             foreach (var rating in topRatings)
             {
-
-                articles.AddRange(_articleViewsRepo.Entities.Where(_ => _.Article.TopicId == rating.TopicId).Select(_ => new ArticleInfo
+                articles.AddRange(_articleViewsRepo.Entities.Where(_ => _.Article.TopicId == rating.TopicId).Select(_ => new ArticleOutput
                 {
                     Id = _.ArticleId,
                     TopicId = _.Article.TopicId,
@@ -45,6 +44,21 @@ namespace Service
                 }
             }
             return articles;
+        }
+
+        public ArticleOutput GetArticle(int articleId)
+        {
+           return _repository.Entities.Where(_ => _.Id == articleId).Select(_ => new ArticleOutput
+           {
+               Id = _.Id,
+               Title = _.Title,
+               TopicId = _.TopicId,
+               ContentArticles = _.ContentArticles,
+               CreatedBy = _.CreatedBy,
+               CreatedDay = _.CreatedDay,
+               Description = _.Description,
+               Views = _.ArticleViews.Views
+           }).FirstOrDefault();
         }
     }
 }
