@@ -9,7 +9,7 @@ import {AuthenticationService} from '../../../../services/authentication.service
 })
 export class MemberbarComponent implements OnInit {
   user: UserInfo;
-  onLogin = false;
+  displayLoginForm = false;
   onRegister = false;
 
   constructor(private authService: AuthenticationService) {
@@ -20,6 +20,7 @@ export class MemberbarComponent implements OnInit {
   }
 
   loggedIn(loggedUser: UserInfo) {
+    this.displayLoginForm = false;
     this.user = loggedUser;
   }
 

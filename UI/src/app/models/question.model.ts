@@ -1,4 +1,4 @@
-export class QuestionModel {
+export class QuestionViewModel {
   id: number;
   contentQ: string;
   answer1?: string;
@@ -6,44 +6,27 @@ export class QuestionModel {
   answer3?: string;
   answer4?: string;
   correctAnswer?: number;
-  part?: number;
-  position?: number;
+  partNumber?: number;
   topicId?: number;
-
-  public constructor(init?: Partial<QuestionModel>) {
-    Object.assign(this, init);
-  }
-}
-
-
-export class QuestionAnswerModel {
-  id: number;
-  question: QuestionModel;
   userAnswer: number;
+  answeredByUserId: number;
   isCorrect: boolean;
+  index: number;
 
-  public constructor(init?: Partial<QuestionAnswerModel>) {
+  public constructor(init?: Partial<QuestionViewModel>) {
     Object.assign(this, init);
   }
 }
 
-export class QuestionAnswerOutput {
+export class AnswerSubmitModel {
   userId: number;
-  qtionId: number;
-  answer: number;
+  questionId: number;
+  userAnswer: number;
   isCorrect: boolean;
   topicId: number;
 
-  public constructor(init?: Partial<QuestionAnswerOutput>) {
-    Object.assign(this, init);
-  }
-
-}
-
-export  class QuestionRequest {
-  questions: QuestionModel[];
-
-  public constructor(init?: Partial<QuestionRequest>) {
+  public constructor(init?: Partial<AnswerSubmitModel>) {
     Object.assign(this, init);
   }
 }
+

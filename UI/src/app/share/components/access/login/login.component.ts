@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {UserInfo, UserLogin} from '../../../../models/account.model';
+import {UserLogin} from '../../../../models/account.model';
 import {AuthenticationService} from '../../../../services/authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Utility} from '../../../Utility';
@@ -11,11 +11,12 @@ import notify from 'devextreme/ui/notify';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  @Output() loggedUser = new EventEmitter<UserInfo>();
+  @Output() onSubmitted: EventEmitter<UserLogin> = new EventEmitter();
+  @Output() onCancel: EventEmitter<any> = new EventEmitter();
+
 
   loginData: UserLogin;
   isLoading: boolean;
-  returnUrl: string;
   loginBtnId: string;
   isValidAccount: boolean;
 
@@ -41,10 +42,9 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginData)
       .subscribe((rr) => {
           if (rr.success) {
-            const user = rr.obj;
+            const user = rr.data;
             this.authService.setLoggedUser(user);
-            this.loggedUser.emit(user);
-            notify('success');
+            this.onSubmitted.emit(user);
             // this.authService.setLoggedUser(user);
             // this.router.navigate(['/dashboard']);
             if (this.loginData.isKeepSignedIn) {
@@ -66,5 +66,9 @@ export class LoginComponent implements OnInit {
         },
         () => this.isLoading = false
       );
+  }
+
+  closeLoginForm() {
+    this.onCancel.emit();
   }
 }

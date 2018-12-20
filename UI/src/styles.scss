@@ -102,10 +102,15 @@ h3 {
   }
 }
 
+.c-pointer {
+  cursor: pointer;
+}
 
 .bg-main-color {
   background-color: $light-main-color;
 }
+
+
 @media only screen and (min-width: 481px) {
 
 }

@@ -1,5 +1,6 @@
-import {QuestionAnswerModel, QuestionAnswerOutput} from '../models/question.model';
 import {AuthenticationService} from '../services/authentication.service';
+import {TestInputModel, TestSubmitModel} from '../models/testInput.model';
+import {AnswerSubmitModel, QuestionViewModel} from '../models/question.model';
 
 export class Utility {
 
@@ -12,24 +13,34 @@ export class Utility {
     });
   }
 
-  public static toQuestionAnswerOutput(qa: QuestionAnswerModel[], userId: number): QuestionAnswerOutput[] {
-    if (!userId) {
-      userId = 0;
-    }
-    const output = [];
-    qa.forEach(aq => {
-      if (aq.userAnswer !== null) {
-        const input = new QuestionAnswerOutput({
-          userId: userId,
-          answer: aq.userAnswer,
-          qtionId: aq.question.id,
-          isCorrect: aq.isCorrect,
-          topicId: aq.question.topicId
+
+  static ConvertToTestSubmit(test: TestInputModel, userId: number) {
+
+    const answerSubmits: AnswerSubmitModel[] = [];
+    test.questions.forEach((qtion) => {
+      if (qtion.userAnswer) {
+        const answer = new AnswerSubmitModel( {
+          questionId: qtion.id,
+          userAnswer: qtion.userAnswer,
+          isCorrect: qtion.userAnswer === qtion.correctAnswer,
+          topicId: qtion.topicId,
+          userId: userId
         });
-        output.push(input);
+
+        answerSubmits.push(answer);
       }
     });
-    return output;
+
+    return new TestSubmitModel({
+      id: test.id,
+      userId: userId,
+      answers: answerSubmits
+    });
   }
 
+  static getTimeString(totalTime: number) {
+    const mins = Math.floor(totalTime / 60);
+    const second = totalTime % 60;
+    return mins.toString() + ' phút ' + second.toString() + ' giây';
+  }
 }

@@ -16,12 +16,12 @@ namespace Repositories
         {
             return await repository.Entities.FirstOrDefaultAsync(_ => _.Id == questionId);
         }
-        public static async Task<IEnumerable<QtionOutput>> Get(this IRepository<Qtions> repository, int part)
+        public static async Task<IList<QuestionViewModel>> Get(this IRepository<Qtions> repository, int part)
         {
             return await repository.Entities
                 .Where(_ => _.Part == part)
                 .Select(
-                    _ => new QtionOutput
+                    _ => new QuestionViewModel
                     {
                         Id = _.Id,
                         ContentQ = _.ContentQ,
@@ -29,17 +29,11 @@ namespace Repositories
                         Answer2 = _.Answer2,
                         Answer3 = _.Answer3,
                         Answer4 = _.Answer4,
-                        CorrectAnswer = _.CorrectAnswer,
-                        Part = _.Part,
-                        TopicId = _.TopicId,
+                        CorrectAnswer = _.CorrectAnswer.Value,
+                        Part = _.Part.Value,
+                        TopicId = _.TopicId.Value,
                     }).OrderBy(_ => Guid.NewGuid()).Take(40).ToListAsync();
 
         }
-
-        
-
     }
-
-
-
 }

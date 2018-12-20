@@ -11,10 +11,14 @@ export enum Answers {
 }
 
 export enum  TestTypes {
-  FullTest = 1,
-  ShortTest,
-  Part5,
-  Part6,
-  Part7
+  Part = 1,
+  Topic = 2,
+  FullTest = 3,
+  ShortTest = 4,
 }
 
+export enum  PartNumber {
+  Part5 = 5,
+  Part6 = 6,
+  Part7 = 7,
+}

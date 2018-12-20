@@ -1,5 +1,6 @@
 ﻿using Entities.AppModels;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,12 +39,19 @@ namespace Service
                     Title = _.Article.Title,
                     Views = _.Views
                 }));
-                if (articles.Count > 20)
+                if (articles.Count > 10)
                 {
                     break;
                 }
             }
-            return articles;
+            if (articles.Count >= 10)
+            {
+                return articles;
+            } else
+            {
+                var articlesTop = GetTopArticles();
+                return articles.Concat(articlesTop).Take(10).ToList();
+            }
         }
 
         public ArticleOutput GetArticle(int articleId)
@@ -59,6 +67,24 @@ namespace Service
                Description = _.Description,
                Views = _.ArticleViews.Views
            }).FirstOrDefault();
+        }
+
+        internal List<ArticleOutput> GetTopArticles()
+        {
+            var topicIds = new List<int>{1,2,5,6};
+
+            return _repository.Entities.Where(_ => topicIds.Any(t => t == _.TopicId))
+                .Select(_ => new ArticleOutput
+                {
+                    Id = _.Id,
+                    Title = _.Title,
+                    TopicId = _.TopicId,
+                    ContentArticles = _.ContentArticles,
+                    CreatedBy = _.CreatedBy,
+                    CreatedDay = _.CreatedDay,
+                    Description = _.Description,
+                    Views = _.ArticleViews.Views
+                }).Take(10).ToList();
         }
     }
 }

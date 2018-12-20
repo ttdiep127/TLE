@@ -33,14 +33,14 @@ namespace Web.Api.Controllers
 
         // GET api/question/5
         [HttpGet("{partNumber}")]
-        public async Task<IEnumerable<QtionOutput>> Get(int partNumber)
+        public async Task<IEnumerable<QuestionViewModel>> Get(int partNumber)
         {
             return await _service.Get(partNumber);
         }
 
         // GET api/question/5
         [HttpGet("topic/{topicId}")]
-        public async Task<IEnumerable<QtionOutput>> GetByTopicId(int topicId)
+        public async Task<IEnumerable<QuestionViewModel>> GetByTopicId(int topicId)
         {
             return await _service.GetByTopicId(topicId);
         }

@@ -21,16 +21,25 @@ import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 import {AchievementService} from './services/achievement.service';
 import {GrammarService} from './services/grammar.service';
 import { ArchivementComponent } from './modules/archivement/archivement.component';
+import {ResultComponent} from './modules/result/result.component';
+import {OwlModule} from 'ngx-owl-carousel';
+import {QuestionComponent} from './modules/question/question.component';
+import {TestComponent} from './modules/test/test.component';
+import {PracticeComponent} from './modules/practice/practice.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     AdministrationComponent,
+    QuestionComponent,
     AddTestComponent,
     AddQuestionComponent,
     PageNotFoundComponent,
     ArchivementComponent,
+    ResultComponent,
+    TestComponent,
+    PracticeComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +47,8 @@ import { ArchivementComponent } from './modules/archivement/archivement.componen
     HttpClientModule,
     SharedModule.forRoot(),
     NgxPermissionsModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    OwlModule,
   ],
   providers: [
     CookieService,

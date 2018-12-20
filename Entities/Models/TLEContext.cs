@@ -42,8 +42,6 @@ namespace Entities.Models
         {
             modelBuilder.Entity<Answers>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.QtionId });
-
                 entity.Property(e => e.UpdateDay).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Qtion)
@@ -52,13 +50,17 @@ namespace Entities.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Answers_Qtions");
 
-                entity.HasOne(d => d.User)
+                entity.HasOne(d => d.TestResult)
                     .WithMany(p => p.Answers)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Answers_Ratings");
+                    .HasForeignKey(d => d.TestResultId)
+                    .HasConstraintName("FK_Answers_TestResults");
 
-                entity.HasOne(d => d.UserNavigation)
+                entity.HasOne(d => d.Topic)
+                    .WithMany(p => p.Answers)
+                    .HasForeignKey(d => d.TopicId)
+                    .HasConstraintName("FK_Answers_Topics");
+
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.Answers)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
@@ -132,20 +134,32 @@ namespace Entities.Models
 
             modelBuilder.Entity<Ratings>(entity =>
             {
+                entity.Property(e => e.TestGuid).HasMaxLength(50);
+
                 entity.Property(e => e.UpdateDay).HasColumnType("datetime");
 
                 entity.HasOne(d => d.Topic)
                     .WithMany(p => p.Ratings)
                     .HasForeignKey(d => d.TopicId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Ratings_Topics");
+                    .HasConstraintName("FK_Ratings_Topics1");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Ratings)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Ratings_Users");
             });
 
             modelBuilder.Entity<TestQtions>(entity =>
             {
                 entity.HasKey(e => new { e.TestId, e.ItemId, e.IsPara });
 
-                entity.Property(e => e.IsPara).HasColumnName("isPara");
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.TestQtions)
+                    .HasForeignKey(d => d.ItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_TestQtions_Qtions");
 
                 entity.HasOne(d => d.Test)
                     .WithMany(p => p.TestQtions)
@@ -156,23 +170,31 @@ namespace Entities.Models
 
             modelBuilder.Entity<TestResults>(entity =>
             {
-                entity.Property(e => e.DateTime).HasColumnType("datetime");
+                entity.Property(e => e.ExamedAt).HasColumnType("datetime");
+
+                entity.Property(e => e.GuidId)
+                    .IsRequired()
+                    .HasMaxLength(50);
 
                 entity.HasOne(d => d.Test)
                     .WithMany(p => p.TestResults)
                     .HasForeignKey(d => d.TestId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TestResults_Tests");
+                    .HasConstraintName("FK_TestResults_Tests1");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TestResults)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_TestResults_Users1");
+                    .HasConstraintName("FK_TestResults_Users");
             });
 
             modelBuilder.Entity<Tests>(entity =>
             {
+                entity.Property(e => e.CreatedAt).HasMaxLength(10);
+
+                entity.Property(e => e.CreatedBy).HasMaxLength(10);
+
                 entity.Property(e => e.Title).HasMaxLength(500);
 
                 entity.HasOne(d => d.Type)

@@ -8,11 +8,14 @@ namespace Entities.AppModels
 {
     public class RatingModel
     {
+        public int Id { get; set; }
         public int UserId { get; set; }
         public int TopicId { get; set; }
-        public double? Percentage { get; set; }
-        public DateTime? UpdateDay { get; set; }
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public string TopicName { get; set; }
+        public int TotalAnswers { get; set; }
+        public int CorrectNumber { get; set; }
+        public double Percentage { get; set; }
+        public DateTime UpdateDay { get; set; }
+        public string TestGuid { get; set; }
     }
 }

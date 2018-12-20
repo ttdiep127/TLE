@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges} from '@angular/core';
-import {QuestionAnswerModel} from '../../../models/question.model';
 import {cloneDeep} from 'lodash';
-import {Answers} from '../../../share/enums';
+import {Answers} from '../../share/enums';
+import {QuestionViewModel} from '../../models/question.model';
 
 @Component({
   selector: 'app-question',
@@ -9,21 +9,21 @@ import {Answers} from '../../../share/enums';
   styleUrls: ['./question.component.scss']
 })
 export class QuestionComponent implements OnInit, OnChanges {
-  private _question: QuestionAnswerModel;
+  private _question: QuestionViewModel;
 
   @Input()
-  get question(): QuestionAnswerModel {
+  get question(): QuestionViewModel {
     return this._question;
   }
 
-  set question(value: QuestionAnswerModel) {
+  set question(value: QuestionViewModel) {
     this._question = value;
   }
 
   @Input() isTesting: boolean;
-  @Output() onChange = new EventEmitter<QuestionAnswerModel>();
+  @Output() onChange = new EventEmitter<QuestionViewModel>();
 
-  qa: QuestionAnswerModel;
+  qa: QuestionViewModel;
   currentAnswers: any;
   userAnswer: any;
   correctAnswer: string;
@@ -56,10 +56,10 @@ export class QuestionComponent implements OnInit, OnChanges {
       this.correctAnswer = null;
       this.qa = cloneDeep(this._question);
       this.currentAnswers = [
-        {text: 'A. ' + (this.qa.question.answer1 || ''), value: 1},
-        {text: 'B. ' + (this.qa.question.answer2 || ''), value: 2},
-        {text: 'C. ' + (this.qa.question.answer3 || ''), value: 3},
-        {text: 'D. ' + (this.qa.question.answer4 || ''), value: 4}
+        {text: 'A. ' + (this.qa.answer1 || ''), value: 1},
+        {text: 'B. ' + (this.qa.answer2 || ''), value: 2},
+        {text: 'C. ' + (this.qa.answer3 || ''), value: 3},
+        {text: 'D. ' + (this.qa.answer4 || ''), value: 4}
       ];
       this.userAnswer = this.currentAnswers[this.qa.userAnswer - 1];
       if (this._question.userAnswer && !this.isTesting) {
@@ -71,29 +71,29 @@ export class QuestionComponent implements OnInit, OnChanges {
   onValueChanged(e) {
     if (e.value) {
       this.qa.userAnswer = e.value.value;
-      this.qa.isCorrect = this.qa.userAnswer === this.qa.question.correctAnswer;
+      this.qa.isCorrect = this.qa.userAnswer === this.qa.correctAnswer;
       this.onChange.emit(this.qa);
     }
   }
 
-  displayAnswer(qa: QuestionAnswerModel) {
+  displayAnswer(qa: QuestionViewModel) {
     let answer = '';
     if (qa.userAnswer) {
-      switch (qa.question.correctAnswer) {
+      switch (qa.correctAnswer) {
         case Answers.A: {
-          answer = 'A. ' + qa.question.answer1;
+          answer = 'A. ' + qa.answer1;
           break;
         }
         case Answers.B: {
-          answer = 'B. ' + qa.question.answer2;
+          answer = 'B. ' + qa.answer2;
           break;
         }
         case Answers.C: {
-          answer = 'C. ' + qa.question.answer3;
+          answer = 'C. ' + qa.answer3;
           break;
         }
         case Answers.D: {
-          answer = 'D. ' + qa.question.answer4;
+          answer = 'D. ' + qa.answer4;
           break;
         }
         default:

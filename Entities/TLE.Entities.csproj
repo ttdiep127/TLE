@@ -134,16 +134,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppModels\AnswersRequest.cs" />
+    <Compile Include="AppModels\ListRatingModel.cs" />
+    <Compile Include="AppModels\ResultRequest.cs" />
+    <Compile Include="AppModels\TestResultsView.cs" />
+    <Compile Include="AppModels\TestSubmitModel.cs" />
     <Compile Include="AppModels\QuestionsRequest.cs" />
     <Compile Include="AppModels\RatingModel.cs" />
     <Compile Include="AppModels\TestInputModel.cs" />
-    <Compile Include="AppModels\TestOutput.cs" />
+    <Compile Include="AppModels\TestViewModel.cs" />
     <Compile Include="AppModels\ArticleOutput.cs" />
-    <Compile Include="AppModels\UserAnswer.cs" />
+    <Compile Include="AppModels\TestTypeModel.cs" />
+    <Compile Include="AppModels\AnswerSubmit.cs" />
     <Compile Include="AppModels\LoginModel.cs" />
     <Compile Include="AppModels\ParagraphOutput.cs" />
-    <Compile Include="AppModels\QtionOutput.cs" />
+    <Compile Include="AppModels\QuestionViewModel.cs" />
     <Compile Include="AppModels\ResponseOutput.cs" />
     <Compile Include="AppModels\UserOuput.cs" />
     <Compile Include="Class1.cs" />

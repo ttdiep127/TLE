@@ -1,5 +1,6 @@
 ﻿using Entities.AppModels;
 using Entities.Models;
+using Entities.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
 using Repositories.Repositories;
@@ -22,6 +23,10 @@ namespace Service
         private readonly IRepository<Qtions> _questionRepo;
         private readonly IRepository<TestTypes> _testTypesRepo;
         private readonly IRepository<TestQtions> _testQuestionsRepo;
+        private readonly IRepository<TestResults> _testResultRepo;
+        private readonly IRepository<Answers> _answerRepo;
+        private readonly IRepository<Topics> _topicRepo;
+
 
         public TestService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -31,6 +36,9 @@ namespace Service
             _questionRepo = UnitOfWork.Repository<Qtions>();
             _testTypesRepo = UnitOfWork.Repository<TestTypes>();
             _testQuestionsRepo = UnitOfWork.Repository<TestQtions>();
+            _testResultRepo = UnitOfWork.Repository<TestResults>();
+            _answerRepo = UnitOfWork.Repository<Answers>();
+            _topicRepo = UnitOfWork.Repository<Topics>();
         }
 
 
@@ -79,7 +87,7 @@ namespace Service
                 _questionRepo.InsertRange(questions);
                 await UnitOfWork.SaveChangesAsync();
 
-                response.Success = await InsertParagraphs(testInput.Paragraphs);
+                response.Success = true; // await InsertParagraphs(testInput.Paragraphs);
             }
             catch (Exception ex)
             {
@@ -90,172 +98,263 @@ namespace Service
             return response;
         }
 
-        public async Task<bool> InsertParagraphs(IEnumerable<ParagraphOutput> paragraphsInput)
+        //public async Task<bool> InsertParagraphs(IEnumerable<ParagraphOutput> paragraphsInput)
+        //{
+        //    try
+        //    {
+        //        var paragraphs = new List<Paragraphs>();
+        //        UnitOfWork.BeginTransaction();
+        //        foreach (var para in paragraphsInput)
+        //        {
+
+        //            var paraTemp = new Paragraphs
+        //            {
+        //                Id = 0,
+        //                ContentP1 = para.ContentP1,
+        //                ContentP2 = para.ContentP2,
+        //            };
+
+        //            await _paraRepo.InsertAsync(paraTemp);
+
+        //            var qtionsTemp = new List<Qtions>();
+        //            para.Questions = para.Questions.OrderBy(_ => _.Position);
+
+        //            foreach (var qtion in para.Questions)
+        //            {
+        //                var qtionTemp = new Qtions
+        //                {
+        //                    Id = 0,
+        //                    ContentQ = qtion.ContentQ,
+        //                    Answer1 = qtion.Answer1,
+        //                    Answer2 = qtion.Answer2,
+        //                    Answer3 = qtion.Answer3,
+        //                    Answer4 = qtion.Answer4,
+        //                    Part = qtion.Part,
+        //                    TopicId = qtion.TopicId
+        //                };
+        //                qtionsTemp.Add(qtionTemp);
+        //            }
+        //            _questionRepo.InsertRange(qtionsTemp);
+        //            await UnitOfWork.SaveChangesAsync();
+
+        //            var paraQtions = new List<ParagraphQuestions>();
+
+        //            var index = 1;
+        //            foreach (var qtion in qtionsTemp)
+        //            {
+        //                var paraQtion = new ParagraphQuestions
+        //                {
+        //                    IdParagraph = paraTemp.Id,
+        //                    IdQuestion = qtion.Id,
+        //                    Position = index++
+        //                };
+
+        //                paraQtions.Add(paraQtion);
+        //            }
+        //            var exist = _paraQuestionRepo.GetByParaId(paraTemp.Id);
+
+        //            if (exist == null)
+        //            {
+        //                _paraQuestionRepo.InsertRange(paraQtions);
+        //                await UnitOfWork.SaveChangesAsync();
+        //                return true;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //    }
+        //    UnitOfWork.RollbackTransaction();
+        //    return false;
+        //}
+
+        public async Task<ResponseOutput> GetTest(TestTypesEnum testTypeId, int param)
         {
-            try
-            {
-                var paragraphs = new List<Paragraphs>();
-                UnitOfWork.BeginTransaction();
-                foreach (var para in paragraphsInput)
-                {
-
-                    var paraTemp = new Paragraphs
-                    {
-                        Id = 0,
-                        ContentP1 = para.ContentP1,
-                        ContentP2 = para.ContentP2,
-                    };
-
-                    await _paraRepo.InsertAsync(paraTemp);
-
-                    var qtionsTemp = new List<Qtions>();
-                    para.Questions = para.Questions.OrderBy(_ => _.Position);
-
-                    foreach (var qtion in para.Questions)
-                    {
-                        var qtionTemp = new Qtions
-                        {
-                            Id = 0,
-                            ContentQ = qtion.ContentQ,
-                            Answer1 = qtion.Answer1,
-                            Answer2 = qtion.Answer2,
-                            Answer3 = qtion.Answer3,
-                            Answer4 = qtion.Answer4,
-                            Part = qtion.Part,
-                            TopicId = qtion.TopicId
-                        };
-                        qtionsTemp.Add(qtionTemp);
-                    }
-                    _questionRepo.InsertRange(qtionsTemp);
-                    await UnitOfWork.SaveChangesAsync();
-
-                    var paraQtions = new List<ParagraphQuestions>();
-
-                    var index = 1;
-                    foreach (var qtion in qtionsTemp)
-                    {
-                        var paraQtion = new ParagraphQuestions
-                        {
-                            IdParagraph = paraTemp.Id,
-                            IdQuestion = qtion.Id,
-                            Position = index++
-                        };
-
-                        paraQtions.Add(paraQtion);
-                    }
-                    var exist = _paraQuestionRepo.GetByParaId(paraTemp.Id);
-
-                    if (exist == null)
-                    {
-                        _paraQuestionRepo.InsertRange(paraQtions);
-                        await UnitOfWork.SaveChangesAsync();
-                        return true;
-                    }
-                }
-            }
-            catch (Exception)
-            {
-
-            }
-            UnitOfWork.RollbackTransaction();
-            return false;
-        }
-
-        public async Task<ResponseOutput> GetTest(int testType) {
-
-            if (_testTypesRepo.Entities.FirstOrDefault(_ => _.Id == testType) == null)
+            var type = _testTypesRepo.Entities.FirstOrDefault(_ => _.Id == (int)testTypeId);
+            var test = new Tests();
+            if (type == null)
             {
                 return new ResponseOutput(false, "TestType is invalid!");
-            } else
-            {
-                var test = await _repository.Entities.Where(_ => _.TypeId == testType).OrderBy(_ => Guid.NewGuid()).FirstOrDefaultAsync();
-
-                var questions = new List<QtionOutput>();
-                var paras = new List<ParagraphOutput>();
-                if (test != null)
-                {
-                    var testQuestions = _testQuestionsRepo.Entities.Where(_ => _.TestId == test.Id);
-
-                    foreach (var item in testQuestions)
-                    {
-                        if (item.IsPara)
-                        {
-                            paras.Add( await GetParaById(item.ItemId));
-                        }
-                        else
-                        {
-                            questions.Add(await GetQuestionByIdAsync(item.ItemId));
-                        }
-                    }
-
-                    var testOutput = new TestOutput
-                    {
-                        Id = test.Id,
-                        Title = test.Title,
-                        TypeId = test.TypeId,
-                        Paragraphs = paras,
-                        Questions = questions
-                    };
-
-                    return new ResponseOutput(true, "", testOutput);
-                }
-                else
-                {
-                    //genarate test
-                    
-                }
-                return new ResponseOutput(false, "Error When get a test");
             }
+            var questions = new List<QuestionViewModel>();
+            if (testTypeId == TestTypesEnum.Part)
+            {
+                test = await _repository.Entities
+                    .Where(_ => _.TypeId == (int)testTypeId && _.Part == param)
+                    .OrderBy(_ => Guid.NewGuid())
+                    .FirstOrDefaultAsync();
+            }
+
+            if (testTypeId == TestTypesEnum.Topic)
+            {
+                test = await CreateTest(param);
+            }
+
+            if (test != null)
+            {
+                var testQuestions = _testQuestionsRepo.Entities.Where(_ => _.TestId == test.Id).ToList();
+
+                foreach (var item in testQuestions)
+                {
+                    var question = await GetQuestionByIdAsync(item.ItemId);
+                    question.Index = item.Position;
+                    questions.Add(question);
+                }
+
+                var testOutput = new TestViewModel
+                {
+                    Id = test.Id,
+                    Title = test.Title,
+                    TypeId = test.TypeId,
+                    Questions = questions,
+                };
+
+                return new ResponseOutput(true, "", testOutput);
+            }
+            return new ResponseOutput(false);
+        }
+        private async Task<Tests> CreateTest(int topicId)
+        {
+            var topic = await _topicRepo.Entities.FirstOrDefaultAsync(_ => _.Id == topicId);
+            var test = new Tests
+            {
+                TopicId = topicId,
+                Title = "Bài luyện tập " + topic.Name,
+                TypeId = (int)TestTypesEnum.Topic,
+            };
+            _repository.Insert(test);
+            UnitOfWork.SaveChanges();
+            var testQuestions = _questionRepo.Entities.Where(_ => _.TopicId == topicId)
+                .OrderBy(_ => new Guid())
+                .Take(40)
+                .Select(_ => new TestQtions
+                {
+                    IsPara = false,
+                    ItemId = _.Id,
+                    Part = 5,
+                    TestId = test.Id,
+                }).ToList();
+
+            var index = 1;
+            foreach (var testQuestion in testQuestions)
+            {
+                testQuestion.Position = index++;
+            }
+
+            _testQuestionsRepo.InsertRangeAsync(testQuestions);
+            UnitOfWork.SaveChanges();
+
+            return test;
+        }
+        public async Task<IList<QuestionViewModel>> GetAnswers(string testGuidId)
+        {
+            var testResult = await _testResultRepo.Entities.FirstOrDefaultAsync(_ => _.GuidId == testGuidId);
+            return _answerRepo.Entities.Where(_ => _.TestResultId == testResult.Id).Select(temp => new QuestionViewModel
+            {
+                Id = temp.Id,
+                Answer1 = temp.Qtion.Answer1,
+                Answer2 = temp.Qtion.Answer2,
+                Answer3 = temp.Qtion.Answer3,
+                Answer4 = temp.Qtion.Answer4,
+                ContentQ = temp.Qtion.ContentQ,
+                CorrectAnswer = temp.Qtion.CorrectAnswer.Value,
+                Part = temp.Qtion.Part.Value,
+                TopicId = temp.TopicId.Value,
+                IsCorrect = temp.IsCorrect,
+                UserAnswer = temp.Answer
+            }
+          ).ToList();
         }
 
-        private async Task<QtionOutput> GetQuestionByIdAsync(int itemId)
+        private async Task<QuestionViewModel> GetQuestionByIdAsync(int itemId)
         {
             var temp = await _questionRepo.GetById(itemId);
-            return new QtionOutput {
+            return new QuestionViewModel
+            {
                 Id = temp.Id,
                 Answer1 = temp.Answer1,
                 Answer2 = temp.Answer2,
                 Answer3 = temp.Answer3,
                 Answer4 = temp.Answer4,
                 ContentQ = temp.ContentQ,
-                CorrectAnswer = temp.CorrectAnswer,
-                Part = temp.Part,
-                TopicId = temp.TopicId};
+                CorrectAnswer = temp.CorrectAnswer.Value,
+                Part = temp.Part.Value,
+                TopicId = temp.TopicId.Value,
+            };
         }
 
-        private async Task<ParagraphOutput> GetParaById(int paraId)
+        public async Task<ResponseOutput> GetResult(ResultRequest resultRequest)
         {
-            var para = await _paraRepo.GetById(paraId);
-            para.ParagraphQuestions = await _paraQuestionRepo.GetByParaId(para.Id);
+            var result = await _testResultRepo.Entities.FirstOrDefaultAsync(_ => _.GuidId == resultRequest.GuidId);
 
-            var paraQuestions = new List<QtionOutput>();
-            foreach (var qtion in para.ParagraphQuestions)
+            var test = await _repository.Entities.FirstOrDefaultAsync(_ => _.Id == result.TestId);
+
+
+            if (test == null || result == null)
             {
-                var temp = await _questionRepo.GetById(qtion.IdQuestion);
-                paraQuestions.Add(new QtionOutput
-                {
-                    Id = temp.Id,
-                    Answer1 = temp.Answer1,
-                    Answer2 = temp.Answer2,
-                    Answer3 = temp.Answer3,
-                    Answer4 = temp.Answer4,
-                    ContentQ = temp.ContentQ,
-                    CorrectAnswer = temp.CorrectAnswer,
-                    Part = temp.Part,
-                    Position = qtion.Position,
-                    TopicId = temp.TopicId
-                });
+                return new ResponseOutput(false, "Cannot found result of test");
             }
 
-            return new ParagraphOutput
+            var resultOutput = new TestResultsView
             {
-                Id = para.Id,
-                ContentP1 = para.ContentP1,
-                ContentP2 = para.ContentP2,
-                Part = para.Part,
-                Questions = paraQuestions
+                Id = result.Id,
+                ExamedAt = result.ExamedAt,
+                CorrectAnswer = result.CorrectAnswer,
+                GuidId = result.GuidId,
+                TestId = result.TestId,
+                TestName = test.Title,
+                TotalQuestion = result.TotalQuestion,
+                TotalTime = result.TotalTime,
+                UserId = result.UserId,
+                TypeTestId = test.TypeId
             };
 
+            if (resultRequest.UserId.HasValue && resultRequest.UserId == result.UserId)
+            {
+                return new ResponseOutput(true, resultOutput);
+            }
+
+            if (!resultRequest.UserId.HasValue && result.ExamedAt.CompareTo(DateTime.Now.AddDays(-1)) == 1)
+            {
+                return new ResponseOutput(true, resultOutput);
+            }
+
+            return new ResponseOutput(false, "Cannot find result of test ");
         }
+        //private async Task<ParagraphOutput> GetParaById(int paraId)
+        //{
+        //    var para = await _paraRepo.GetById(paraId);
+        //    para.ParagraphQuestions = await _paraQuestionRepo.GetByParaId(para.Id);
+
+        //    var paraQuestions = new List<QuestionViewModel>();
+        //    foreach (var qtion in para.ParagraphQuestions)
+        //    {
+        //        var temp = await _questionRepo.GetById(qtion.IdQuestion);
+        //        paraQuestions.Add(new QuestionViewModel
+        //        {
+        //            Id = temp.Id,
+        //            Answer1 = temp.Answer1,
+        //            Answer2 = temp.Answer2,
+        //            Answer3 = temp.Answer3,
+        //            Answer4 = temp.Answer4,
+        //            ContentQ = temp.ContentQ,
+        //            CorrectAnswer = temp.CorrectAnswer,
+        //            Part = temp.Part,
+        //            Position = qtion.Position,
+        //            TopicId = temp.TopicId
+        //        });
+        //    }
+
+        //    return new ParagraphOutput
+        //    {
+        //        Id = para.Id,
+        //        ContentP1 = para.ContentP1,
+        //        ContentP2 = para.ContentP2,
+        //        Part = para.Part,
+        //        Questions = paraQuestions
+        //    };
+
+        //}
     }
 }

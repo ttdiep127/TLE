@@ -13,6 +13,6 @@ namespace Entities.AppModels
         public string ContentP2 { get; set; }
         public int? Part { get; set; }
 
-        public IEnumerable<QtionOutput> Questions{get; set;}
+        public IEnumerable<QuestionViewModel> Questions{get; set;}
     }
 }

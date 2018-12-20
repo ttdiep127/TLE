@@ -44,13 +44,13 @@
   <li>Cách thức làm bài: làm theo từng câu hoặc từng cụm câu.</li>
 </ul>
   <div class="row">
-    <a class="col-sm p-1" routerLink="practice/part1"><dx-button class="btn-default w-100" text="Part 1"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part2"><dx-button class="btn-default w-100" text="Part 2"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part3"><dx-button class="btn-default w-100" text="Part 3"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part4"><dx-button class="btn-default w-100" text="Part 4"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part5"><dx-button class="btn-default w-100" text="Part 5"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part6"><dx-button class="btn-default w-100" text="Part 6"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part7"><dx-button class="btn-default w-100" text="Part 7"></dx-button></a>
+    <a class="col-sm p-1" routerLink="practice/part1"><dx-button class="btn-default w-100" text="Part 1" [disabled]="disableFeature"></dx-button></a>
+    <a class="col-sm p-1" routerLink="practice/part2"><dx-button class="btn-default w-100" text="Part 2" [disabled]="disableFeature"></dx-button></a>
+    <a class="col-sm p-1" routerLink="practice/part3"><dx-button class="btn-default w-100" text="Part 3" [disabled]="disableFeature"></dx-button></a>
+    <a class="col-sm p-1" routerLink="practice/part4"><dx-button class="btn-default w-100" text="Part 4" [disabled]="disableFeature"></dx-button></a>
+    <a class="col-sm p-1" routerLink="practice/part5"><dx-button class="btn-default w-100" text="Part 5" [disabled]="disableFeature"></dx-button></a>
+    <a class="col-sm p-1" routerLink="practice/part6"><dx-button class="btn-default w-100" text="Part 6" [disabled]="disableFeature"></dx-button></a>
+    <a class="col-sm p-1" routerLink="practice/part7"><dx-button class="btn-default w-100" text="Part 7" [disabled]="disableFeature"></dx-button></a>
   </div>
 </div>
 <hr>
@@ -68,7 +68,7 @@
         <li>Part 7: gồm từ 7 đến 10 đoạn đơn: 28 câu hỏi, 4 đoạn kép: 20 câu hỏi</li>
       </ul>
       <p>Thời gian làm bài: 75 phút.</p>
-      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="full"></dx-button>
+      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="full" [disabled]="disableFeature"></dx-button>
     </div>
   </div>
   <div class="ml-sm-3 mb-sm-3">
@@ -81,7 +81,7 @@
         <li>Part 7: gồm 3 đoạn đơn: 12 câu hỏi, 1 đoạn kép: 5 câu hỏi</li>
       </ul>
       <p>Thời gian làm bài: 30 phút.</p>
-      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="short"></dx-button>
+      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="short" [disabled]="disableFeature"></dx-button>
     </div>
   </div>
   <div class="ml-sm-3 mb-sm-3">
@@ -89,7 +89,7 @@
     <div class="ml-lg-4">
       <p>Bài thi gồm 40 câu: Bạn cần phải chọn từ đúng nhất để hoàn thành câu.</p>
       <p>Thời gian làm bài: 20 phút.</p>
-      <dx-button routerLink="/test/part5" class="btn-outline-success" text="Làm bài ngay"></dx-button>
+      <dx-button routerLink="/test/part5" class="btn-outline-success" text="Làm bài ngay" ></dx-button>
     </div>
   </div>
   <div class="ml-sm-3 mb-sm-3">
@@ -98,7 +98,7 @@
       <p>Bài thi gồm 12 câu: Mỗi đoạn văn có 03 chỗ trống. Bạn phải điền từ thích hợp còn thiếu vào mỗi chỗ trống trong
         đoạn văn đó.</p>
       <p>Thời gian làm bài: 12 phút.</p>
-      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="part6"></dx-button>
+      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="part6" [disabled]="disableFeature"></dx-button>
     </div>
   </div>
   <div class="ml-sm-3 mb-sm-3">
@@ -106,7 +106,7 @@
     <div class="ml-lg-4">
       <p>Bài kiểm tra gồm: 28 câu hỏi( từ 7 - 10 đoạn đơn) và 20 câu hỏi( 4 đoạn kép) </p>
       <p>Thời gian làm bài: 60 phút.</p>
-      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="part7"></dx-button>
+      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="part7" [disabled]="disableFeature"></dx-button>
     </div>
   </div>
 

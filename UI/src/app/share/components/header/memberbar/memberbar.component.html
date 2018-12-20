@@ -4,28 +4,17 @@
       <a routerLinkActive="active" routerLink="/help" class="" href="">Help</a>
     </div>
     <div class="form-inline">
-      <div *ngIf="user">
+      <div class="c-pointer" *ngIf="user">
         <a class="mr-1">{{user.fullName}}</a>
         <a class="mr-1">|</a>
         <a class=" mr-1" (click)="logout($event)">Logout</a>
       </div>
-      <div *ngIf="!user">
-        <a class=" mr-1" (click)="onLogin = true">Login</a>
+      <div class="c-pointer" *ngIf="!user">
+        <a class=" mr-1" (click)="displayLoginForm = true">Login</a>
         <a class="mr-1">|</a>
         <a routerLinkActive="active" routerLink="/signUp" class=" mr-1" href="">Register</a>
       </div>
     </div>
   </div>
 </nav>
-<dx-popup [(visible)]="onLogin"
-          width="375px"
-          title="Login Form"
-          [showTitle]="false"
-          [showCloseButton]="true"
-          [closeOnOutsideClick]="true">
-  <div *dxTemplate="let data of 'content'">
-    <div *ngIf="onLogin">
-      <app-login (loggedUser)="loggedIn($event)"></app-login>
-    </div>
-  </div>
-</dx-popup>
+<app-login *ngIf="displayLoginForm" (onCancel)="displayLoginForm = false" (onSubmitted)="loggedIn($event)"></app-login>

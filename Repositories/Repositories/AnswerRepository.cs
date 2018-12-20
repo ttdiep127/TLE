@@ -23,5 +23,11 @@ namespace Repositories.Repositories
         {
             return await repository.Entities.Where(_ => _.UserId == userId && _.Qtion.Part == part).OrderByDescending(_ => _.UpdateDay).Take(30).ToListAsync();
         }
+
+        public static async Task<IEnumerable<Answers>> GetAnswers(this IRepository<Answers> repository, int topicId,int userId)
+        {
+            return null;
+        }
+
     }
 }

@@ -10,7 +10,7 @@ namespace Entities.AppModels
     {
         public bool Success;
         public string Message;
-        public object obj;
+        public object Data;
 
         public ResponseOutput()
         {
@@ -19,19 +19,26 @@ namespace Entities.AppModels
         {
             Success = v1;
             Message = null;
-            obj = null;
+            Data = null;
         }
+
         public ResponseOutput(bool v1, string v2)
         {
             Success = v1;
             Message = v2;
-            obj = null;
+            Data = null;
+        }
+
+        public ResponseOutput(bool v1, object v2)
+        {
+            Success = v1;
+            Data = v2;
         }
 
         public ResponseOutput(bool v1, string v2, object v3) {
             Success = v1;
             Message = v2;
-            obj = v3;
+            Data = v3;
         }
     }
 }

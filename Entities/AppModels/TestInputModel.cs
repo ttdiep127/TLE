@@ -11,7 +11,7 @@ namespace Entities.AppModels
         public int? Id { get; set; }
         public string Title { get; set; }
         public int Type { get; set; }
-        public IEnumerable<QtionOutput> Questions { get; set; }
+        public IEnumerable<QuestionViewModel> Questions { get; set; }
         public IEnumerable<ParagraphOutput> Paragraphs { get; set; }
     }
 }

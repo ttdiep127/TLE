@@ -312,7 +312,6 @@ F:\Code.net\TLE\Entities\bin\Debug\System.Interactive.Async.xml
 F:\Code.net\TLE\Entities\bin\Debug\System.Memory.xml
 F:\Code.net\TLE\Entities\bin\Debug\System.Numerics.Vectors.xml
 F:\Code.net\TLE\Entities\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
-F:\Code.net\TLE\Entities\obj\Debug\TLE.Entities.csprojAssemblyReference.cache
 F:\Code.net\TLE\Entities\obj\Debug\Entities.Resources.ConstantStrings.resources
 F:\Code.net\TLE\Entities\obj\Debug\Entities.Resources.ErrorMessages.resources
 F:\Code.net\TLE\Entities\obj\Debug\TLE.Entities.csproj.GenerateResource.cache
@@ -320,3 +319,4 @@ F:\Code.net\TLE\Entities\obj\Debug\TLE.Entities.csproj.CoreCompileInputs.cache
 F:\Code.net\TLE\Entities\obj\Debug\TLE.Entities.csproj.CopyComplete
 F:\Code.net\TLE\Entities\obj\Debug\Entities.dll
 F:\Code.net\TLE\Entities\obj\Debug\Entities.pdb
+F:\Code.net\TLE\Entities\obj\Debug\TLE.Entities.csprojAssemblyReference.cache

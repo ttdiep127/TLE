@@ -37,8 +37,8 @@ export const GuideToeicPartE = [{
     ' Select the best answer for each question and mark the letter (A), (B), (C), or (D) on your answer sheet.'
 }];
 
-export const GuideToeicPartV = [
-  {}, {}, {}, {
+export const GuideToeicPart = [
+  {}, {}, {}, {}, {
     part: 4, directions: 'Bạn sẽ nghe một số cuộc nói chuyện ngắn được đưa ra bởi một người nói duy nhất. ' +
       'Bạn sẽ được yêu cầu trả lời ba câu hỏi về những gì người nói nói trong mỗi cuộc nói chuyện ngắn.' +
       'Các cuộc đàm phán sẽ chỉ được nói một lần và sẽ không được hiển thị trên trang bài làm.'

@@ -30,16 +30,23 @@ namespace Web.Api.Controllers
         }
 
         // GET api/<controller>/5
-        [HttpGet("rating/{userId}")]
-        public async Task<IList<RatingModel>> GetRatings(int userId)
+        [HttpGet("rating/{guidId}")]
+        public async Task<IList<RatingModel>> GetRatings(string guidId)
         {
-            return await _service.GetRating(userId);
+            return await _service.GetRating(guidId);
+        }
+
+        // GET api/<controller>/5
+        [HttpGet("user/{userId}")]
+        public async Task<ResponseOutput> GetUserRatings(int userId)
+        {
+            return await _service.GetUserRating(userId);
         }
 
         [HttpGet("recommend/{userId}")]
-        public List<ArticleOutput> RecommendTopicToLearn(int userId)
+        public List<ArticleOutput> RecommendArticles(int userId)
         {
-            return _service.GetRecommend(userId);
+            return _service.RecommendArticles(userId);
         }
 
         // POST api/<controller>

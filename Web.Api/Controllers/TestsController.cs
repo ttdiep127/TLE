@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Entities.AppModels;
 using Entities.Models;
+using Entities.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 
@@ -21,25 +22,38 @@ namespace Web.Api.Controllers
         {
             _service = service;
         }
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
+
+        [HttpGet("practice/{topicId}")]
+        public async Task<ResponseOutput> Get(int topicId)
         {
-            return new string[] { "value1", "value2" };
+            return await _service.GetTest(TestTypesEnum.Topic, topicId);
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{testType}")]
-        public async Task<ResponseOutput> GetTest(int testType)
+        [HttpGet("answers/{testGuidId}")]
+        public async Task<IList<QuestionViewModel>> Get(string testGuidId)
         {
-            return await _service.GetTest(testType);
+            return await _service.GetAnswers(testGuidId);
         }
 
         // POST api/<controller>
         [HttpPost]
+        public async Task<ResponseOutput> GetTest([FromBody]TestTypeModel testType)
+        {
+            return await _service.GetTest(TestTypesEnum.Part, testType.Part.Value);
+        }
+
+        // POST api/<controller>
+        [HttpPost("add")]
         public async Task<ResponseOutput> AddTest([FromBody]TestInputModel test)
         {
             return await _service.AddTest(test);
+        }
+
+        // POST api/<controller>
+        [HttpPost("result")]
+        public async Task<ResponseOutput> GetResult([FromBody]ResultRequest resultRequest)
+        {
+            return await _service.GetResult(resultRequest);
         }
 
         // PUT api/<controller>/5

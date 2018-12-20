@@ -30,30 +30,30 @@ namespace Service
             _answerRepo = UnitOfWork.Repository<Answers>();
         }
 
-        public async Task<IEnumerable<QtionOutput>> Get(int part)
+        public async Task<IEnumerable<QuestionViewModel>> Get(int part)
         {
             var question = await _repository.Get(part);
             return question;
         }
 
-        public async Task<IEnumerable<QtionOutput>> GetByTopicId(int topicId)
+        public async Task<IEnumerable<QuestionViewModel>> GetByTopicId(int topicId)
         {
-            var questions = await _repository.Entities.Where(_ => _.TopicId == topicId).Select(_ => new QtionOutput
+            var questions = await _repository.Entities.Where(_ => _.TopicId == topicId).Select(_ => new QuestionViewModel
             {
                 Id = _.Id,
-                TopicId = _.TopicId,
+                TopicId = _.TopicId.Value,
                 Answer1 = _.Answer1,
                 Answer2 = _.Answer2,
                 Answer3 = _.Answer3,
                 Answer4 = _.Answer4,
                 ContentQ = _.ContentQ,
-                CorrectAnswer = _.CorrectAnswer,
-                Part = _.Part,
+                CorrectAnswer = _.CorrectAnswer.Value,
+                Part = _.Part.Value,
             }).Take(20).ToListAsync();
 
             return questions;
         }
-        public ResponseOutput AddQuestion(ICollection<QtionOutput> qtions)
+        public ResponseOutput AddQuestion(ICollection<QuestionViewModel> qtions)
         {
             if (qtions == null || qtions.Count == 0)
             {
@@ -102,11 +102,11 @@ namespace Service
             var para = await _paraRepo.Get(part);
             para.ParagraphQuestions = await _paraQuestionRepo.GetByParaId(para.Id);
 
-            var paraQuestions = new List<QtionOutput>();
+            var paraQuestions = new List<QuestionViewModel>();
             foreach (var qtion in para.ParagraphQuestions)
             {
                 var temp = await _repository.GetById(qtion.IdQuestion);
-                paraQuestions.Add(new QtionOutput
+                paraQuestions.Add(new QuestionViewModel
                 {
                     Id = temp.Id,
                     Answer1 = temp.Answer1,
@@ -114,10 +114,9 @@ namespace Service
                     Answer3 = temp.Answer3,
                     Answer4 = temp.Answer4,
                     ContentQ = temp.ContentQ,
-                    CorrectAnswer = temp.CorrectAnswer,
-                    Part = temp.Part,
-                    Position = qtion.Position,
-                    TopicId = temp.TopicId
+                    CorrectAnswer = temp.CorrectAnswer.Value,
+                    Part = temp.Part.Value,
+                    TopicId = temp.TopicId.Value
                 });
             }
 

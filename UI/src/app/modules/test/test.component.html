@@ -1,0 +1,25 @@
+<div class="m-sm-3">
+  <div *ngIf="displayIntroduction">
+    <p class="ml-sm-2 sr-sm-2"><strong>Hướng dẫn: </strong>{{directions}}</p>
+    <div class="text-center">
+      <dx-button class="btn btn-outline-success" [text]="isLoading?'Đang tải...': 'Vào làm bài'"
+                 (onClick)="startTest($event)" [(disabled)]="isLoading"></dx-button>
+    </div>
+  </div>
+  <div *ngIf="!displayIntroduction">
+    <div class="clock-postiion">
+      <nav class="clock">
+        {{minutes}} : {{duration%60}}
+      </nav>
+    </div>
+    <div *ngFor="let q of test.questions">
+      <app-question [question]="q" [isTesting]="true" (onChange)="changeAnswer($event)"></app-question>
+    </div>
+    <div class="float-right">
+      <dx-button class="m-sm-2 btn-default" text="Submit" (onClick)="onSubmitTest()"
+                 [(disabled)]="isSubmitting"></dx-button>
+    </div>
+  </div>
+</div>
+<app-login *ngIf="displayLoginForm" (onSubmitted)="sendAQsToServer()" (onCancel)="sendAQsToServer()"></app-login>
+

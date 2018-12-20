@@ -8,6 +8,6 @@ namespace Entities.AppModels
 {
     public class QuestionsRequest
     {
-        public ICollection<QtionOutput> Questions { get; set; }
+        public ICollection<QuestionViewModel> Questions { get; set; }
     }
 }

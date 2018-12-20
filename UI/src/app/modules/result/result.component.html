@@ -1,0 +1,47 @@
+<div *ngIf="!isLoading" class="text-center bg-main-color">
+  <h4>Bạn vừa hoàn thành bài kiểm tra:</h4>
+  <h2>{{testResult?.testName}}</h2>
+  <h3>Điểm của bạn: {{testResult?.correctAnswer}}/{{testResult?.totalQuestion}}</h3>
+  <a>Thời gian làm bài: {{timeString}}. </a>
+</div>
+<div *ngIf="articles">
+  <strong>Bài đọc gợi ý:</strong>
+  <owl-carousel [options]="{items: 4, dots: true, navigation: false}" [items]="articles"
+                [carouselClasses]="['owl-theme', 'row', 'sliding']">
+    <div class="item" *ngFor="let article of articles;let i = index">
+      <div class="article-info">
+          <strong>{{article.title}}</strong>
+        <a [routerLink]="'/grammar/' + article.id">Xem thêm</a>
+        <p>{{article.description}}</p>
+      </div>
+    </div>
+  </owl-carousel>
+</div>
+<div *ngIf="isPracticing && testRatings">
+  <strong>Chủ đề: {{testRatings[0].topicName}}</strong>
+  <div>Tỉ lệ trả lời đúng trước khi làm luyện tập: {{testRatings[1].percentage}}</div>
+  <div>Tỉ lệ trả lời đúng sau khi làm luyện tập: {{testRatings[0].percentage}}</div>
+</div>
+<div>
+  <a class="font-weight-bold" (click)="isDisplayResultDetail = !isDisplayResultDetail">Xem chi tiết bài làm</a>
+  <div *ngIf="isDisplayResultDetail">
+    <div *ngIf="answerQuestions">
+      <div *ngFor="let q of answerQuestions">
+        <app-question [question]="q" [isTesting]="false"></app-question>
+      </div>
+    </div>
+    <div *ngIf="testRatings && !isPracticing">
+      <div class="row">
+        <div class="col-4">Chủ đề</div>
+        <div class="col-4">Số câu trả lời đúng/ tổng số câu</div>
+        <div class="col-4">Xác xuất trả lời đúng</div>
+      </div>
+      <div class="row" *ngFor="let rating of testRatings">
+        <div class="col-4">{{rating.topicName}}:</div>
+        <div class="col-4">{{rating.correctNumber}}/{{rating.totalAnswers}}</div>
+        <div class="col-4">{{rating.percentage*100}}%</div>
+      </div>
+    </div>
+  </div>
+</div>
+

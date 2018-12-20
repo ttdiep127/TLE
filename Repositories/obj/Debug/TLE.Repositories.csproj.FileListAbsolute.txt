@@ -155,8 +155,6 @@ D:\TLE\Repositories\obj\Debug\Repositories.dll
 D:\TLE\Repositories\obj\Debug\Repositories.pdb
 D:\TLE\Repositories\bin\Debug\x86\e_sqlite3.dll
 D:\TLE\Repositories\bin\Debug\x64\e_sqlite3.dll
-F:\Code.net\TLE\Repositories\bin\Debug\x86\e_sqlite3.dll
-F:\Code.net\TLE\Repositories\bin\Debug\x64\e_sqlite3.dll
 F:\Code.net\TLE\Repositories\bin\Debug\Repositories.dll.config
 F:\Code.net\TLE\Repositories\bin\Debug\Repositories.dll
 F:\Code.net\TLE\Repositories\bin\Debug\Repositories.pdb
@@ -312,3 +310,5 @@ F:\Code.net\TLE\Repositories\obj\Debug\TLE.Repositories.csproj.CoreCompileInputs
 F:\Code.net\TLE\Repositories\obj\Debug\TLE.Repositories.csproj.CopyComplete
 F:\Code.net\TLE\Repositories\obj\Debug\Repositories.dll
 F:\Code.net\TLE\Repositories\obj\Debug\Repositories.pdb
+F:\Code.net\TLE\Repositories\bin\Debug\x86\e_sqlite3.dll
+F:\Code.net\TLE\Repositories\bin\Debug\x64\e_sqlite3.dll

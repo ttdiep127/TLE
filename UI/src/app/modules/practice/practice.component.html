@@ -1,0 +1,39 @@
+<div *ngIf="test">
+  <div *ngFor="let q of test?.questions">
+    <app-question [question]="q" [isTesting]="true" (onChange)="changeAnswer($event)"></app-question>
+  </div>
+  <div class="float-right">
+    <dx-button class="m-sm-2 btn-default" text="Submit" (onClick)="onSubmitTest()"
+               [(disabled)]="isSubmitting"></dx-button>
+  </div>
+</div>
+<app-login *ngIf="displayLoginForm" (onSubmitted)="sendAQsToServer()" (onCancel)="sendAQsToServer()"></app-login>
+<!--<div class="ml-sm-5 mr-sm-5">-->
+  <!--<div class="form-inline">-->
+    <!--<p class="float-left">Câu hỏi Part {{partNumber}}:</p>-->
+    <!--<p *ngIf="isLoading" class="float-left ml-sm-2" [ngStyle]="{'color': '#112d4e'}"><i-->
+      <!--class="fa fa-spinner fa-pulse"></i> Loading</p>-->
+    <!--<div *ngIf="inIntroduce">-->
+      <!--&lt;!&ndash;<p class="ml-sm-2 sr-sm-2"><strong>Hướng dẫn: </strong>{{guideToeicPart[partNumber-1].directions}}</p>&ndash;&gt;-->
+      <!--<div class="text-center">-->
+        <!--<button class="btn btn-outline-success" (click)="inIntroduce = false" [disabled]="isLoading">Vào luyện tập</button>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div *ngIf="!inIntroduce">-->
+    <!--<div class="border p-3">-->
+        <!--<div *ngIf="currentQuestion">-->
+          <!--<app-question [question]="currentQuestion" [isTesting]="false" (onChange)="updateAnswer($event)"></app-question>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--<div class="text-center mt-sm-2">-->
+      <!--<button class="btn btn-default mr-sm-2" (click)="clickPrevious()" [disabled]="isFirstQuestion"><i-->
+        <!--class="fas fa-chevron-left"></i> Previous Question-->
+      <!--</button>-->
+      <!--<button class="btn btn-default ml-sm-2" (click)="clickNext()" [disabled]="isFinalQuestion">Next Question <i-->
+        <!--class="fas fa-chevron-right"></i></button>-->
+      <!--<button class="btn btn-success float-right" (click)="clickEnd()">End Practice</button>-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</div>-->
+

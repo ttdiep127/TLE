@@ -23,7 +23,7 @@ namespace Repositories.Repositories
                     Percentage = _.Percentage,
                     TopicId = _.TopicId,
                     UpdateDay = _.UpdateDay,
-                    Name = _.Topic.Name
+                    TopicName = _.Topic.Name
                 }).ToListAsync();
             var userTopics = ratings.Select(_ => _.TopicId).Distinct().ToList();
             var topRatings = new List<RatingModel>();

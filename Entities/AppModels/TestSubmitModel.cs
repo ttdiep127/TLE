@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Entities.AppModels
 {
-    public class TestRequest
+    public class TestSumbitModel
     {
         public int Id { get; set; }
-        public int TypeId { get; set; }
-        public List<UserAnswer> Answers { get; set; }
+        public int UserId { get; set; }
+        public long TotalTime { get; set; }
+        public List<AnswerSubmit> Answers { get; set; }
     }
 }

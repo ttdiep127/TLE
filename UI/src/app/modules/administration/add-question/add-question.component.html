@@ -1,47 +1,47 @@
-<div class="question-form">
-  <dx-data-grid
-    [dataSource]="questionStorage"
-    [showBorders]="true"
-    minlength="400px">
-    <dxo-editing
-      mode="row"
-      [allowUpdating]="true"
-      [allowDeleting]="true"
-      [allowAdding]="true">
-    </dxo-editing>
-    <dxi-column caption="No" cellTemplate="numericalOrder" [width]="40">
-      <div *dxTemplate="let data of 'numericalOrder'">
-        {{data.row.rowIndex + 1}}
-      </div>
-    </dxi-column>
-    <dxi-column dataField="contentQ" caption="Content Question">
-    </dxi-column>
-    <dxi-column dataField="answer1" caption="A" [width]="100">
-      <dxi-validation-rule type="required"></dxi-validation-rule>
-    </dxi-column>
-    <dxi-column dataField="answer2" caption="B" [width]="100">
-      <dxi-validation-rule type="required"></dxi-validation-rule>
-    </dxi-column>
-    <dxi-column dataField="answer3" caption="C" [width]="100">
-      <dxi-validation-rule type="required"></dxi-validation-rule>
-    </dxi-column>
-    <dxi-column dataField="answer4" caption="D" [width]="100">
-      <dxi-validation-rule type="required"></dxi-validation-rule>
-    </dxi-column>
-    <dxi-column dataField="correctAnswer" caption="Answer" dataType="number" [width]="100">
-      <dxi-validation-rule type="required"></dxi-validation-rule>
-    </dxi-column>
-    <dxi-column dataField="part" [width]="100" dataType="number">
-      <dxi-validation-rule type="required"></dxi-validation-rule>
-    </dxi-column>
-    <dxi-column dataField="topicId" [width]="100" dataType="number">
-      <dxi-validation-rule type="required"></dxi-validation-rule>
-    </dxi-column>
-  </dx-data-grid>
-  <dx-button
-    class="float-right btn-default mt-sm-4"
-    text="Save"
-    [disabled]="isLoading"
-    (onClick)="onFormSubmit($event)">
-  </dx-button>
-</div>
+<!--<div class="question-form">-->
+  <!--<dx-data-grid-->
+    <!--[dataSource]="questionStorage"-->
+    <!--[showBorders]="true"-->
+    <!--minlength="400px">-->
+    <!--<dxo-editing-->
+      <!--mode="row"-->
+      <!--[allowUpdating]="true"-->
+      <!--[allowDeleting]="true"-->
+      <!--[allowAdding]="true">-->
+    <!--</dxo-editing>-->
+    <!--<dxi-column caption="No" cellTemplate="numericalOrder" [width]="40">-->
+      <!--<div *dxTemplate="let data of 'numericalOrder'">-->
+        <!--{{data.row.rowIndex + 1}}-->
+      <!--</div>-->
+    <!--</dxi-column>-->
+    <!--<dxi-column dataField="contentQ" caption="Content Question">-->
+    <!--</dxi-column>-->
+    <!--<dxi-column dataField="answer1" caption="A" [width]="100">-->
+      <!--<dxi-validation-rule type="required"></dxi-validation-rule>-->
+    <!--</dxi-column>-->
+    <!--<dxi-column dataField="answer2" caption="B" [width]="100">-->
+      <!--<dxi-validation-rule type="required"></dxi-validation-rule>-->
+    <!--</dxi-column>-->
+    <!--<dxi-column dataField="answer3" caption="C" [width]="100">-->
+      <!--<dxi-validation-rule type="required"></dxi-validation-rule>-->
+    <!--</dxi-column>-->
+    <!--<dxi-column dataField="answer4" caption="D" [width]="100">-->
+      <!--<dxi-validation-rule type="required"></dxi-validation-rule>-->
+    <!--</dxi-column>-->
+    <!--<dxi-column dataField="correctAnswer" caption="Answer" dataType="number" [width]="100">-->
+      <!--<dxi-validation-rule type="required"></dxi-validation-rule>-->
+    <!--</dxi-column>-->
+    <!--<dxi-column dataField="part" [width]="100" dataType="number">-->
+      <!--<dxi-validation-rule type="required"></dxi-validation-rule>-->
+    <!--</dxi-column>-->
+    <!--<dxi-column dataField="topicId" [width]="100" dataType="number">-->
+      <!--<dxi-validation-rule type="required"></dxi-validation-rule>-->
+    <!--</dxi-column>-->
+  <!--</dx-data-grid>-->
+  <!--<dx-button-->
+    <!--class="float-right btn-default mt-sm-4"-->
+    <!--text="Save"-->
+    <!--[disabled]="isLoading"-->
+    <!--(onClick)="onFormSubmit($event)">-->
+  <!--</dx-button>-->
+<!--</div>-->

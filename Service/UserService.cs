@@ -1,6 +1,8 @@
 ﻿using Entities.AppModels;
 using Entities.Models;
 using Entities.Resources;
+using Entities.Utilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Repositories.Repositories;
@@ -26,8 +28,9 @@ namespace TLE.Service
         private readonly AppSettings _appSettings;
         private readonly IRepository<TestResults> _testResultRepo;
         private readonly IRepository<Tests> _testRepo;
+        private readonly IRepository<Qtions> _qtionRepo;
 
-      
+
         public UserService(IUnitOfWork unitOfWork, IOptions<AppSettings> appSettings) : base(unitOfWork)
         {
             _repository = Repository;
@@ -36,6 +39,7 @@ namespace TLE.Service
             _ratingRepo = UnitOfWork.Repository<Ratings>();
             _testResultRepo = UnitOfWork.Repository<TestResults>();
             _testRepo = UnitOfWork.Repository<Tests>();
+            _qtionRepo = UnitOfWork.Repository<Qtions>();
         }
 
         public async Task<IList<RatingModel>> GetRating(int userId)
@@ -77,76 +81,87 @@ namespace TLE.Service
             return user;
         }
 
-        public ResponseOutput Answers(TestRequest testRequest)
+        public async Task<ResponseOutput> SumbitTest(TestSumbitModel testRequest)
         {
+            var answers = testRequest.Answers;
             var test = _testRepo.Entities.FirstOrDefault(_ => _.Id == testRequest.Id);
             if (test != null && testRequest.Answers != null)
             {
-                var answers = testRequest.Answers;
-                var numberCorrect = 0;
-                var count = 0;
+                var numberCorrect = answers.Where(_ => _.IsCorrect == true).ToList().Count;
+                var userId = answers[0].UserId;
+
+                var guidId = Guid.NewGuid();
+
+                // save test result
+                var testResult = new TestResults
+                {
+                    TestId = testRequest.Id,
+                    UserId = userId,
+                    CorrectAnswer = numberCorrect,
+                    ExamedAt = DateTime.Now,
+                    GuidId = guidId.ToString(),
+                    TotalQuestion = answers.Count,
+                    TotalTime = testRequest.TotalTime,
+                };
+
+                _testResultRepo.Insert(testResult);
+                UnitOfWork.SaveChanges();
+
+                // Save answer
+                var answersDB = new List<Answers>();
                 foreach (var answer in answers)
                 {
-                    if (answer.IsCorrect == true) numberCorrect++;
-                    var response = Answer(answer);
-                    if (response.Result.Success) count++;
+                    var answerDB = new Answers
+                    {
+                        UserId = answer.UserId,
+                        TopicId = answer.TopicId,
+                        IsCorrect = answer.IsCorrect,
+                        QtionId = answer.QuestionId,
+                        UpdateDay = DateTime.Now,
+                        TestResultId = testResult.Id,
+                        Answer = answer.UserAnswer
+                    };
+                    answersDB.Add(answerDB);
                 }
 
-                if (count == answers.Count)
-                {
-                    _testResultRepo.Insert(new TestResults
-                    {
-                        TestId = testRequest.Id,
-                        UserId = answers[0].UserId,
-                        Scored = numberCorrect,
-                        DateTime = DateTime.Now
-                    }
-                    );
-                    UnitOfWork.SaveChanges();
-                    if (CalculatePercentageProficient(answers))
-                    {
-                        return new ResponseOutput(true);
-                    }
-                    else
-                    {
-                        return new ResponseOutput(false, "Cannot update Percentage Proficient");
-                    }
+                _answerRepo.InsertRange(answersDB);
+                UnitOfWork.SaveChanges();
 
-                }
-                else if (count > 0)
-                {
-                    return new ResponseOutput
-                    (false, "Didn't save all answers.");
-                }
+
+                await CalculateProficient(answers, testResult.GuidId, userId);
+
+                var topicIds = GetTopics(answers);
+                await CalculateProficientTop(topicIds, testResult.Id, userId);
+
+                return new ResponseOutput(true, "", guidId.ToString());
             }
 
             return new ResponseOutput(false, "array is emtpy.");
         }
 
-        private bool CalculatePercentageProficient(List<UserAnswer> answers)
+        private async Task<bool> CalculateProficient(List<AnswerSubmit> answers, string resultTestGuid, int userId)
         {
             try
             {
-                var topics = GetTopics(answers);
-                var userId = answers[0].UserId;
-                foreach (var topicId in topics)
+                var topicIds = GetTopics(answers);
+
+                foreach (var topicId in topicIds)
                 {
-                    var numberCorrectAnswer = 0;
-                    var allanswers = _answerRepo.Entities.Where(_ => _.UserId == userId && _.Qtion.TopicId == topicId).ToList();
-                    foreach (var answer in allanswers)
-                    {
-                        if (answer.IsCorrect == true) numberCorrectAnswer++;
-                    }
+                    var topicAnswers = answers.Where(_ => _.TopicId == topicId).ToList();
+                    var correctNumber = topicAnswers.Where(_ => _.IsCorrect == true).ToList().Count;
 
-                    var percentageProgicient = (float)numberCorrectAnswer / allanswers.Count();
-
-                    _ratingRepo.Insert(new Ratings
+                    var percentage = (float)correctNumber / topicAnswers.Count;
+                    await _ratingRepo.InsertAsync(new Ratings
                     {
-                        UserId = userId,
                         TopicId = topicId,
-                        Percentage = percentageProgicient,
-                        UpdateDay = DateTime.Now
+                        Percentage = percentage,
+                        UserId = userId,
+                        TotalAnswer = topicAnswers.Count,
+                        CorrectAnswer = correctNumber,
+                        UpdateDay = DateTime.Now,
+                        TestGuid = resultTestGuid
                     });
+
                     UnitOfWork.SaveChanges();
                 }
 
@@ -154,12 +169,123 @@ namespace TLE.Service
             }
             catch (Exception ex)
             {
-                UnitOfWork.RollbackTransaction();
                 return false;
             }
         }
 
-        private List<int> GetTopics(List<UserAnswer> answers)
+        private async Task<bool> CalculateProficientTop(List<int> topicIds, int testResultId, int userId)
+        {
+            try
+            {
+                var tenTestRecentlys = _testResultRepo.Entities
+                    .Where(_ => _.UserId == userId)
+                    .OrderByDescending(_ => _.ExamedAt)
+                    .Take(10).Select(_ => _.Id)
+                    .ToList();
+
+                foreach (var topicId in topicIds)
+                {
+                    //rating for top 10 testing
+
+                   var answers = await _answerRepo.Entities
+                       .Where(_ => tenTestRecentlys.Any(t => _.TestResultId == t)
+                                   && _.TopicId == topicId
+                                   && _.UserId == userId)
+                       .ToListAsync();
+
+                    if (answers.Count >= 20)
+                        {
+                            var correctNumber = answers.Where(_ => _.IsCorrect == true).ToList().Count;
+
+                            await _ratingRepo.InsertAsync(new Ratings
+                            {
+                                TopicId = topicId,
+                                Percentage = (float) correctNumber / answers.Count,
+                                UserId = userId,
+                                TotalAnswer = answers.Count,
+                                CorrectAnswer = correctNumber,
+                                UpdateDay = DateTime.Now,
+                                TestGuid = null
+
+                            });
+
+                            UnitOfWork.SaveChanges();
+                        }
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        private bool CalculatePercentageProficientCyclical(int userId, int topicId, TypeUpdate typeUpdate, bool isUpdate)
+        {
+            var today = DateTime.Now;
+
+            var dayNumber = 0;
+            switch (typeUpdate)
+            {
+                case TypeUpdate.Day:
+                    dayNumber = 1;
+                    break;
+                case TypeUpdate.Week:
+                    dayNumber = 7;
+                    break;
+                case TypeUpdate.Month:
+                    dayNumber = 30;
+                    break;
+            }
+
+            var allanswers = _answerRepo.Entities
+                .Where(_ => _.UserId == userId && _.Qtion.TopicId == topicId
+                && _.UpdateDay > today.AddDays(-dayNumber))
+                .ToList();
+
+            if (allanswers == null || allanswers.Count < 20)
+            {
+                return false;
+            }
+
+            var numberCorrectAnswer = 0;
+            foreach (var answer in allanswers)
+            {
+                if (answer.IsCorrect == true) numberCorrectAnswer++;
+            }
+
+            var percentageProgicient = (float)numberCorrectAnswer / allanswers.Count();
+
+            if (isUpdate)
+            {
+                var lastUpdate = _ratingRepo.Entities
+                                        .Where(_ => _.TopicId == topicId && _.UserId == userId)
+                                        .OrderByDescending(_ => _.UpdateDay)
+                                        .FirstOrDefault();
+                lastUpdate.CorrectAnswer = numberCorrectAnswer;
+                lastUpdate.TotalAnswer = allanswers.Count;
+                lastUpdate.Percentage = percentageProgicient;
+                UnitOfWork.SaveChanges();
+            }
+            else
+            {
+                _ratingRepo.Insert(new Ratings
+                {
+                    UserId = userId,
+                    TopicId = topicId,
+                    TotalAnswer = allanswers.Count,
+                    CorrectAnswer = numberCorrectAnswer,
+                    Percentage = percentageProgicient,
+                    UpdateDay = DateTime.Now,
+                });
+                UnitOfWork.SaveChanges();
+            }
+            return false;
+
+        }
+
+        private List<int> GetTopics(List<AnswerSubmit> answers)
         {
             return answers.Select(_ => _.TopicId).Distinct().ToList();
         }
@@ -174,7 +300,7 @@ namespace TLE.Service
                 {
                     Success = false,
                     Message = ErrorMessages.InvalidUserName,
-                    obj = null,
+                    Data = null,
                 };
             }
 
@@ -210,7 +336,7 @@ namespace TLE.Service
                 {
                     Success = true,
                     Message = null,
-                    obj = new UserOuput
+                    Data = new UserOuput
                     {
                         Id = user.Id,
                         EmailAddress = user.EmailAddress,
@@ -229,42 +355,45 @@ namespace TLE.Service
             {
                 Success = false,
                 Message = ErrorMessages.IncorrectPassword,
-                obj = null
+                Data = null
             };
         }
 
-        public async Task<ResponseOutput> Answer(UserAnswer answerQuestion)
+        public async Task<ResponseOutput> Answer(AnswerSubmit answerQuestion)
         {
             try
             {
-                var savedAnswer = await _answerRepo.Get(answerQuestion.UserId, answerQuestion.QtionId);
-                if (savedAnswer != null)
+                var question = await _qtionRepo.Entities.FirstOrDefaultAsync(_ => _.Id == answerQuestion.QuestionId);
+
+                if (question == null)
                 {
-                    savedAnswer.Answer = answerQuestion.Answer;
-                    savedAnswer.IsCorrect = answerQuestion.IsCorrect;
-                    savedAnswer.UpdateDay = DateTime.Now;
-                    _answerRepo.Update(savedAnswer);
-                    await UnitOfWork.SaveChangesAsync();
+                    return new ResponseOutput(true, "Question is not exist.");
                 }
-                else
+
+                if (answerQuestion.UserAnswer != null)
                 {
                     var answer = new Answers
                     {
                         UserId = answerQuestion.UserId,
-                        QtionId = answerQuestion.QtionId,
-                        Answer = answerQuestion.Answer,
+                        QtionId = answerQuestion.QuestionId,
+                        Answer = answerQuestion.UserAnswer,
                         IsCorrect = answerQuestion.IsCorrect,
                         UpdateDay = DateTime.Now
                     };
-                    await _answerRepo.InsertAsync(answer);
-                    await UnitOfWork.SaveChangesAsync();
+                    _answerRepo.Insert(answer);
+                    UnitOfWork.SaveChanges();
+                    return new ResponseOutput
+                    {
+                        Success = true,
+                        Message = null,
+                        Data = null
+                    };
                 }
-
                 return new ResponseOutput
                 {
-                    Success = true,
-                    Message = null,
-                    obj = null
+                    Success = false,
+                    Message = "Error when add answer",
+                    Data = null
                 };
             }
             catch (System.Exception ex)
@@ -273,10 +402,9 @@ namespace TLE.Service
                 {
                     Success = false,
                     Message = ErrorMessages.ErrorAddAnswer,
-                    obj = null
+                    Data = null
                 };
             }
-
         }
     }
 }

@@ -5,6 +5,13 @@ img {
   margin: auto;
 }
 
+.btn-close {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-size: 17px;
+}
+
 .btn-facebook {
   background-color: #3B5998;
   color: white;
@@ -27,7 +34,6 @@ img {
 .hor-line {
   line-height: 33px;
 
-
   hr {
     color: $light-main-color;
     background-color: $light-main-color;
@@ -35,16 +41,19 @@ img {
     opacity: 0.5;
   }
 }
-.dx-popup-content{
+
+.dx-popup-content {
   width: 400px;
 }
+
 .link {
   line-height: 33px;
 }
-@media only screen and (min-width: 481px){
+
+@media only screen and (min-width: 481px) {
   .dx-popup-normal {
-    width: 350px!important;
-    height: 350px!important;
+    width: 350px !important;
+    height: 350px !important;
   }
 
 }

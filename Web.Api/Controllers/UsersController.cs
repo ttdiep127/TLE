@@ -37,16 +37,16 @@ namespace Web.Api.Controllers
         // POST api/<controller>
         [HttpPost]
         [Route("answer")]
-        public Task<ResponseOutput> AnswerAQuestion([FromBody]UserAnswer answerModel)
+        public Task<ResponseOutput> AnswerAQuestion([FromBody]AnswerSubmit answerModel)
         {
             return _service.Answer(answerModel);
         }
 
         [HttpPost]
-        [Route("answers")]
-        public ResponseOutput SumbitTest([FromBody]TestRequest input)
+        [Route("submit")]
+        public async Task<ResponseOutput> SumbitTest([FromBody]TestSumbitModel input)
         {
-            return _service.Answers(input);
+            return await _service.SumbitTest(input);
         }
 
         // PUT api/<controller>/5
