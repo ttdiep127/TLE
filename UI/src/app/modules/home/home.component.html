@@ -1,3 +1,102 @@
-<p>
-  home works!
-</p>
+<div class="tab-content pb-4">
+  <article>
+    <div>
+      <div>
+        <p><a href="https://cfl.edu.vn/xmedia/2014/08/toeic.jpg?x70269" data-rel="lightbox-gallery-PduqTYpX"
+              data-rl_title="TOEIC" data-rl_caption="" title="TOEIC"><img class="aligncenter size-full wp-image-4877"
+                                                                          src="https://cfl.edu.vn/xmedia/2014/08/toeic.jpg?x70269"
+                                                                          alt="TOEIC" width="940px" height="auto"
+                                                                          srcset="https://cfl.edu.vn/xmedia/2014/08/toeic.jpg 980w, https://cfl.edu.vn/xmedia/2014/08/toeic-300x80.jpg 300w, https://cfl.edu.vn/xmedia/2014/08/toeic-450x120.jpg 450w, https://cfl.edu.vn/xmedia/2014/08/toeic-654x175.jpg 654w"
+                                                                          sizes="(max-width: 980px) 100vw, 980px"></a>
+        </p>
+        <div class="p-3">
+          <p>Một bài thi TOEIC đầy đủ gồm hai phần thi: <strong>Phần thi Listening</strong> (nghe hiểu) trong
+            <em><strong>45
+              phút</strong></em> và <strong>phần thi Reading</strong> (đọc hiểu) trong <em><strong>75 phút</strong></em>.
+            Mỗi
+            phần thi có 100 câu. Tổng số câu hỏi của cả hai phần thi là <em><strong>200 câu</strong></em>. Tổng thời
+            gian
+            làm bài là <em><strong>120 phút</strong></em> hay 2 tiếng.<a href="#">>> Tìm hiểu cấu trúc đề thi TOEIC – Nội
+              dung
+              của bài thi TOEIC.</a></p>
+          <p>Sau khi hoàn thành bài thi, nếu có đáp án bạn có thể tự quy đổi ra điểm số bài thi của mình theo bảng quy
+            đổi
+            sau &gt;&gt; <a title="Thang điểm và cách tính điểm bài thi TOEIC"
+                            href="https://cfl.edu.vn/toeic/thang-diem-va-cach-tinh-diem-bai-thi-toeic/">Thang điểm
+              TOEIC</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </article>
+  <div class="text-center">
+    <a class="btn btn-success m-2" routerLink="/test">Làm bài thi ngay</a>
+    <div class="btn btn-primary m-2">Luyện tập</div>
+  </div>
+</div>
+<div class="tab-content">
+<div class="title">Hiệu xuất làm bài của bạn:</div>
+  <div *ngIf="isLoggedIn" class="content">
+    <dx-chart
+      palette="violet"
+      [dataSource]="ratings"
+      title="Hiệu xuất"
+      [valueAxis]="[{
+        name: 'percentage',
+        position: 'left',
+        showZero: true,
+        label: {
+            customizeText: customizeLabelText
+        }}]">
+      <dxi-series valueField="percentage" name="Tỉ lệ"></dxi-series>
+
+      <dxo-common-series-settings #seriesSettings
+                                  argumentField="topicName"
+                                  type="bar">
+      </dxo-common-series-settings>
+      <dxo-margin [bottom]="20"></dxo-margin>
+      <dxo-common-axis-settings>
+        <dxo-grid [visible]="true"></dxo-grid>
+      </dxo-common-axis-settings>
+      <dxo-legend
+        verticalAlignment="top"
+        horizontalAlignment="right">
+      </dxo-legend>
+      <dxo-argument-axis
+        [valueMarginsEnabled]="false"
+        discreteAxisDivisionMode="crossLabels">
+        <dxo-grid [visible]="true"></dxo-grid>
+      </dxo-argument-axis>
+      <dxo-crosshair
+        [enabled]="true"
+        color="#949494"
+        [width]="3"
+        dashStyle="dot">
+        <dxo-label
+          [visible]="true"
+          backgroundColor="#949494">
+          <dxo-font
+            color="#fff"
+            [size]="12">
+          </dxo-font>
+        </dxo-label>
+      </dxo-crosshair>
+      <dxo-tooltip [enabled]="true"></dxo-tooltip>
+    </dx-chart>
+  </div>
+  <div *ngIf="!isLoggedIn">Bạn cần đăng nhập để xem chức năng này.</div>
+</div>
+<div *ngIf="articles" class="tab-content">
+  <div class="title">Bài đọc gợi ý:</div>
+  <div class="row content">
+    <div *ngFor="let item of articles" class="col-3">
+      <div class="article-info">
+        <strong>{{item.title}}</strong>
+        <div class="intro">
+         {{item.description}}
+        </div>
+        <a [routerLink]="'/grammar/' + item.id">Xem thêm >></a>
+      </div>
+    </div>
+  </div>
+</div>

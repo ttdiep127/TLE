@@ -1,10 +1,11 @@
 @import "~src/assets/variables";
 
 body {
-  font-family: "Segoe UI",Arial,sans-serif;
+  font-family: "Segoe UI", Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
+  background-color: #e9e9e9;
 }
 
 h2 {
@@ -33,7 +34,7 @@ h3 {
   color: $red;
 }
 
-.link{
+.link {
   cursor: pointer;
   color: #0056b3;
   text-decoration: none;
@@ -44,16 +45,15 @@ h3 {
   }
 }
 
-.container{
+.container {
   max-width: 970px;
 }
 
-.btn-default{
+.btn-default {
   background-color: $dark-main-color;
   color: $background-color;
   border: 0;
   border-radius: 0;
-
 
   &:hover {
     color: $dark-main-color;
@@ -85,7 +85,6 @@ h3 {
   border: 0;
   border-radius: 0;
 
-
   &:hover {
     color: $green;
     background-color: white;
@@ -110,7 +109,106 @@ h3 {
   background-color: $light-main-color;
 }
 
+.tab-content {
+  background-color: white;
+  box-shadow: 0px 0px 60px -33px rgba(0, 0, 0, 0.5);
+  margin-bottom: 2rem;
+  margin-top: 1rem;
 
+  .title {
+    background-color: $background-color;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 40px;
+    padding-left: 10px;
+    border-left: 5px solid $main-color;
+  }
+
+  .content {
+    margin: 0px;
+    box-shadow: 0px 0px 60px -33px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.content-menu {
+  background-color: white;
+  padding: 1px 24px;
+}
+
+.tab-menu {
+  background-color: $main-color;
+
+  > div {
+    background-color: $main-color;
+    color: white;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 40px;
+    padding-left: 10px;
+    //box-shadow: 0px 0px 60px -33px rgba(0, 0, 0,0.5);
+    cursor: pointer;
+
+    &:hover {
+      background-color: white;
+      color: $main-color;
+    }
+  }
+  .active {
+    background-color: white;
+    color: $main-color;
+  }
+}
+
+.article-info {
+  margin: 10px 2px;
+  padding: 0px 5px;
+  strong {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .intro {
+    display: inline;
+    max-height: 100px;
+  }
+
+  a {
+    margin-left: 10px;
+  }
+}
+
+owl-carousel {
+  owl-carousel-child {
+    padding-left: 12px;
+  }
+  .article-info {
+    width: auto;
+    height: 200px;
+    box-shadow: $box-shadow;
+    border-radius: 4px;
+    overflow: initial;
+    margin: 1rem 0.2rem 0;
+    padding: .8rem;
+    border: 1px solid;
+
+    strong {
+      display: inline;
+    }
+
+    a {
+    }
+
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+/deep/ .row {
+  padding: 0px;
+  margin: 0px;
+}
 @media only screen and (min-width: 481px) {
 
 }

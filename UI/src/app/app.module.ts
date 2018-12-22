@@ -39,7 +39,7 @@ import {PracticeComponent} from './modules/practice/practice.component';
     ArchivementComponent,
     ResultComponent,
     TestComponent,
-    PracticeComponent
+    PracticeComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +48,7 @@ import {PracticeComponent} from './modules/practice/practice.component';
     SharedModule.forRoot(),
     NgxPermissionsModule.forRoot(),
     AppRoutingModule,
-    OwlModule,
+    OwlModule
   ],
   providers: [
     CookieService,

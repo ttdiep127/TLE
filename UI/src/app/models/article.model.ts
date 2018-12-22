@@ -12,3 +12,9 @@ export class ArticleModel {
     Object.assign(this, init);
   }
 }
+
+export class TopicArticles {
+  topicId: number;
+  topicName: string;
+  articles: ArticleModel[];
+}

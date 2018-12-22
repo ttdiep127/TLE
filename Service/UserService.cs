@@ -150,7 +150,7 @@ namespace TLE.Service
                     var topicAnswers = answers.Where(_ => _.TopicId == topicId).ToList();
                     var correctNumber = topicAnswers.Where(_ => _.IsCorrect == true).ToList().Count;
 
-                    var percentage = (float)correctNumber / topicAnswers.Count;
+                    var percentage = Math.Floor((float) correctNumber / topicAnswers.Count*100);
                     await _ratingRepo.InsertAsync(new Ratings
                     {
                         TopicId = topicId,
@@ -200,7 +200,7 @@ namespace TLE.Service
                             await _ratingRepo.InsertAsync(new Ratings
                             {
                                 TopicId = topicId,
-                                Percentage = (float) correctNumber / answers.Count,
+                                Percentage = Math.Floor((float) correctNumber / answers.Count* 100),
                                 UserId = userId,
                                 TotalAnswer = answers.Count,
                                 CorrectAnswer = correctNumber,

@@ -29,19 +29,3 @@ i {
   width: 5%;
 }
 
-.article-info {
-  width: auto;
-  height: 200px;
-  border: 3px dashed;
-  overflow: initial;
-  margin: 1rem 0.2rem 0;
-  padding: .8rem;
-  a {
-    padding-left: 10px;
-  }
-
-  p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}

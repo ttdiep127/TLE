@@ -1,3 +1,29 @@
-<p>
-  grammar works!
-</p>
+<div *ngIf="userId && articlesRecommend.length > 0" class="tab-content">
+  <div class="title">Bài đọc gợi ý:</div>
+  <div class="pl-3">
+    <owl-carousel [options]="{items: 4, dots: true, navigation: false}" [items]="articlesRecommend"
+                  [carouselClasses]="['owl-theme', 'row', 'sliding']">
+      <div class="item" *ngFor="let article of articlesRecommend; let i = index">
+        <div class="article-info">
+          <strong>{{article.title}}</strong>
+          <a [routerLink]="'/grammar/' + article.id">Xem thêm</a>
+          <p>{{article.description}}</p>
+        </div>
+      </div>
+    </owl-carousel>
+  </div>
+</div>
+<div *ngIf="allArticles" class="tab-content">
+  <div class="title">Tất cả bài học:</div>
+  <div class="content row">
+    <div class=" col-4" *ngFor="let article of allArticles">
+      <div class="article-info">
+        <strong>{{article.title}}</strong>
+        <div class="intro">
+          {{article.description}}
+        </div>
+        <a [routerLink]="'/grammar/' + article.id">Xem thêm >></a>
+      </div>
+    </div>
+  </div>
+</div>

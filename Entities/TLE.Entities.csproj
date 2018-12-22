@@ -149,6 +149,7 @@
     <Compile Include="AppModels\ParagraphOutput.cs" />
     <Compile Include="AppModels\QuestionViewModel.cs" />
     <Compile Include="AppModels\ResponseOutput.cs" />
+    <Compile Include="AppModels\TopicArticles.cs" />
     <Compile Include="AppModels\UserOuput.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Helpers\AppSettings.cs" />

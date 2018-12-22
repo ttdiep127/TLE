@@ -13,3 +13,9 @@ export class RatingModel {
     Object.assign(this, init);
   }
 }
+
+export class TopicRatingModel {
+  topicId: number;
+  topicName: string;
+  ratings: RatingModel[];
+}

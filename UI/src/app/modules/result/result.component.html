@@ -4,27 +4,29 @@
   <h3>Điểm của bạn: {{testResult?.correctAnswer}}/{{testResult?.totalQuestion}}</h3>
   <a>Thời gian làm bài: {{timeString}}. </a>
 </div>
-<div *ngIf="articles">
-  <strong>Bài đọc gợi ý:</strong>
-  <owl-carousel [options]="{items: 4, dots: true, navigation: false}" [items]="articles"
-                [carouselClasses]="['owl-theme', 'row', 'sliding']">
-    <div class="item" *ngFor="let article of articles;let i = index">
-      <div class="article-info">
+<div *ngIf="articles" class="tab-content">
+  <div class="title">Bài đọc gợi ý:</div>
+  <div class="pl-3">
+    <owl-carousel [options]="{items: 4, dots: true, navigation: false}" [items]="articles"
+                  [carouselClasses]="['owl-theme', 'row', 'sliding']">
+      <div class="item" *ngFor="let article of articles; let i = index">
+        <div class="article-info">
           <strong>{{article.title}}</strong>
-        <a [routerLink]="'/grammar/' + article.id">Xem thêm</a>
-        <p>{{article.description}}</p>
+          <a [routerLink]="'/grammar/' + article.id">Xem thêm</a>
+          <p>{{article.description}}</p>
+        </div>
       </div>
-    </div>
-  </owl-carousel>
+    </owl-carousel>
+  </div>
 </div>
 <div *ngIf="isPracticing && testRatings">
   <strong>Chủ đề: {{testRatings[0].topicName}}</strong>
   <div>Tỉ lệ trả lời đúng trước khi làm luyện tập: {{testRatings[1].percentage}}</div>
   <div>Tỉ lệ trả lời đúng sau khi làm luyện tập: {{testRatings[0].percentage}}</div>
 </div>
-<div>
-  <a class="font-weight-bold" (click)="isDisplayResultDetail = !isDisplayResultDetail">Xem chi tiết bài làm</a>
-  <div *ngIf="isDisplayResultDetail">
+<div class="tab-content">
+  <div class="title" (click)="isDisplayResultDetail = !isDisplayResultDetail">Xem chi tiết bài làm</div>
+  <div class="content p-3" *ngIf="isDisplayResultDetail">
     <div *ngIf="answerQuestions">
       <div *ngFor="let q of answerQuestions">
         <app-question [question]="q" [isTesting]="false"></app-question>

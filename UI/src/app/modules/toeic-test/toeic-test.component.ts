@@ -12,15 +12,15 @@ import {Subscription} from 'rxjs';
 export class ToeicTestComponent implements OnInit, OnDestroy {
 
   paramsSub: Subscription;
-
   disableFeature = true;
+  displayPartTest: boolean = true;
+
   constructor(private route: ActivatedRoute, private router: Router,
               private questionService: QuestionService,
               private userService: UserService) {
     this.paramsSub = this.route.params.subscribe(params => {
         const id = params['id'];
-  }
-    );
+    });
   }
 
   ngOnInit() {

@@ -23,10 +23,10 @@ namespace Web.Api.Controllers
         }
 
         // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpGet("current/{userId}")]
+        public async Task<IList<RatingModel>> GetUserCurrentRatings(int userId)
         {
-            return new string[] { "value1", "value2" };
+            return await _service.GetCurrentRating(userId);
         }
 
         // GET api/<controller>/5

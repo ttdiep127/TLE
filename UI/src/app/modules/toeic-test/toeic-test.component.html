@@ -1,114 +1,104 @@
-<div>
-    <article id="post-4779" class="post-4779 page type-page status-publish has-post-thumbnail hentry">
-      <div class="entry-content-wrapper">
-        <div class="entry-content">
-          <p><a href="https://cfl.edu.vn/xmedia/2014/08/toeic.jpg?x70269" data-rel="lightbox-gallery-PduqTYpX"
-                data-rl_title="TOEIC" data-rl_caption="" title="TOEIC"><img class="aligncenter size-full wp-image-4877"
-                                                                            src="https://cfl.edu.vn/xmedia/2014/08/toeic.jpg?x70269"
-                                                                            alt="TOEIC" width="980" height="262"
-                                                                            srcset="https://cfl.edu.vn/xmedia/2014/08/toeic.jpg 980w, https://cfl.edu.vn/xmedia/2014/08/toeic-300x80.jpg 300w, https://cfl.edu.vn/xmedia/2014/08/toeic-450x120.jpg 450w, https://cfl.edu.vn/xmedia/2014/08/toeic-654x175.jpg 654w"
-                                                                            sizes="(max-width: 980px) 100vw, 980px"></a>
-          </p>
-          <p>Một bài thi TOEIC đầy đủ gồm hai phần thi: <strong>Phần thi Listening</strong> (nghe hiểu) trong
-            <em><strong>45
-              phút</strong></em> và <strong>phần thi Reading</strong> (đọc hiểu) trong <em><strong>75 phút</strong></em>.
-            Mỗi
-            phần thi có 100 câu. Tổng số câu hỏi của cả hai phần thi là <em><strong>200 câu</strong></em>. Tổng thời
-            gian
-            làm bài là <em><strong>120 phút</strong></em> hay 2 tiếng.<a href="#">>> Tìm hiểu cấu trúc đề thi TOEIC – Nội
-              dung
-              của bài thi TOEIC.</a></p>
-          <p>Sau khi hoàn thành bài thi, nếu có đáp án bạn có thể tự quy đổi ra điểm số bài thi của mình theo bảng quy
-            đổi
-            sau &gt;&gt; <a title="Thang điểm và cách tính điểm bài thi TOEIC"
-                            href="https://cfl.edu.vn/toeic/thang-diem-va-cach-tinh-diem-bai-thi-toeic/">Thang điểm
-              TOEIC</a>
-          </p>
+<div class=" mt-3">
+  <div class="row">
+    <div class="col-3 tab-menu pr-0 pl-0">
+      <div [class.active]="displayPartTest" (click)="displayPartTest = true">Làm bài kiểm tra</div>
+      <div [class.active]="!displayPartTest" (click)="displayPartTest = false">Luyện tập theo chủ đề</div>
+    </div>
+    <div class="col-9 pl-0">
+      <div class="content-menu" *ngIf="displayPartTest">
+        <div class="tab-content">
+          <div class="title">Làm bài kiểm tra Full Test</div>
+          <div class="content p-3">
+            <p>Bài thi gồm 7 phần:</p>
+            <ul>
+              <li>Part 1: gồm 10 câu</li>
+              <li>Part 2: gồm 30 câu</li>
+              <li>Part 3: gồm 30 câu</li>
+              <li>Part 4: gồm 30 câu</li>
+              <li>Part 5: gồm 20 câu</li>
+              <li>Part 6: gồm 12 câu</li>
+              <li>Part 7: gồm từ 7 đến 10 đoạn đơn: 28 câu hỏi, 4 đoạn kép: 20 câu hỏi</li>
+            </ul>
+            <p>Thời gian làm bài: 160 phút.</p>
+            <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="full"
+                       [disabled]="disableFeature"></dx-button>
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="title">Làm bài kiểm tra Part 5</div>
+          <div class="content p-3">
+            <p>Bài thi gồm 40 câu: Bạn cần phải chọn từ đúng nhất để hoàn thành câu.</p>
+            <p>Thời gian làm bài: 30 phút.</p>
+            <dx-button routerLink="/test/part5" class="btn-outline-success" text="Làm bài ngay"></dx-button>
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="title">Làm bài kiểm tra Part 6</div>
+          <div class="content p-3">
+            <p>Bài thi gồm 12 câu: Mỗi đoạn văn có 03 chỗ trống. Bạn phải điền từ thích hợp còn thiếu vào mỗi chỗ trống
+              trong
+              đoạn văn đó.</p>
+            <p>Thời gian làm bài: 30 phút.</p>
+            <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="part6"
+                       [disabled]="disableFeature"></dx-button>
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="title">Làm bài kiểm tra Part 7</div>
+          <div class="content p-3">
+            <p>Bài kiểm tra gồm: 28 câu hỏi( từ 7 - 10 đoạn đơn) và 20 câu hỏi( 4 đoạn kép) </p>
+            <p>Thời gian làm bài: 60 phút.</p>
+            <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="part7"
+                       [disabled]="disableFeature"></dx-button>
+          </div>
         </div>
       </div>
-    </article>
-    <div class="text-center">
-      <div class="btn btn-success m-2">Làm bài thi ngay</div>
-      <div class="btn btn-primary m-2">Luyện tập</div>
+      <div class="content-menu" *ngIf="!displayPartTest">
+        <div class="tab-content">
+          <div class="title">Làm bài kiểm tra chủ đề V-ing, To do</div>
+          <div class="content p-3">
+            <p>Mỗi bài test gồm 40 câu hỏi trắc nghiệm, thuộc chủ đề V-ing, To do.</p>
+            <p>Thời gian làm bài: Không giới hạn.</p>
+            <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="/practice/1"
+            ></dx-button>
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="title">Làm bài kiểm tra chủ đề Mạo Từ</div>
+          <div class="content p-3">
+            <p>Mỗi bài test gồm 40 câu hỏi trắc nghiệm, thuộc chủ đề Mạo Từ.</p>
+            <p>Thời gian làm bài: Không giới hạn.</p>
+            <dx-button routerLink="/practice/2" class="btn-outline-success" text="Làm bài ngay"></dx-button>
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="title">Làm bài kiểm tra chủ đề Liên từ</div>
+          <div class="content p-3">
+            <p>Mỗi bài test gồm 40 câu hỏi trắc nghiệm, thuộc chủ đề Liên từ.</p>
+            <p>Thời gian làm bài: Không giới hạn.</p>
+            <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="/practice/6"
+            ></dx-button>
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="title">Làm bài kiểm tra chủ đề Đảo ngữ</div>
+          <div class="content p-3">
+            <p>Mỗi bài test gồm 40 câu hỏi trắc nghiệm, thuộc chủ đề Đảo ngữ.</p>
+            <p>Thời gian làm bài: Không giới hạn.</p>
+            <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="/practice/7"
+            ></dx-button>
+          </div>
+        </div>
+        <div class="tab-content">
+          <div class="title">Làm bài kiểm tra chủ đề Mệnh đề quan hệ</div>
+          <div class="content p-3">
+            <p>Mỗi bài test gồm 40 câu hỏi trắc nghiệm, thuộc chủ đề Mệnh đề quan hệ.</p>
+            <p>Thời gian làm bài: Không giới hạn.</p>
+            <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="/practice/5"
+            ></dx-button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-<hr>
-<div>
-  <div class="text-center">
-    <h4>Luyện tập</h4>
-  </div>
-  <p>Phần này giúp người học luyện tập những câu hỏi có trong bài thi Toeic. Được chia theo 7 part tương ứng với bài thi Toeic.</p>
-<ul>
-  <li>Thời gian luyện tập: không giới hạn.</li>
-  <li>Số lượng câu hỏi: tùy thuộc vào từng Part có số lượng câu hỏi tương ứng.</li>
-  <li>Cách thức làm bài: làm theo từng câu hoặc từng cụm câu.</li>
-</ul>
-  <div class="row">
-    <a class="col-sm p-1" routerLink="practice/part1"><dx-button class="btn-default w-100" text="Part 1" [disabled]="disableFeature"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part2"><dx-button class="btn-default w-100" text="Part 2" [disabled]="disableFeature"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part3"><dx-button class="btn-default w-100" text="Part 3" [disabled]="disableFeature"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part4"><dx-button class="btn-default w-100" text="Part 4" [disabled]="disableFeature"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part5"><dx-button class="btn-default w-100" text="Part 5" [disabled]="disableFeature"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part6"><dx-button class="btn-default w-100" text="Part 6" [disabled]="disableFeature"></dx-button></a>
-    <a class="col-sm p-1" routerLink="practice/part7"><dx-button class="btn-default w-100" text="Part 7" [disabled]="disableFeature"></dx-button></a>
-  </div>
-</div>
-<hr>
-<div>
-  <div class="text-center">
-    <h4>Làm bài thi Toeic</h4>
-  </div>
-  <div class="ml-sm-3 mb-sm-3">
-    <h6 class="main-color">Full Test Phần Reading</h6>
-    <div class="ml-lg-4">
-      <p>Bài thi gồm 3 phần:</p>
-      <ul>
-        <li>Part 5: gồm 20 câu</li>
-        <li>Part 6: gồm 12 câu</li>
-        <li>Part 7: gồm từ 7 đến 10 đoạn đơn: 28 câu hỏi, 4 đoạn kép: 20 câu hỏi</li>
-      </ul>
-      <p>Thời gian làm bài: 75 phút.</p>
-      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="full" [disabled]="disableFeature"></dx-button>
-    </div>
-  </div>
-  <div class="ml-sm-3 mb-sm-3">
-    <h6 class="main-color">Short Test Phần Reading</h6>
-    <div class="ml-lg-4">
-      <p>Bài thi gồm 3 phần:</p>
-      <ul>
-        <li>Part 5: gồm 10 câu hỏi</li>
-        <li>Part 6: gồm 6 câu hỏi</li>
-        <li>Part 7: gồm 3 đoạn đơn: 12 câu hỏi, 1 đoạn kép: 5 câu hỏi</li>
-      </ul>
-      <p>Thời gian làm bài: 30 phút.</p>
-      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="short" [disabled]="disableFeature"></dx-button>
-    </div>
-  </div>
-  <div class="ml-sm-3 mb-sm-3">
-    <h6 class="main-color">Làm bài kiểm tra Part 5</h6>
-    <div class="ml-lg-4">
-      <p>Bài thi gồm 40 câu: Bạn cần phải chọn từ đúng nhất để hoàn thành câu.</p>
-      <p>Thời gian làm bài: 20 phút.</p>
-      <dx-button routerLink="/test/part5" class="btn-outline-success" text="Làm bài ngay" ></dx-button>
-    </div>
-  </div>
-  <div class="ml-sm-3 mb-sm-3">
-    <h6 class="main-color">Làm bài kiểm tra Part 6</h6>
-    <div class="ml-lg-4">
-      <p>Bài thi gồm 12 câu: Mỗi đoạn văn có 03 chỗ trống. Bạn phải điền từ thích hợp còn thiếu vào mỗi chỗ trống trong
-        đoạn văn đó.</p>
-      <p>Thời gian làm bài: 12 phút.</p>
-      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="part6" [disabled]="disableFeature"></dx-button>
-    </div>
-  </div>
-  <div class="ml-sm-3 mb-sm-3">
-    <h6 class="main-color">Làm bài kiểm tra Part 7</h6>
-    <div class="ml-lg-4">
-      <p>Bài kiểm tra gồm: 28 câu hỏi( từ 7 - 10 đoạn đơn) và 20 câu hỏi( 4 đoạn kép) </p>
-      <p>Thời gian làm bài: 60 phút.</p>
-      <dx-button class="btn-outline-success" text="Làm bài ngay" routerLink="part7" [disabled]="disableFeature"></dx-button>
-    </div>
-  </div>
-
-</div>
-

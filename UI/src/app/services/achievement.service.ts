@@ -22,4 +22,8 @@ export class AchievementService {
   getUserRating(userId: number): Observable<RequestResponse> {
     return this.baseService.get(`${this.baseService.achievementUrl}/user/${userId}`);
   }
+
+  getRatingTopics(userId: number): Observable<RatingModel[]> {
+    return this.baseService.get(`${this.baseService.achievementUrl}/current/${userId}`);
+  }
 }

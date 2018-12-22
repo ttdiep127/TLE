@@ -20,11 +20,18 @@ namespace Web.Api.Controllers
             _service = service;
         }
 
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        // GET api/<controller>/5
+        [HttpGet("all")]
+        public async Task<IEnumerable<ArticleOutput>> GetAll()
         {
-            return new string[] { "value1", "value2" };
+            return await _service.GetAllArticle();
+        }
+
+        // GET: api/<controller>
+        [HttpGet("topic/{topicId}")]
+        public async Task<IEnumerable<ArticleOutput>> GetByTopicId(int topicId)
+        {
+            return await _service.GetArticleByTopicId(topicId);
         }
 
         // GET api/<controller>/5
@@ -35,9 +42,10 @@ namespace Web.Api.Controllers
         }
 
         // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
+        [HttpPost("topics")]
+        public async Task<IList<TopicArticles>> Post([FromBody]IList<int> topics)
         {
+            return await _service.GetTopicsArticles(topics);
         }
 
         // PUT api/<controller>/5

@@ -33,7 +33,7 @@ namespace Service
             {
                 var topic = _topicRepo.Entities.FirstOrDefault(_ => _.Id == topicId);
                 var ratings = await _ratingRepo.Entities
-                .Where(_ => _.UserId == userId && _.TestGuid == null && _.TopicId == topic.Id && _.UpdateDay.CompareTo(timeNow.AddYears(-1)) > 0)
+                .Where(_ => _.UserId == userId && _.TestGuid == null && _.TopicId == topic.Id)
                 .OrderByDescending(_ => _.UpdateDay)
                 .Take(20)
                 .Select(_ => new RatingModel
@@ -53,11 +53,36 @@ namespace Service
                 listRatings.Add(new ListRatingModel
                 {
                     TopicId = topic.Id,
-                    Ratings = ratings,
+                    Ratings = ratings.OrderBy(_ => _.UpdateDay).ToList(),
                     TopicName = topic.Name
                 });
             }
             return new ResponseOutput(true, listRatings);
+        }
+
+        public async Task<IList<RatingModel>> GetCurrentRating(int userId)
+        {
+            var topicIds = new List<int> { 1, 6, 5, 2, 7 };
+            var ratings = new List<RatingModel>();
+            foreach (var topicId in topicIds)
+            {
+                var rating = await _ratingRepo.Entities.LastOrDefaultAsync(_ => _.UserId == userId && _.TestGuid == null && _.TopicId == topicId);
+                var topic = _topicRepo.Entities.FirstOrDefault(_ => _.Id == topicId);
+
+                ratings.Add(new RatingModel
+                {
+                    Id = rating.Id,
+                    TopicId = rating.TopicId,
+                    TopicName = topic.Name,
+                    Percentage = rating.Percentage,
+                    CorrectNumber = rating.CorrectAnswer,
+                    TotalAnswers = rating.TotalAnswer,
+                    TestGuid = rating.TestGuid,
+                    UpdateDay = rating.UpdateDay,
+                    UserId = rating.UserId
+                });
+            }
+            return ratings;
         }
 
         public async Task<IList<RatingModel>> GetRating(string resultGuidId)
@@ -131,7 +156,7 @@ namespace Service
                         var lastRating = ratings.OrderByDescending(_ => _.UpdateDay).ToList().FirstOrDefault(_ => _.TopicId == topicId);
                         topRatings.Add(lastRating);
                     }
-                    topRatings = topRatings.OrderBy(_ => _.Percentage).Take(10).ToList();
+                    topRatings = topRatings.OrderBy(_ => _.Percentage).Take(8).ToList();
 
                     return _articleService.GetArtiles(topRatings);
                 }

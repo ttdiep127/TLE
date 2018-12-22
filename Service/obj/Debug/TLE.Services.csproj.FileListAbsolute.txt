@@ -324,5 +324,3 @@ F:\Code.net\TLE\Service\obj\Debug\TLE.Services.csproj.CoreCompileInputs.cache
 F:\Code.net\TLE\Service\obj\Debug\TLE.Services.csproj.CopyComplete
 F:\Code.net\TLE\Service\obj\Debug\Service.dll
 F:\Code.net\TLE\Service\obj\Debug\Service.pdb
-F:\Code.net\TLE\Service\bin\Debug\x86\e_sqlite3.dll
-F:\Code.net\TLE\Service\bin\Debug\x64\e_sqlite3.dll
