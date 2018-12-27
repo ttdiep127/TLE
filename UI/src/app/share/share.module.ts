@@ -9,6 +9,7 @@ import {MemberbarComponent} from './components/header/memberbar/memberbar.compon
 import {MenubarComponent} from './components/header/menubar/menubar.component';
 import {LoginComponent} from './components/access/login/login.component';
 import {FooderComponent} from './components/fooder/fooder.component';
+import {RegisterComponent} from './components/access/register/register.component';
 
 const BASE_MODULES = [
   CommonModule,
@@ -25,7 +26,8 @@ const COMPONENTS = [
   MemberbarComponent,
   MenubarComponent,
   LoginComponent,
-  FooderComponent
+  FooderComponent,
+  RegisterComponent
 ];
 
 const NB_THEME_PROVIDERS = [];

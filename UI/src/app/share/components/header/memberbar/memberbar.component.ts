@@ -10,7 +10,7 @@ import {AuthenticationService} from '../../../../services/authentication.service
 export class MemberbarComponent implements OnInit {
   user: UserInfo;
   displayLoginForm = false;
-  onRegister = false;
+  displayRegisterForm = false;
 
   constructor(private authService: AuthenticationService) {
     this.getCurrentUser();
@@ -21,6 +21,7 @@ export class MemberbarComponent implements OnInit {
 
   loggedIn(loggedUser: UserInfo) {
     this.displayLoginForm = false;
+    this.displayRegisterForm = false
     this.user = loggedUser;
   }
 

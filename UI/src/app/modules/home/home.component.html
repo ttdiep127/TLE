@@ -31,16 +31,15 @@
   </article>
   <div class="text-center">
     <a class="btn btn-success m-2" routerLink="/test">Làm bài thi ngay</a>
-    <div class="btn btn-primary m-2">Luyện tập</div>
+    <div class="btn btn-primary m-2" routerLink="/grammar">Học ngữ pháp</div>
   </div>
 </div>
 <div class="tab-content">
-<div class="title">Hiệu xuất làm bài của bạn:</div>
+<div class="title">Hiệu suất làm bài của bạn:</div>
   <div *ngIf="isLoggedIn" class="content">
     <dx-chart
       palette="violet"
       [dataSource]="ratings"
-      title="Hiệu xuất"
       [valueAxis]="[{
         name: 'percentage',
         position: 'left',
@@ -48,7 +47,7 @@
         label: {
             customizeText: customizeLabelText
         }}]">
-      <dxi-series valueField="percentage" name="Tỉ lệ"></dxi-series>
+      <dxi-series valueField="percentage" name="Hiệu xuất"></dxi-series>
 
       <dxo-common-series-settings #seriesSettings
                                   argumentField="topicName"
@@ -67,24 +66,24 @@
         discreteAxisDivisionMode="crossLabels">
         <dxo-grid [visible]="true"></dxo-grid>
       </dxo-argument-axis>
-      <dxo-crosshair
-        [enabled]="true"
-        color="#949494"
-        [width]="3"
-        dashStyle="dot">
-        <dxo-label
-          [visible]="true"
-          backgroundColor="#949494">
-          <dxo-font
-            color="#fff"
-            [size]="12">
-          </dxo-font>
-        </dxo-label>
-      </dxo-crosshair>
+      <!--<dxo-crosshair-->
+        <!--[enabled]="true"-->
+        <!--color="#949494"-->
+        <!--[width]="3"-->
+        <!--dashStyle="dot">-->
+        <!--<dxo-label-->
+          <!--[visible]="true"-->
+          <!--backgroundColor="#949494">-->
+          <!--<dxo-font-->
+            <!--color="#fff"-->
+            <!--[size]="12">-->
+          <!--</dxo-font>-->
+        <!--</dxo-label>-->
+      <!--</dxo-crosshair>-->
       <dxo-tooltip [enabled]="true"></dxo-tooltip>
     </dx-chart>
   </div>
-  <div *ngIf="!isLoggedIn">Bạn cần đăng nhập để xem chức năng này.</div>
+  <div *ngIf="!isLoggedIn">Bạn cần đăng nhập để xem chức năng này. <a class="herfa" (click)="displayLoginForm = true">Đăng nhập</a></div>
 </div>
 <div *ngIf="articles" class="tab-content">
   <div class="title">Bài đọc gợi ý:</div>
@@ -100,3 +99,4 @@
     </div>
   </div>
 </div>
+<app-login *ngIf="displayLoginForm" (onSubmitted)="reloadPerformance($event)"></app-login>

@@ -4,7 +4,7 @@
     <dx-chart
       palette="blue"
       [dataSource]="currentRatings"
-      title="Hiệu xuất làm bài theo từng chủ đề"
+      title="Hiệu suất làm bài theo từng chủ đề"
       [valueAxis]="[{
         name: 'percentage',
         position: 'left',
@@ -12,7 +12,7 @@
         label: {
             customizeText: customizeLabelText
         }}]">
-      <dxi-series valueField="percentage" name="Tỉ lệ"></dxi-series>
+      <dxi-series valueField="percentage" name="Hiệu suất"></dxi-series>
 
       <dxo-common-series-settings #seriesSettings
                                   argumentField="topicName"
@@ -51,7 +51,7 @@
   </div>
 </div>
 <div *ngIf="isLoggedIn" class="tab-content">
-  <div class="title">Chi tiết hiệu xuất làm bài theo từng chủ đề:</div>
+  <div class="title">Chi tiết hiệu suất làm bài theo từng chủ đề:</div>
   <div class="content">
     <div *ngIf="ratings" class="row m-0">
       <div class="col-2 tab-menu pr-0 pl-0 ">
@@ -79,7 +79,7 @@
             customizeText: customizeLabelText
         }}]">
                 <dxi-series valueField="percentage"
-                            name="Hiệu xuất"
+                            name="Hiệu suất"
                             axis="percentage">
                 </dxi-series>
                 <dxo-common-series-settings #seriesSettings

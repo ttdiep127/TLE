@@ -112,4 +112,8 @@ export class AuthenticationService {
       this.setLoggedUser(null);
     });
   }
+
+  register(registerInfo: { email: string; password: string; lastName: string; firstName: string }) {
+    return this.baseService.post(`${this.baseUrl}/register`, registerInfo);
+  }
 }

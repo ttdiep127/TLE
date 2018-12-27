@@ -16,13 +16,13 @@ namespace Service
     public class ArticleService : BaseService<Articles>
     {
         private readonly IRepository<Articles> _repository;
-        private readonly IRepository<ArticleViews> _articleViewsRepo;
+        //private readonly IRepository<ArticleViews> _articleViewsRepo;
         private readonly IRepository<Topics> _topicRepo;
 
         public ArticleService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _repository = Repository;
-            _articleViewsRepo = UnitOfWork.Repository<ArticleViews>();
+            //_articleViewsRepo = UnitOfWork.Repository<ArticleViews>();
             _topicRepo = UnitOfWork.Repository<Topics>();
         }
 
@@ -32,15 +32,15 @@ namespace Service
             var articles = new List<ArticleOutput>();
             foreach (var rating in topRatings)
             {
-                articles.AddRange(_articleViewsRepo.Entities.Where(_ => _.Article.TopicId == rating.TopicId).Select(_ => new ArticleOutput
+                articles.AddRange(_repository.Entities.Where(_ => _.TopicId == rating.TopicId).Select(_ => new ArticleOutput
                 {
-                    Id = _.ArticleId,
-                    TopicId = _.Article.TopicId,
-                    CreatedBy = _.Article.CreatedBy,
-                    CreatedDay = _.Article.CreatedDay,
-                    Description = _.Article.Description,
-                    Title = _.Article.Title,
-                    Views = _.Views
+                    Id = _.Id,
+                    TopicId = _.TopicId,
+                    CreatedBy = _.CreatedBy,
+                    CreatedDay = _.CreatedDay,
+                    Description = _.Description,
+                    Title = _.Title,
+                    //Views = _.Views
                 }));
                 if (articles.Count > 8)
                 {
@@ -69,7 +69,6 @@ namespace Service
                 CreatedBy = _.CreatedBy,
                 CreatedDay = _.CreatedDay,
                 Description = _.Description,
-                Views = _.ArticleViews.Views
             }).FirstOrDefault();
         }
 
@@ -85,7 +84,7 @@ namespace Service
                      CreatedBy = _.CreatedBy,
                      CreatedDay = _.CreatedDay,
                      Description = _.Description,
-                     Views = _.ArticleViews.Views
+                     //Views = _.ArticleViews.Views
                  })
             .OrderBy(_ => new Guid())
             .ToListAsync();
@@ -103,7 +102,7 @@ namespace Service
                      CreatedBy = _.CreatedBy,
                      CreatedDay = _.CreatedDay,
                      Description = _.Description,
-                     Views = _.ArticleViews.Views
+                     //Views = _.ArticleViews.Views
                  })
             .OrderBy(_ => new Guid())
             .Take(10)
@@ -141,7 +140,7 @@ namespace Service
                     CreatedBy = _.CreatedBy,
                     CreatedDay = _.CreatedDay,
                     Description = _.Description,
-                    Views = _.ArticleViews.Views
+                    //Views = _.ArticleViews.Views
                 }).Take(8).ToList();
         }
     }

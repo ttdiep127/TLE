@@ -14,6 +14,5 @@ namespace Entities.Models
         public int TopicId { get; set; }
 
         public Topics Topic { get; set; }
-        public ArticleViews ArticleViews { get; set; }
     }
 }

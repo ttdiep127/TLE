@@ -7,7 +7,5 @@ namespace Entities.Models
     {
         public int ArticleId { get; set; }
         public int? Views { get; set; }
-
-        public Articles Article { get; set; }
     }
 }

@@ -1,20 +1,21 @@
 <nav class="navbar border-bottom">
   <div class="container">
     <div>
-      <a routerLinkActive="active" routerLink="/help" class="" href="">Help</a>
+      <a routerLinkActive="active" routerLink="/help" class="" href="">Hỗ trợ</a>
     </div>
     <div class="form-inline">
       <div class="c-pointer" *ngIf="user">
         <a class="mr-1">{{user.fullName}}</a>
         <a class="mr-1">|</a>
-        <a class=" mr-1" (click)="logout($event)">Logout</a>
+        <a class=" mr-1" (click)="logout($event)">Đăng xuất</a>
       </div>
       <div class="c-pointer" *ngIf="!user">
-        <a class=" mr-1" (click)="displayLoginForm = true">Login</a>
+        <a class=" mr-1" (click)="displayLoginForm = true">Đăng nhập</a>
         <a class="mr-1">|</a>
-        <a routerLinkActive="active" routerLink="/signUp" class=" mr-1" href="">Register</a>
+        <a (click)="displayRegisterForm = true" class=" mr-1">Đăng kí</a>
       </div>
     </div>
   </div>
 </nav>
-<app-login *ngIf="displayLoginForm" (onCancel)="displayLoginForm = false" (onSubmitted)="loggedIn($event)"></app-login>
+<app-login *ngIf="displayLoginForm" (onCancel)="displayLoginForm = false" (onSubmitted)="loggedIn($event)" (register)="displayLoginForm = false; displayRegisterForm= true"></app-login>
+<app-register *ngIf="displayRegisterForm" (onCancel)="displayRegisterForm = false" (onSuccess)="loggedIn($event)" ></app-register>

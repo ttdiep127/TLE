@@ -1,5 +1,6 @@
 <dx-popup [visible]="true"
           width="375px"
+          height="auto"
           [showTitle]="false"
           [closeOnOutsideClick]="false">
   <div *dxTemplate="let data of 'content'">
@@ -13,7 +14,7 @@
             <dxi-validation-rule type="required" message="Email is required."></dxi-validation-rule>
             <dxi-validation-rule type="email" message="Email is invalid!"></dxi-validation-rule>
           </dx-text-box>
-          <small class="mb-1">Password</small>
+          <small class="mb-1">Mật khẩu</small>
           <dx-text-box placeholder="Password" mode="password" [(value)]="loginData.password" valueChangeEvent="keyup">
             <dxi-validation-rule type="required" message="Password is required."></dxi-validation-rule>
           </dx-text-box>
@@ -28,27 +29,55 @@
                 ngClass="btn btn-default"
                 [disabled]="isLoading"
                 class="w-100"
-                text="{{isLoading?'Logging':'Login'}}"
+                text="{{isLoading?'Đang đăng nhập':'Đăng nhập'}}"
                 icon="{{isLoading?'fas fa-spinner fa-spin':''}}"
                 [useSubmitBehavior]="true">
               </dx-button>
             </div>
           </div>
           <div class="clearfix mt-1">
-            <div class="mr-auto">
-              <a routerLinkActive="active" [routerLink]="['/forgot']">Forgot Password?</a>
-            </div>
-            <div class="ml-auto">
-              <a routerLinkActive="active" [routerLink]="['/register']">Sign up</a>
+            <div class="text-center">
+              <a routerLinkActive="active" [routerLink]="['/forgot']">Quên mật khẩu?</a>
             </div>
           </div>
         </dx-validation-group>
       </form>
+      <!--<div class="row mb-0 hor-line">-->
+        <!--<div class="col">-->
+          <!--<hr class="w-100 float-left">-->
+        <!--</div>-->
+        <!--<a>Or connect with</a>-->
+        <!--<div class="col">-->
+          <!--<hr class="w-100 float-right">-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="row">-->
+        <!--<div class="col-12 mt-1">-->
+          <!--<dx-button-->
+            <!--ngClass="btn-facebook"-->
+            <!--[disabled]="isLoading"-->
+            <!--class="w-100"-->
+            <!--text="Login with Facebook"-->
+            <!--[useSubmitBehavior]="true">-->
+          <!--</dx-button>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--<div class="row">-->
+        <!--<div class="col-12 mt-1">-->
+          <!--<dx-button-->
+            <!--ngClass="btn-google"-->
+            <!--[disabled]="isLoading"-->
+            <!--class="w-100"-->
+            <!--text="Sign in with Google+"-->
+            <!--[useSubmitBehavior]="true">-->
+          <!--</dx-button>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="row mb-0 hor-line">
         <div class="col">
           <hr class="w-100 float-left">
         </div>
-        <a>Or connect with</a>
+        <a>Tham gia với chúng tôi</a>
         <div class="col">
           <hr class="w-100 float-right">
         </div>
@@ -56,42 +85,11 @@
       <div class="row">
         <div class="col-12 mt-1">
           <dx-button
-            ngClass="btn-facebook"
             [disabled]="isLoading"
             class="w-100"
-            text="Login with Facebook"
-            [useSubmitBehavior]="true">
-          </dx-button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 mt-1">
-          <dx-button
-            ngClass="btn-google"
-            [disabled]="isLoading"
-            class="w-100"
-            text="Sign in with Google+"
-            [useSubmitBehavior]="true">
-          </dx-button>
-        </div>
-      </div>
-      <div class="row mb-0 hor-line">
-        <div class="col">
-          <hr class="w-100 float-left">
-        </div>
-        <a>Join with Us</a>
-        <div class="col">
-          <hr class="w-100 float-right">
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12 mt-1">
-          <dx-button
-            [disabled]="isLoading"
-            class="w-100"
-            text="Sign Up"
+            text="Đăng kí"
             type="success"
-            [useSubmitBehavior]="true">
+           (onClick)="register.emit()">
           </dx-button>
         </div>
       </div>

@@ -59,6 +59,7 @@ export class TestComponent implements OnInit {
     this.testService.getTest(this.typeExam).subscribe(rr => {
         if (rr.success) {
           this.test = rr.data as TestInputModel;
+          console.log(this.test);
         } else {
           notify(rr.message, 'warning');
         }
@@ -132,10 +133,10 @@ export class TestComponent implements OnInit {
       return true;
     }
 
-    // if (this.test.questions.find(_ => _.userAnswer === undefined)) {
-    //   alert('Please answers all the questions before submit!');
-    //   return false;
-    // }
+    if (this.test.questions.find(_ => _.userAnswer === null)) {
+      alert('Please answers all the questions before submit!');
+      return false;
+    }
 
     return true;
   }

@@ -19,10 +19,12 @@
     </owl-carousel>
   </div>
 </div>
-<div *ngIf="isPracticing && testRatings">
-  <strong>Chủ đề: {{testRatings[0].topicName}}</strong>
-  <div>Tỉ lệ trả lời đúng trước khi làm luyện tập: {{testRatings[1].percentage}}</div>
-  <div>Tỉ lệ trả lời đúng sau khi làm luyện tập: {{testRatings[0].percentage}}</div>
+<div *ngIf="isPracticing && testRatings" class="tab-content">
+  <div class="title">Chủ đề: {{testRatings[0].topicName}}</div>
+  <div class="content p-3" >
+    <div>Hiệu suất trước khi làm luyện tập: {{testRatings[1].percentage}}%</div>
+    <div>Hiệu suất đúng sau khi làm luyện tập: {{testRatings[0].percentage}}%</div>
+  </div>
 </div>
 <div class="tab-content">
   <div class="title" (click)="isDisplayResultDetail = !isDisplayResultDetail">Xem chi tiết bài làm</div>
@@ -36,12 +38,12 @@
       <div class="row">
         <div class="col-4">Chủ đề</div>
         <div class="col-4">Số câu trả lời đúng/ tổng số câu</div>
-        <div class="col-4">Xác xuất trả lời đúng</div>
+        <div class="col-4">Xác suất trả lời đúng</div>
       </div>
       <div class="row" *ngFor="let rating of testRatings">
         <div class="col-4">{{rating.topicName}}:</div>
         <div class="col-4">{{rating.correctNumber}}/{{rating.totalAnswers}}</div>
-        <div class="col-4">{{rating.percentage*100}}%</div>
+        <div class="col-4">{{rating.percentage}}%</div>
       </div>
     </div>
   </div>

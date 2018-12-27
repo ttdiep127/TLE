@@ -10,6 +10,5 @@ namespace Entities.Models
         public int Position { get; set; }
 
         public Paragraphs IdParagraphNavigation { get; set; }
-        public Qtions IdQuestionNavigation { get; set; }
     }
 }

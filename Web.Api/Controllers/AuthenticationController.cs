@@ -44,6 +44,13 @@ namespace Web.Api.Controllers
             return await _userService.Login(input);
         }
 
+        [HttpPost]
+        [Route("register")]
+        public async Task<ResponseOutput> Register([FromBody] RegisterModel input)
+        {
+            return await _userService.Register(input);
+        }
+
         
 
     }

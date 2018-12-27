@@ -1,4 +1,4 @@
-<div *ngIf="test">
+<div *ngIf="test" class="content">
   <div *ngFor="let q of test?.questions">
     <app-question [question]="q" [isTesting]="true" (onChange)="changeAnswer($event)"></app-question>
   </div>

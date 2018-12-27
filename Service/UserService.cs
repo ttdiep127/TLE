@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -405,6 +407,45 @@ namespace TLE.Service
                     Data = null
                 };
             }
+        }
+
+        public async Task<ResponseOutput> Register(RegisterModel registerInfo)
+        {
+            // add new user
+            var user = new Users
+            {
+                EmailAddress = registerInfo.Email,
+                FirstName = registerInfo.FirstName,
+                LastName = registerInfo.LastName,
+                FullName = registerInfo.LastName + ' ' + registerInfo.FirstName,
+                Password = registerInfo.Password,
+            };
+
+            await _repository.InsertAsync(user);
+            UnitOfWork.SaveChanges();
+            // generta email content
+            // send email
+
+            return new ResponseOutput(true);
+        }
+
+        public Task SendEmailAsync(RegisterModel registerInfo, string subject,string linkConfirm)
+        {
+            var client = new SmtpClient("smtp.gmail.com")
+            {
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("tuilearnenglish2018@gmail.com", "english127")
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress("ttdiep127@gmail.com")
+            };
+            var htmlMessage = "";
+            mailMessage.To.Add(registerInfo.Email);
+            mailMessage.Subject = subject;
+            mailMessage.Body = htmlMessage;
+            return client.SendMailAsync(mailMessage);
         }
     }
 }

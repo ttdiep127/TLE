@@ -8,7 +8,6 @@ namespace Entities.Models
         public Qtions()
         {
             Answers = new HashSet<Answers>();
-            ParagraphQuestions = new HashSet<ParagraphQuestions>();
             TestQtions = new HashSet<TestQtions>();
         }
 
@@ -24,7 +23,6 @@ namespace Entities.Models
 
         public Topics Topic { get; set; }
         public ICollection<Answers> Answers { get; set; }
-        public ICollection<ParagraphQuestions> ParagraphQuestions { get; set; }
         public ICollection<TestQtions> TestQtions { get; set; }
     }
 }

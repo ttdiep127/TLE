@@ -1,3 +1,55 @@
-<p>
-  register works!
-</p>
+<dx-popup [visible]="true"
+          width="375px"
+          height="auto"
+          [showTitle]="false"
+          [closeOnOutsideClick]="false">
+  <div *dxTemplate="let data of 'content'">
+    <div class="btn-close" (click)="closeRegisterForm()"><i class="fas fa-times"></i></div>
+    <div class="m-1">
+      <img src="../../../../../assets/logo/logo.webp" width="50px">
+      <form (submit)="onSubmit($event)">
+        <dx-validation-group>
+          <small class="mb-1">Họ và tên:</small>
+          <div class="row p-0 m-0">
+            <dx-text-box placeholder="Họ" class="col-5 p-0 m-0 mr-1" [(value)]="lastName" valueChangeEvent="keyup">
+              <dxi-validation-rule type="required" message="Vui lòng nhập email"></dxi-validation-rule>
+            </dx-text-box>
+            <dx-text-box placeholder="Tên" class="col p-0 m-0" [(value)]="firstName" valueChangeEvent="keyup">
+              <dxi-validation-rule type="required" message="Vui lòng nhập email"></dxi-validation-rule>
+            </dx-text-box>
+          </div>
+          <small class="mb-1">Email:</small>
+          <dx-text-box placeholder="Email" [(value)]="email" valueChangeEvent="keyup">
+            <dxi-validation-rule type="required" message="Vui lòng nhập email"></dxi-validation-rule>
+            <dxi-validation-rule type="email" message="Email không đúng"></dxi-validation-rule>
+          </dx-text-box>
+          <small class="mb-1">Mật khẩu:</small>
+          <dx-text-box placeholder="Mật khẩu" mode="password" [(value)]="password" valueChangeEvent="keyup">
+            <dxi-validation-rule type="required" message="Vui lòng nhập mật khẩu"></dxi-validation-rule>
+          </dx-text-box>
+          <small class="mb-1">Nhập lại mật khẩu:</small>
+          <dx-text-box mode="password"  placeholder="Nhập lại mật khẩu">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="Vui lòng nhập lại mật khẩu"></dxi-validation-rule>
+              <dxi-validation-rule type="compare" [comparisonTarget]="passwordComparison"
+                                   message="Mật khẩu không trùng khớp"></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+          <div class="row">
+            <div class="col-12 mt-3">
+              <dx-button
+                type="success"
+                [disabled]="isLoading"
+                class="w-100"
+                text="{{isLoading?'Đợi tí ...':'Đăng kí'}}"
+                icon="{{isLoading?'fas fa-spinner fa-spin':''}}"
+                [useSubmitBehavior]="true">
+              </dx-button>
+            </div>
+          </div>
+        </dx-validation-group>
+      </form>
+    </div>
+  </div>
+</dx-popup>
+

@@ -16,11 +16,14 @@ export class HomeComponent implements OnInit {
   ratings: RatingModel[];
   isLoggedIn: boolean;
   articles: ArticleModel[];
+  displayLoginForm: boolean = false;
+
   constructor(private archService: AchievementService, private authService: AuthenticationService) {
     this.userId = this.authService.currentUserId;
   }
 
   ngOnInit() {
+    this.subscribe = this.authService.subscribeLogin()
     if (this.userId) {
       this.isLoggedIn = true;
       this.archService.getRatingTopics(this.userId).subscribe( (ratings) => {
@@ -40,4 +43,16 @@ export class HomeComponent implements OnInit {
     return info.valueText + '%';
   };
 
+  reloadPerformance() {
+    this.displayLoginForm = false;
+    this.userId = this.authService.currentUserId;
+    if (this.userId) {
+      this.isLoggedIn = true;
+      this.archService.getRatingTopics(this.userId).subscribe( (ratings) => {
+        this.ratings = ratings;
+      });
+    } else {
+      this.isLoggedIn = false;
+    }
+  }
 }

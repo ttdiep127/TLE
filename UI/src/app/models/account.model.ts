@@ -4,6 +4,10 @@ export class UserLogin {
   emailAddress: string;
   password: string;
   isKeepSignedIn: boolean;
+
+  public constructor(init?: Partial<UserLogin>) {
+    Object.assign(this, init);
+  }
 }
 
 export class UserInfo {

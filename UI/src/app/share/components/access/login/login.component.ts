@@ -13,6 +13,7 @@ import notify from 'devextreme/ui/notify';
 export class LoginComponent implements OnInit {
   @Output() onSubmitted: EventEmitter<UserLogin> = new EventEmitter();
   @Output() onCancel: EventEmitter<any> = new EventEmitter();
+  @Output() register: EventEmitter<any> = new EventEmitter();
 
 
   loginData: UserLogin;

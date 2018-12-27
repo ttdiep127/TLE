@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppModels\ListRatingModel.cs" />
+    <Compile Include="AppModels\RegisterModel.cs" />
     <Compile Include="AppModels\ResultRequest.cs" />
     <Compile Include="AppModels\TestResultsView.cs" />
     <Compile Include="AppModels\TestSubmitModel.cs" />

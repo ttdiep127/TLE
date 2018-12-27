@@ -89,12 +89,6 @@ namespace Entities.Models
                 entity.HasKey(e => e.ArticleId);
 
                 entity.Property(e => e.ArticleId).ValueGeneratedNever();
-
-                entity.HasOne(d => d.Article)
-                    .WithOne(p => p.ArticleViews)
-                    .HasForeignKey<ArticleViews>(d => d.ArticleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ArticleViews_Articles");
             });
 
             modelBuilder.Entity<ParagraphQuestions>(entity =>
@@ -106,12 +100,6 @@ namespace Entities.Models
                     .HasForeignKey(d => d.IdParagraph)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ParagraphQuestion_Paragraphs");
-
-                entity.HasOne(d => d.IdQuestionNavigation)
-                    .WithMany(p => p.ParagraphQuestions)
-                    .HasForeignKey(d => d.IdQuestion)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ParagraphQuestion_Qtions");
             });
 
             modelBuilder.Entity<Qtions>(entity =>
