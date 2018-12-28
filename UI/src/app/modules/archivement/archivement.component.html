@@ -1,4 +1,4 @@
-<div *ngIf="isLoggedIn" class="tab-content">
+<div *ngIf="isLoggedIn && currentRatings && currentRatings.length >= 2" class="tab-content">
   <div class="title">Tổng quan:</div>
   <div class="content">
     <dx-chart
@@ -121,3 +121,5 @@
       </div>
     </div>
   </div>
+</div>
+<app-login *ngIf="displayLoginForm" (onSubmitted)="onLogin($event)" (onCancel)="onCancelLogin()"></app-login>

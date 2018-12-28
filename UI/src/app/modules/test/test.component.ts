@@ -100,7 +100,7 @@ export class TestComponent implements OnInit {
       const userId = this.authService.currentUserId;
 
       if (!userId) {
-        window.alert('Login to save your result for view your achievements.');
+        window.alert('Đăng nhập để lưu kết quả bài làm!');
         this.displayLoginForm = true;
       } else {
         this.sendAQsToServer();
@@ -134,7 +134,7 @@ export class TestComponent implements OnInit {
     }
 
     if (this.test.questions.find(_ => _.userAnswer === null)) {
-      alert('Please answers all the questions before submit!');
+      alert('Vui lòng trả lời hết tất cả các câu hỏi trước khi nộp!');
       return false;
     }
 

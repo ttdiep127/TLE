@@ -36,6 +36,15 @@ export class GrammarComponent implements OnInit {
       });
     }
 
+    this.authService.handleSubscribeLogin().subscribe( (user) => {
+      if (user) {
+        this.userId = user.id
+        this.archService.getRecommend(this.userId).subscribe((ars) => {
+          this.articlesRecommend = ars;
+        });
+      }
+    });
+
   }
 
 }

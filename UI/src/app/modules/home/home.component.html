@@ -36,7 +36,9 @@
 </div>
 <div class="tab-content">
 <div class="title">Hiệu suất làm bài của bạn:</div>
-  <div *ngIf="isLoggedIn" class="content">
+  <div *ngIf="isLoggedIn" class="content p-3">
+    <div *ngIf="!ratings || ratings.length < 2" >Bạn cần làm nhiều bài kiểm tra hơn để xem mục này</div>
+    <div *ngIf="ratings && ratings.length > 2" >
     <dx-chart
       palette="violet"
       [dataSource]="ratings"
@@ -66,24 +68,11 @@
         discreteAxisDivisionMode="crossLabels">
         <dxo-grid [visible]="true"></dxo-grid>
       </dxo-argument-axis>
-      <!--<dxo-crosshair-->
-        <!--[enabled]="true"-->
-        <!--color="#949494"-->
-        <!--[width]="3"-->
-        <!--dashStyle="dot">-->
-        <!--<dxo-label-->
-          <!--[visible]="true"-->
-          <!--backgroundColor="#949494">-->
-          <!--<dxo-font-->
-            <!--color="#fff"-->
-            <!--[size]="12">-->
-          <!--</dxo-font>-->
-        <!--</dxo-label>-->
-      <!--</dxo-crosshair>-->
       <dxo-tooltip [enabled]="true"></dxo-tooltip>
     </dx-chart>
+    </div>
   </div>
-  <div *ngIf="!isLoggedIn">Bạn cần đăng nhập để xem chức năng này. <a class="herfa" (click)="displayLoginForm = true">Đăng nhập</a></div>
+  <div class="content p-3" *ngIf="!isLoggedIn">Bạn cần đăng nhập để xem chức năng này. <a class="herfa" (click)="displayLoginForm = true">Đăng nhập</a></div>
 </div>
 <div *ngIf="articles" class="tab-content">
   <div class="title">Bài đọc gợi ý:</div>

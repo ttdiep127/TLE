@@ -49,13 +49,15 @@ namespace Service
                     UserId = _.UserId
                 })
                 .ToListAsync();
-
-                listRatings.Add(new ListRatingModel
+                if (ratings != null)
                 {
-                    TopicId = topic.Id,
-                    Ratings = ratings.OrderBy(_ => _.UpdateDay).ToList(),
-                    TopicName = topic.Name
-                });
+                    listRatings.Add(new ListRatingModel
+                    {
+                        TopicId = topic.Id,
+                        Ratings = ratings.OrderBy(_ => _.UpdateDay).ToList(),
+                        TopicName = topic.Name
+                    });
+                }
             }
             return new ResponseOutput(true, listRatings);
         }
@@ -69,25 +71,28 @@ namespace Service
                 var rating = await _ratingRepo.Entities.LastOrDefaultAsync(_ => _.UserId == userId && _.TestGuid == null && _.TopicId == topicId);
                 var topic = _topicRepo.Entities.FirstOrDefault(_ => _.Id == topicId);
 
-                ratings.Add(new RatingModel
+                if (rating != null)
                 {
-                    Id = rating.Id,
-                    TopicId = rating.TopicId,
-                    TopicName = topic.Name,
-                    Percentage = rating.Percentage,
-                    CorrectNumber = rating.CorrectAnswer,
-                    TotalAnswers = rating.TotalAnswer,
-                    TestGuid = rating.TestGuid,
-                    UpdateDay = rating.UpdateDay,
-                    UserId = rating.UserId
-                });
+                    ratings.Add(new RatingModel
+                    {
+                        Id = rating.Id,
+                        TopicId = rating.TopicId,
+                        TopicName = topic.Name,
+                        Percentage = rating.Percentage,
+                        CorrectNumber = rating.CorrectAnswer,
+                        TotalAnswers = rating.TotalAnswer,
+                        TestGuid = rating.TestGuid,
+                        UpdateDay = rating.UpdateDay,
+                        UserId = rating.UserId
+                    });
+                }
             }
             return ratings;
         }
 
         public async Task<IList<RatingModel>> GetRating(string resultGuidId)
         {
-            var ratings =  await _ratingRepo.Entities.Where(_ => _.TestGuid == resultGuidId)
+            var ratings = await _ratingRepo.Entities.Where(_ => _.TestGuid == resultGuidId)
                 .Select(_ => new RatingModel
                 {
                     Id = _.Id,
@@ -121,7 +126,8 @@ namespace Service
                     .Take(2)
                     .ToListAsync();
                 return oldRatings;
-            } else
+            }
+            else
             {
                 return ratings;
             }
@@ -131,7 +137,7 @@ namespace Service
         {
             var ratings = await _ratingRepo.Entities.Where(_ => _.TopicId == topicId && _.UserId == userId).Select(_ => new RatingModel
             {
-                Id =  _.Id,
+                Id = _.Id,
                 TopicId = _.TopicId,
                 Percentage = _.Percentage,
                 UpdateDay = _.UpdateDay,

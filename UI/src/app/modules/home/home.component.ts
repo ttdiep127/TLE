@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {RatingModel} from '../../models/achievement.model';
-import {ArchivementComponent} from '../archivement/archivement.component';
 import {AuthenticationService} from '../../services/authentication.service';
 import {AchievementService} from '../../services/achievement.service';
 import {ArticleModel} from '../../models/article.model';
+import {Subscription} from 'rxjs';
+import {UserInfo} from '../../models/account.model';
 
 @Component({
   selector: 'app-home',
@@ -17,25 +18,42 @@ export class HomeComponent implements OnInit {
   isLoggedIn: boolean;
   articles: ArticleModel[];
   displayLoginForm: boolean = false;
+  subscribe: Subscription;
 
   constructor(private archService: AchievementService, private authService: AuthenticationService) {
     this.userId = this.authService.currentUserId;
   }
 
   ngOnInit() {
-    this.subscribe = this.authService.subscribeLogin()
-    if (this.userId) {
+    this.subscribe = this.authService.handleSubscribeLogin().subscribe((user) => {
+      if (user) {
+        this.userId = user.id;
+        this.getPerformances(this.userId);
+        this.getArticles(this.userId);
+      } else {
+        this.isLoggedIn = false;
+      }
+    });
+
+
+    this.getPerformances(this.userId);
+    this.getArticles(this.userId);
+  }
+
+  getPerformances(userId: number) {
+    if (userId) {
       this.isLoggedIn = true;
-      this.archService.getRatingTopics(this.userId).subscribe( (ratings) => {
+      this.archService.getRatingTopics(userId).subscribe((ratings) => {
         this.ratings = ratings;
       });
-     } else {
+    } else {
       this.isLoggedIn = false;
     }
+  }
 
+  getArticles(userId: number) {
     this.archService.getRecommend(this.userId).subscribe((articles) => {
       this.articles = articles.slice(0, 8);
-      console.log(this.articles);
     });
   }
 
@@ -45,14 +63,14 @@ export class HomeComponent implements OnInit {
 
   reloadPerformance() {
     this.displayLoginForm = false;
-    this.userId = this.authService.currentUserId;
-    if (this.userId) {
-      this.isLoggedIn = true;
-      this.archService.getRatingTopics(this.userId).subscribe( (ratings) => {
-        this.ratings = ratings;
-      });
-    } else {
-      this.isLoggedIn = false;
-    }
+    // this.userId = this.authService.currentUserId;
+    // if (this.userId) {
+    //   this.isLoggedIn = true;
+    //   this.archService.getRatingTopics(this.userId).subscribe((ratings) => {
+    //     this.ratings = ratings;
+    //   });
+    // } else {
+    //   this.isLoggedIn = false;
+    // }
   }
 }

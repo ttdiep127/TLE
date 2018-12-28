@@ -16,6 +16,7 @@ export const ACCOUNT_STORE_NAME = 'hongkong1';
 export class AuthenticationService {
   private baseUrl = 'api/authentication';
   private _loginUser: BehaviorSubject<UserInfo> = new BehaviorSubject(null);
+  private loggedIn: BehaviorSubject<UserInfo> = new BehaviorSubject(null);
 
   constructor(private router: Router, private permissionsService: NgxPermissionsService
     , private cookieService: CookieService, private baseService: BaseService
@@ -52,6 +53,7 @@ export class AuthenticationService {
 
   setLoggedUser(user: UserInfo) {
     if (user) {
+      this.subscribeLogin(user);
       // Remove old access token if have
       this.cookieService.remove('AccessToken');
       this.cookieService.remove(ACCOUNT_STORE_NAME);
@@ -69,6 +71,7 @@ export class AuthenticationService {
     } else {
       this.cookieService.remove('AccessToken');
       this.cookieService.remove(ACCOUNT_STORE_NAME);
+      this.subscribeLogout();
     }
 
     this.initAccountInfo();
@@ -115,5 +118,18 @@ export class AuthenticationService {
 
   register(registerInfo: { email: string; password: string; lastName: string; firstName: string }) {
     return this.baseService.post(`${this.baseUrl}/register`, registerInfo);
+  }
+
+
+  subscribeLogin(user: UserInfo) {
+    this.loggedIn.next(user);
+  }
+
+  subscribeLogout() {
+    this.loggedIn.next(null);
+  }
+
+  handleSubscribeLogin(): Observable<any> {
+    return this.loggedIn.asObservable();
   }
 }

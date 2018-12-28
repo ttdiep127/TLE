@@ -306,16 +306,6 @@ namespace TLE.Service
                 };
             }
 
-            //// Verify user active or not
-            //if (!user.EmailVerified && !user.SmsVerified)
-            //{
-            //    throw new AppException(ErrorMessages.UserHasntVerifyAccount);
-            //}
-
-            //
-            // Check password
-
-            // authentication successful so generate jwt token
             var hashedPassword = input.Password;
 
             if (hashedPassword == user.Password)
